@@ -1,9 +1,10 @@
 ## TODO
 
 [/] Show/hide import section
+[ ] Break App functions out into separate files
+[ ] Best practice for ^^ ?
 [ ] Use update to set toggle state better
 [ ] Really no better way to conditionally set content?
-[ ] Break App functions out into separate files
 [ ] Manually set "danger" time
 [ ] Install testing modules
 [ ] Tests

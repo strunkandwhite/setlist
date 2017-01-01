@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import 'moment-duration-format';
-import _ from 'lodash';
+import { sumBy } from 'lodash';
 
 import Track from './Track';
 import CONSTANTS from './constants';
@@ -73,7 +73,7 @@ class TrackList extends Component {
       />
     ));
 
-    const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
+    const listDuration = sumBy(this.props.tracks, track => track.duration_ms);
     const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
     const overrunDuration = 6900000;
 

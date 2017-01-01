@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'moment';
 import 'moment-duration-format';
-import _ from 'lodash';
+import { flow } from 'lodash';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 
@@ -139,7 +139,7 @@ class Track extends Component {
   }
 }
 
-export default _.flow(
+export default flow(
   DropTarget(CONSTANTS.TYPES.SONG, trackTarget, connect => ({
     connectDropTarget: connect.dropTarget(),
   })),
