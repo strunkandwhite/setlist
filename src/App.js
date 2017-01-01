@@ -25,12 +25,12 @@ class App extends Component {
     }
 
     //Handlers
-    this.handleSubmitImportForm = handlers.handleSubmitImportForm.bind(this);
-    this.handleChangeTrackBPM = handlers.handleChangeTrackBPM.bind(this);
-    this.handleRemoveTrack = handlers.handleRemoveTrack.bind(this);
-    this.handleRemoveAllTracks = handlers.handleRemoveAllTracks.bind(this);
-    this.handleSwitchTrack = handlers.handleSwitchTrack.bind(this);
-    this.handleAddSpacer = handlers.handleAddSpacer.bind(this);
+    this.handleImportFormSubmit = handlers.handleImportFormSubmit.bind(this);
+    this.handleTrackBPMChange = handlers.handleTrackBPMChange.bind(this);
+    this.handleRemoveTrackClick = handlers.handleRemoveTrackClick.bind(this);
+    this.handleRemoveAllTracksClick = handlers.handleRemoveAllTracksClick.bind(this);
+    this.handleSwitchTrackClick = handlers.handleSwitchTrackClick.bind(this);
+    this.handleAddSpacerClick = handlers.handleAddSpacerClick.bind(this);
 
     //Track operations
     this.addTracks = trackOps.addTracks.bind(this);
@@ -65,7 +65,7 @@ class App extends Component {
 
   render() {
     const { showImport } = this.state;
-    const importForm = showImport ? <ImportForm handleSubmitImportForm={this.handleSubmitImportForm} /> : null;
+    const importForm = showImport ? <ImportForm handleImportFormSubmit={this.handleImportFormSubmit} /> : null;
     const selector = `App ${showImport ? 'show' : 'hide'}-import-form`;
 
     return (
@@ -76,11 +76,11 @@ class App extends Component {
             key={list}
             list={list}
             tracks={this.state[list]}
-            handleChangeTrackBPM={this.handleChangeTrackBPM}
-            handleRemoveTrack={this.handleRemoveTrack}
-            handleRemoveAllTracks={this.handleRemoveAllTracks}
-            handleAddSpacer={this.handleAddSpacer}
-            handleSwitchTrack={this.handleSwitchTrack}
+            handleTrackBPMChange={this.handleTrackBPMChange}
+            handleRemoveTrackClick={this.handleRemoveTrackClick}
+            handleRemoveAllTracksClick={this.handleRemoveAllTracksClick}
+            handleAddSpacerClick={this.handleAddSpacerClick}
+            handleSwitchTrackClick={this.handleSwitchTrackClick}
             moveTrack={this.moveTrack}
           />
         ))}

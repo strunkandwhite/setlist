@@ -1,7 +1,8 @@
 ## TODO
 
 [/] Show/hide import section
-[ ] Break App functions out into separate files
+[/] Break App functions out into separate files
+[ ] Why doesn't => work for ^^ ?
 [ ] Best practice for ^^ ?
 [ ] Use update to set toggle state better
 [ ] Really no better way to conditionally set content?

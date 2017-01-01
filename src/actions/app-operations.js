@@ -4,7 +4,7 @@ import FileSaver from 'file-saver';
 import token from '../token';
 
 const appOps = {
-  getTracksFromSpotify: function(ids, list) {
+  getTracksFromSpotify: function(list, ids) {
     const spotify = new SpotifyWebApi();
     spotify.setAccessToken(token);
     spotify.getTracks(ids, (err, data) => {
@@ -12,7 +12,7 @@ const appOps = {
       else {
         const newTracks = this.removeDuplicates(data.tracks);
         const slimTracks = this.slimTracks(newTracks);
-        this.addTracks(slimTracks, list);
+        this.addTracks(list, slimTracks);
       }
     });
   },
@@ -63,12 +63,12 @@ const appOps = {
 
     FileSaver.saveAs(blob, 'setlist.txt');
   },
-  storeAndSetTracksState: function(tracks, list) {
+  storeAndSetTracksState: function(list, tracks) {
     localStorage.setItem(list, JSON.stringify(tracks));
     this.setState({ [list]: tracks });
   },
-  parseidsFromInput: function(formInput) {
-    const URIList = formInput.split('\n');
+  parseidsFromInput: function(input) {
+    const URIList = input.split('\n');
     const filteredURIList = URIList.filter(URI => URI !== '');
     const ids = filteredURIList.map(URI => URI.split(':')[2]);
 

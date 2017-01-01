@@ -7,7 +7,7 @@ import './ImportForm.css'
 
 class ImportForm extends Component {
   static propTypes = {
-    handleSubmitImportForm: PropTypes.func.isRequired,
+    handleImportFormSubmit: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -23,7 +23,9 @@ class ImportForm extends Component {
 
   handleButtonClick(e) {
     e.preventDefault();
-    this.props.handleSubmitImportForm(this.state.value, e.target.value);
+    const list = e.target.value;
+
+    this.props.handleImportFormSubmit(list, this.state.value);
   }
 
   handleChange(e) {

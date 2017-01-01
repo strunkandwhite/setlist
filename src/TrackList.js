@@ -13,43 +13,43 @@ class TrackList extends Component {
   static propTypes = {
     list: PropTypes.string.isRequired,
     tracks: PropTypes.array.isRequired,
-    handleChangeTrackBPM: PropTypes.func.isRequired,
-    handleRemoveTrack: PropTypes.func.isRequired,
-    handleRemoveAllTracks: PropTypes.func.isRequired,
-    handleAddSpacer: PropTypes.func.isRequired,
+    handleTrackBPMChange: PropTypes.func.isRequired,
+    handleRemoveTrackClick: PropTypes.func.isRequired,
+    handleRemoveAllTracksClick: PropTypes.func.isRequired,
+    handleAddSpacerClick: PropTypes.func.isRequired,
     moveTrack: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
 
-    this.handleRemoveAllClick = this.handleRemoveAllClick.bind(this);
+    this.handleRemoveAllTracksClick = this.handleRemoveAllTracksClick.bind(this);
     this.handleAddSpacerClick = this.handleAddSpacerClick.bind(this);
   }
 
-  handleRemoveAllClick() {
+  handleRemoveAllTracksClick() {
     const {
-      handleRemoveAllTracks,
+      handleRemoveAllTracksClick,
       list
     } = this.props;
 
-    handleRemoveAllTracks(list);
+    handleRemoveAllTracksClick(list);
   }
 
   handleAddSpacerClick() {
     const {
-      handleAddSpacer,
+      handleAddSpacerClick,
       list
     } = this.props;
 
-    handleAddSpacer(list);
+    handleAddSpacerClick(list);
   }
 
   render() {
     const {
-      handleChangeTrackBPM,
-      handleRemoveTrack,
-      handleSwitchTrack,
+      handleTrackBPMChange,
+      handleRemoveTrackClick,
+      handleSwitchTrackClick,
       moveTrack,
       tracks,
       list
@@ -65,9 +65,9 @@ class TrackList extends Component {
         name={name}
         bpm={bpm}
         type={type}
-        handleChangeTrackBPM={handleChangeTrackBPM}
-        handleRemoveTrack={handleRemoveTrack}
-        handleSwitchTrack={handleSwitchTrack}
+        handleTrackBPMChange={handleTrackBPMChange}
+        handleRemoveTrackClick={handleRemoveTrackClick}
+        handleSwitchTrackClick={handleSwitchTrackClick}
         moveTrack={moveTrack}
         list={list}
       />

@@ -35,7 +35,7 @@ const trackTarget = {
 
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
-    props.moveTrack(dragIndex, hoverIndex, props.list);
+    props.moveTrack(props.list, dragIndex, hoverIndex);
     monitor.getItem().index = hoverIndex;
   }
 }
@@ -44,9 +44,9 @@ class Track extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-    handleChangeTrackBPM: PropTypes.func.isRequired,
-    handleRemoveTrack: PropTypes.func.isRequired,
-    handleSwitchTrack: PropTypes.func.isRequired,
+    handleTrackBPMChange: PropTypes.func.isRequired,
+    handleRemoveTrackClick: PropTypes.func.isRequired,
+    handleSwitchTrackClick: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     id: PropTypes.string.isRequired,
@@ -67,7 +67,7 @@ class Track extends Component {
 
   handleChange(e) {
     const {
-      handleChangeTrackBPM,
+      handleTrackBPMChange,
       index,
       list,
       id
@@ -78,27 +78,27 @@ class Track extends Component {
     if(input.length > 3) return;
     if(letters.test(input)) return;
 
-    handleChangeTrackBPM(index, list, id, input);
+    handleTrackBPMChange(list, index, id, input);
   }
 
   handleSwitchClick() {
     const {
-      handleSwitchTrack,
+      handleSwitchTrackClick,
       index,
       list
     } = this.props;
 
-    handleSwitchTrack(index, list);
+    handleSwitchTrackClick(list, index);
   }
 
   handleRemoveClick(e) {
     const {
-      handleRemoveTrack,
+      handleRemoveTrackClick,
       index,
       list
     } = this.props;
 
-    handleRemoveTrack(index, list);
+    handleRemoveTrackClick(list, index);
   }
 
   render() {

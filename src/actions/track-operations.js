@@ -4,41 +4,41 @@ import Moment from 'moment';
 import CONSTANTS from '../constants';
 
 const trackOps = {
-  addTracks: function(tracks, list) {
+  addTracks: function(list, tracks) {
     const mergedTracks = update(this.state[list], {
       $push: tracks
     });
 
-    this.storeAndSetTracksState(mergedTracks, list);
+    this.storeAndSetTracksState(list, mergedTracks);
   },
-  removeTrack: function(index, list) {
+  removeTrack: function(list, index) {
     const filteredTracks = update(this.state[list], {
       $splice: [[index, 1]]
     });
 
-    this.storeAndSetTracksState(filteredTracks, list);
+    this.storeAndSetTracksState(list, filteredTracks);
   },
   removeAllTracks: function(list) {
     const emptyTracks = [];
 
-    this.storeAndSetTracksState(emptyTracks, list)
+    this.storeAndSetTracksState(list, emptyTracks)
   },
-  moveTrack: function(dragIndex, hoverIndex, list) {
-    const dragTrack = this.state[list][dragIndex]
+  moveTrack: function(list, dragIndex, hoverIndex) {
+    const dragTrack = this.state[list][dragIndex];
     const modifiedTracks = update(this.state[list], {
       $splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
     });
 
-    this.storeAndSetTracksState(modifiedTracks, list)
+    this.storeAndSetTracksState(list, modifiedTracks)
   },
-  switchTrack: function(index, list) {
+  switchTrack: function(list, index) {
     const otherList = (list === CONSTANTS.LISTS.SET) ? CONSTANTS.LISTS.RESERVE : CONSTANTS.LISTS.SET;
     const trackToMove = this.state[list][index];
 
-    this.removeTrack(index, list);
-    this.addTracks([trackToMove], otherList);
+    this.removeTrack(list, index);
+    this.addTracks(otherList, [trackToMove]);
   },
-  changeTrackBPM: function(index, list, id, input) {
+  changeTrackBPM: function(list, index, id, input) {
     const modifiedTracks = update(this.state[list], {
       [index]: {
         bpm: {$set: input}
@@ -47,7 +47,7 @@ const trackOps = {
 
     localStorage.setItem(id, input);
 
-    this.storeAndSetTracksState(modifiedTracks, list);
+    this.storeAndSetTracksState(list, modifiedTracks);
   }
 }
 

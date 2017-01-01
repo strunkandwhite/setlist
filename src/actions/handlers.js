@@ -1,23 +1,26 @@
+import Moment from 'moment';
+import CONSTANTS from '../constants';
+
 const handlers = {
-  handleSubmitImportForm: function(formInput, list) {
-    const ids = this.parseidsFromInput(formInput)
-    this.getTracksFromSpotify(ids, list);
+  handleImportFormSubmit: function(list, input) {
+    const ids = this.parseidsFromInput(input)
+    this.getTracksFromSpotify(list, ids);
   },
-  handleChangeTrackBPM: function(index, list, id, input) {
-    this.changeTrackBPM(index, list, id, input);
+  handleTrackBPMChange: function(list, index, id, input) {
+    this.changeTrackBPM(list, index, id, input);
   },
-  handleRemoveTrack: function(index, list) {
-    this.removeTrack(index, list);
+  handleRemoveTrackClick: function(list, index) {
+    this.removeTrack(list, index);
   },
-  handleRemoveAllTracks: function(list) {
+  handleRemoveAllTracksClick: function(list) {
     this.removeAllTracks(list);
   },
-  handleSwitchTrack: function(index, list) {
-    this.switchTrack(index, list);
+  handleSwitchTrackClick: function(list, index) {
+    this.switchTrack(list, index);
   },
-  handleAddSpacer: function(list) {
+  handleAddSpacerClick: function(list) {
     const dummyTrack = Object.assign({ id: Moment().format('x') }, CONSTANTS.DUMMY_TRACK)
-    this.addTracks([dummyTrack], list);
+    this.addTracks(list, [dummyTrack]);
   }
 }
 
