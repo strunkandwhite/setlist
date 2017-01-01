@@ -55,17 +55,8 @@ class TrackList extends Component {
       list
     } = this.props;
 
-    const listItems = tracks.map((track, i) => {
-      const {
-        id,
-        duration_ms,
-        artist,
-        name,
-        bpm,
-        type
-      } = track;
-
-      return <Track
+    const listItems = tracks.map(({ id, duration_ms, artist, name, bpm, type }, i) => (
+      <Track
         key={id}
         id={id}
         index={i}
@@ -80,20 +71,19 @@ class TrackList extends Component {
         moveTrack={moveTrack}
         list={list}
       />
-    })
+    ));
 
     const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
     const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
     const overrunDuration = 6900000;
 
-    const selector = `TrackList ${list}`
     const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
 
     const removeButton = (listItems.length > 0) ? <button onClick={this.handleRemoveAllClick}>Remove all tracks</button> : null;
     const addSpacerButton = (list === CONSTANTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
 
     return (
-      <section className={selector}>
+      <section className={`TrackList ${list}`}>
       <h3>{list}</h3>
         <span className={durationSelector}>{formattedListDuration}</span>
         <ul>
