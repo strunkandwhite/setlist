@@ -18,18 +18,12 @@ class ImportForm extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSetClick = this.handleSetClick.bind(this);
-    this.handleReserveClick = this.handleReserveClick.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  handleSetClick(e) {
+  handleButtonClick(e) {
     e.preventDefault();
-    this.props.handleSubmitImportForm(this.state.value, CONSTANTS.SET);
-  }
-
-  handleReserveClick(e) {
-    e.preventDefault();
-    this.props.handleSubmitImportForm(this.state.value, CONSTANTS.RESERVE);
+    this.props.handleSubmitImportForm(this.state.value, e.target.value);
   }
 
   handleChange(e) {
@@ -47,8 +41,9 @@ class ImportForm extends Component {
             value={this.state.value}
             placeholder='Enter URIs here'
           />
-          <button onClick={this.handleSetClick}>Add to set</button>
-          <button onClick={this.handleReserveClick}>Add to reserve</button>
+          {[CONSTANTS.SET, CONSTANTS.RESERVE].map(list => (
+            <button key={list} value={list} onClick={this.handleButtonClick}> Add to {list}</button>
+          ))}
         </form>
       </section>
     );
