@@ -1,12 +1,12 @@
 .App {
-	min-width: 1300px;
-	display: grid;
-	grid-template-columns: 20% 40% 40%;
-	font-family: Helvetica;
+  min-width: 1300px;
+  display: grid;
+  grid-template-columns: 20% 40% 40%;
+  font-family: Helvetica;
 }
 
 .App .export {
-	position: absolute;
-	top: 2em;
-	right: 2em;
+  position: absolute;
+  top: 2em;
+  right: 2em;
 }

@@ -1,52 +1,52 @@
 .Track {
-	display: flex;
-	cursor: move;
-	margin: .25em 0;
-	padding: .25em;
-	justify-content: space-between;
+  display: flex;
+  cursor: move;
+  margin: .25em 0;
+  padding: .25em;
+  justify-content: space-between;
 }
 
 .Track.song {
-	background: #f0f0f0;
+  background: #f0f0f0;
 }
 
 .Track.spacer {
-	background: #ffffff;
+  background: #ffffff;
 }
 
 .Track .track-info {
-	display: flex;
+  display: flex;
 }
 
 .Track.spacer .track-info {
-	display: flex;
-	text-align: center;
+  display: flex;
+  text-align: center;
 }
 
 .Track span {
-	width: 25em;
-	display: block;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
+  width: 25em;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .Track.dragging {
-	opacity: 0.25;
+  opacity: 0.25;
 }
 
 .Track .bpm {
-	margin-right: .5em;
-	width: 3em;
-	background: #ddeaff;
-	border: none;
-	font-size: 14px;
+  margin-right: .5em;
+  width: 3em;
+  background: #ddeaff;
+  border: none;
+  font-size: 14px;
 }
 
 .Track.spacer .bpm {
-	opacity: 0;
+  opacity: 0;
 }
 
 .Track .bpm:focus {
-	outline: none;
+  outline: none;
 }

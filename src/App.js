@@ -31,9 +31,7 @@ class App extends Component {
     this.handleAddSpacer = this.handleAddSpacer.bind(this);
 
     this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
-    this.addTrack = this.addTrack.bind(this);
     this.addTracks = this.addTracks.bind(this);
-    this.addSpacer = this.addSpacer.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.removeAllTracks = this.removeAllTracks.bind(this);
     this.switchTrack = this.switchTrack.bind(this);
@@ -82,7 +80,9 @@ class App extends Component {
   }
 
   handleAddSpacer(list) {
-    this.addSpacer(list);
+    const dummyTrack = Object.assign({ id: Moment().format('x') }, CONSTANTS.DUMMY_TRACK)
+
+    this.addTracks([dummyTrack], list);
   }
 
   getTracksFromSpotify(ids, list) {
@@ -101,23 +101,6 @@ class App extends Component {
   addTracks(tracks, list) {
     const mergedTracks = update(this.state[list], {
       $push: tracks
-    });
-
-    this.storeAndSetTracksState(mergedTracks, list);
-  }
-
-  addTrack(track, list) {
-    const mergedTracks = update(this.state[list], {
-      $push: [track]
-    });
-
-    this.storeAndSetTracksState(mergedTracks, list);
-  }
-
-  addSpacer(list) {
-    const dummyTrack = Object.assign({ id: Moment().format('x') }, CONSTANTS.DUMMY_TRACK)
-    const mergedTracks = update(this.state[list], {
-      $push: [dummyTrack]
     });
 
     this.storeAndSetTracksState(mergedTracks, list);
@@ -145,6 +128,7 @@ class App extends Component {
 
   removeAllTracks(list) {
     const emptyTracks = [];
+
     this.storeAndSetTracksState(emptyTracks, list)
   }
 
@@ -153,7 +137,7 @@ class App extends Component {
     const trackToMove = this.state[list][index];
 
     this.removeTrack(index, list);
-    this.addTrack(trackToMove, otherList);
+    this.addTracks([trackToMove], otherList);
   }
 
   moveTrack(dragIndex, hoverIndex, list) {
@@ -200,25 +184,16 @@ class App extends Component {
   }
 
   slimTracks(tracks) {
-    return tracks.map(track => {
-      const {
-        artists,
-        name,
-        id,
-        duration_ms
-      } = track;
-
-      const bpm = localStorage.getItem(id) || '';
-
-      return {
+    return tracks.map(({ artists, name, id, duration_ms }) => (
+      {
         artist: artists[0].name,
         name: name,
         id: id,
         duration_ms: duration_ms,
-        bpm: bpm,
+        bpm: localStorage.getItem(id) || '',
         type: CONSTANTS.SONG
       }
-    });
+    ));
   }
 
   parseidsFromInput(formInput) {
@@ -237,31 +212,20 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <ImportForm
-          handleSubmitImportForm={this.handleSubmitImportForm}
-        />
-        <TrackList
-          key={CONSTANTS.SET}
-          list={CONSTANTS.SET}
-          tracks={this.state.set}
-          handleChangeTrackBPM={this.handleChangeTrackBPM}
-          handleRemoveTrack={this.handleRemoveTrack}
-          handleRemoveAllTracks={this.handleRemoveAllTracks}
-          handleAddSpacer={this.handleAddSpacer}
-          handleSwitchTrack={this.handleSwitchTrack}
-          moveTrack={this.moveTrack}
-        />
-        <TrackList
-          key={CONSTANTS.RESERVE}
-          list={CONSTANTS.RESERVE}
-          tracks={this.state.reserve}
-          handleChangeTrackBPM={this.handleChangeTrackBPM}
-          handleRemoveTrack={this.handleRemoveTrack}
-          handleRemoveAllTracks={this.handleRemoveAllTracks}
-          handleAddSpacer={this.handleAddSpacer}
-          handleSwitchTrack={this.handleSwitchTrack}
-          moveTrack={this.moveTrack}
-        />
+        <ImportForm handleSubmitImportForm={this.handleSubmitImportForm} />
+        {[CONSTANTS.SET, CONSTANTS.RESERVE].map(list => (
+          <TrackList
+            key={list}
+            list={list}
+            tracks={this.state[list]}
+            handleChangeTrackBPM={this.handleChangeTrackBPM}
+            handleRemoveTrack={this.handleRemoveTrack}
+            handleRemoveAllTracks={this.handleRemoveAllTracks}
+            handleAddSpacer={this.handleAddSpacer}
+            handleSwitchTrack={this.handleSwitchTrack}
+            moveTrack={this.moveTrack}
+          />
+        ))}
         <button onClick={this.exportTracks} className='export'>Export</button>
       </div>
     );
