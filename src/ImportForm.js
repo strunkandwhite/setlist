@@ -34,7 +34,7 @@ class ImportForm extends Component {
     return (
       <section className='ImportForm'>
         <h3>import</h3>
-        <form className='ImportForm'>
+        <form>
           <textarea
             className='uri-list'
             onChange={this.handleChange}

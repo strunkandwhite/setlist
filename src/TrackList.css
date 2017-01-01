@@ -2,16 +2,21 @@
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
+  padding: 0 .5rem;
+}
+
+.TrackList ul {
+  width: 100%;
 }
 
 .TrackList.set {
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 7;
 }
 
 .TrackList.reserve {
-  grid-column-start: 3;
-  grid-column-end: 4;
+  grid-column-start: 7;
+  grid-column-end: 11;
 }
 
 .TrackList ul {

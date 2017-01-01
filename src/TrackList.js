@@ -84,8 +84,7 @@ class TrackList extends Component {
 
     return (
       <section className={`TrackList ${list}`}>
-      <h3>{list}</h3>
-        <span className={durationSelector}>{formattedListDuration}</span>
+        <h3>{list} <span className={durationSelector}>({formattedListDuration})</span></h3>
         <ul>
           {listItems}
         </ul>

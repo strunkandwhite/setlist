@@ -6,6 +6,14 @@
   justify-content: space-between;
 }
 
+.Track:first-child {
+  margin-top: 0;
+}
+
+.Track:last-child {
+  margin-bottom: 0;
+}
+
 .Track.song {
   background: #f0f0f0;
 }
@@ -24,11 +32,11 @@
 }
 
 .Track span {
-  width: 25em;
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-grow: 1;
 }
 
 .Track.dragging {
@@ -49,4 +57,10 @@
 
 .Track .bpm:focus {
   outline: none;
+}
+
+.Track button {
+  width: 2rem;
+  padding: 0;
+  flex-shrink: 0;
 }

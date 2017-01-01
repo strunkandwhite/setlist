@@ -122,17 +122,15 @@ class Track extends Component {
     return connectDragSource(
       connectDropTarget(
         <li className={selector}>
-          <div className='track-info'>
-            <input
-              type='text'
-              className='bpm'
-              placeholder='bpm'
-              onChange={this.handleChange}
-              value={bpm}
-              disabled={(type !== CONSTANTS.TYPES.SONG)}
-            />
-            <span>({trackLength}) {displayString}</span>
-          </div>
+          <input
+            type='text'
+            className='bpm'
+            placeholder='bpm'
+            onChange={this.handleChange}
+            value={bpm}
+            disabled={(type !== CONSTANTS.TYPES.SONG)}
+          />
+          <span>({trackLength}) {displayString}</span>
           {switchButton}
           <button onClick={this.handleRemoveClick}>x</button>
         </li>
