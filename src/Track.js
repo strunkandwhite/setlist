@@ -6,7 +6,6 @@ import _ from 'lodash';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 
-import ItemTypes from './ItemTypes'
 import CONSTANTS from './constants';
 
 import './Track.css';
@@ -17,27 +16,27 @@ const trackSource = {
       id: props.id,
       index: props.index,
     }
-  },
+  }
 }
 
 const trackTarget = {
   hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index
-    const hoverIndex = props.index
+    const dragIndex = monitor.getItem().index;
+    const hoverIndex = props.index;
 
     if (dragIndex === hoverIndex) return;
 
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect()
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-    const clientOffset = monitor.getClientOffset()
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top
+    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+    const clientOffset = monitor.getClientOffset();
+    const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
 
     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
-    props.moveTrack(dragIndex, hoverIndex, props.list)
-    monitor.getItem().index = hoverIndex
+    props.moveTrack(dragIndex, hoverIndex, props.list);
+    monitor.getItem().index = hoverIndex;
   }
 }
 
@@ -67,14 +66,14 @@ class Track extends Component {
   }
 
   handleChange(e) {
-    const input = e.target.value;
-    const letters = /[a-zA-Z]/;
     const {
       handleChangeTrackBPM,
       index,
       list,
       id
     } = this.props;
+    const input = e.target.value;
+    const letters = /[a-zA-Z]/;
 
     if(input.length > 3) return;
     if(letters.test(input)) return;
@@ -117,8 +116,8 @@ class Track extends Component {
 
     const selector = `Track ${type} ${(isDragging ? 'dragging' : '')}`
     const trackLength = Moment(duration_ms).format('m:ss');
-    const switchButton = <button onClick={this.handleSwitchClick}>{(list === CONSTANTS.SET) ? '>' : '<'}</button>;
-    const displayString = (type === CONSTANTS.SONG) ? `${artist} - ${name}` : CONSTANTS.BREAK;
+    const switchButton = <button onClick={this.handleSwitchClick}>{(list === CONSTANTS.LISTS.SET) ? '>' : '<'}</button>;
+    const displayString = `${artist} - ${name}`;
 
     return connectDragSource(
       connectDropTarget(
@@ -130,7 +129,7 @@ class Track extends Component {
               placeholder='bpm'
               onChange={this.handleChange}
               value={bpm}
-              disabled={(type !== CONSTANTS.SONG)}
+              disabled={(type !== CONSTANTS.TYPES.SONG)}
             />
             <span>({trackLength}) {displayString}</span>
           </div>
@@ -143,10 +142,10 @@ class Track extends Component {
 }
 
 export default _.flow(
-  DropTarget(ItemTypes.TRACK, trackTarget, connect => ({
+  DropTarget(CONSTANTS.TYPES.SONG, trackTarget, connect => ({
     connectDropTarget: connect.dropTarget(),
   })),
-  DragSource(ItemTypes.TRACK, trackSource, (connect, monitor) => ({
+  DragSource(CONSTANTS.TYPES.SONG, trackSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
   }))

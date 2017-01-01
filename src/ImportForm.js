@@ -41,7 +41,7 @@ class ImportForm extends Component {
             value={this.state.value}
             placeholder='Enter URIs here'
           />
-          {[CONSTANTS.SET, CONSTANTS.RESERVE].map(list => (
+          {[CONSTANTS.LISTS.SET, CONSTANTS.LISTS.RESERVE].map(list => (
             <button key={list} value={list} onClick={this.handleButtonClick}> Add to {list}</button>
           ))}
         </form>

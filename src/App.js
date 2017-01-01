@@ -46,8 +46,8 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const cachedSet = JSON.parse(localStorage.getItem(CONSTANTS.SET));
-    const cachedReserve = JSON.parse(localStorage.getItem(CONSTANTS.RESERVE));
+    const cachedSet = JSON.parse(localStorage.getItem(CONSTANTS.LISTS.SET));
+    const cachedReserve = JSON.parse(localStorage.getItem(CONSTANTS.LISTS.RESERVE));
 
     if(cachedSet && cachedSet.length > 0) {
       this.setState({ set: cachedSet });
@@ -133,7 +133,7 @@ class App extends Component {
   }
 
   switchTrack(index, list) {
-    const otherList = (list === CONSTANTS.SET) ? CONSTANTS.RESERVE : CONSTANTS.SET;
+    const otherList = (list === CONSTANTS.LISTS.SET) ? CONSTANTS.LISTS.RESERVE : CONSTANTS.LISTS.SET;
     const trackToMove = this.state[list][index];
 
     this.removeTrack(index, list);
@@ -159,7 +159,7 @@ class App extends Component {
         type
       } = track;
 
-      return (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
+      return (type === CONSTANTS.TYPES.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
     }
 
     let stringToWrite = '';
@@ -191,7 +191,7 @@ class App extends Component {
         id: id,
         duration_ms: duration_ms,
         bpm: localStorage.getItem(id) || '',
-        type: CONSTANTS.SONG
+        type: CONSTANTS.TYPES.SONG
       }
     ));
   }
@@ -213,7 +213,7 @@ class App extends Component {
     return (
       <div className='App'>
         <ImportForm handleSubmitImportForm={this.handleSubmitImportForm} />
-        {[CONSTANTS.SET, CONSTANTS.RESERVE].map(list => (
+        {[CONSTANTS.LISTS.SET, CONSTANTS.LISTS.RESERVE].map(list => (
           <TrackList
             key={list}
             list={list}

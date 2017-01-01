@@ -77,10 +77,10 @@ class TrackList extends Component {
     const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
     const overrunDuration = 6900000;
 
-    const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
+    const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.LISTS.SET) ? 'duration too-long' : 'duration';
 
     const removeButton = (listItems.length > 0) ? <button onClick={this.handleRemoveAllClick}>Remove all tracks</button> : null;
-    const addSpacerButton = (list === CONSTANTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
+    const addSpacerButton = (list === CONSTANTS.LISTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
 
     return (
       <section className={`TrackList ${list}`}>
