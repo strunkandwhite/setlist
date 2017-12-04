@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
-import * as SpotifyWebApi from 'spotify-web-api-js';
+import SpotifyWebApi from 'spotify-web-api-js';
+
 import ImportForm from './ImportForm'
-import SongList from './SongList'
+import TrackList from './TrackList'
 
-const spotifyCreds = {
-	clientId: 'a453ca8acfe947bebf7bd1673e3e5f53',
-	clientSecret: '454167352426490584785aec8b9dce81'
-}
-
-let spotify = new SpotifyWebApi(spotifyCreds);
-
+const spotify = new SpotifyWebApi();
 spotify.setAccessToken('BQDDrHtDAOU9S_TfavtFxj0YeElOndaujsFYQsy3jHmMfXWRpeisWN_VWfiLg_F7HH1_0N53vGmZYbWAfFU');
-
-spotify.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
-  if (err) console.error(err);
-  else console.log('Artist albums', data);
-});
 
 class App extends Component {
   render() {
     return (
       <div className='App'>
 				<ImportForm handleImportFormSubmit={this.handleImportFormSubmit}/>
-				<SongList songs={this.state.URIs} />
+				<TrackList tracks={this.state.tracks} />
       </div>
     );
   }
@@ -30,36 +20,42 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-			URIs: []
+			IDs: [],
+			tracks: []
 		}
 
 		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
-		this.splitTracks = this.splitTracks.bind(this);
+		this.parseIDs = this.parseIDs.bind(this);
+		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 	}
 
 	handleImportFormSubmit(value) {
-		this.splitTracks(value)
-
-		spotify.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE', function(err, data) {
-			if (err) console.error(err);
-			else console.log('Artist albums', data);
-		});
+		this.parseIDs(value)
 	}
 
-	splitTracks(tracks) {
-		const splitTracks = tracks.split('\n');
+	parseIDs(URIs) {
+		const splitURIs = URIs.split('\n');
 
-		const filteredTracks = splitTracks.filter(track => {
-			return track !== '';
+		const filteredURIs = splitURIs.filter(URI => {
+			return URI !== '';
 		});
 
-		const URIs = filteredTracks.map(item => {
-			return {
-				URI: item.split(':')[2]
-			}
+		const IDs = filteredURIs.map(URI => {
+			return URI.split(':')[2];
 		});
 
-		this.setState({ URIs: URIs });
+		this.setState({ IDs: IDs });
+	}
+
+	componentDidUpdate() {
+		this.getTracksFromSpotify();
+	}
+
+	getTracksFromSpotify() {
+		spotify.getTracks(this.state.IDs, (err, data) => {
+			if (err) console.error(err);
+			else this.setState({ tracks: data.tracks });
+		});
 	}
 }
 

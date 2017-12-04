@@ -1,16 +1,7 @@
 ## TODO
 
-[ ] Algorithm
-[ ] Components
-
-### Algorithm
-
-* Add list to textbox
-* Click import
-* Strip down to URIs, add to state as array
-* For each URI, call Spotify API
-* Print to Console
-
-### Components
-
-* App
+[ ] Refactor parseIDs out to actions?
+[ ] Add Track component
+[ ] Implement BPM setting
+[ ] Add localStorage
+[ ] Get rid of need for manual access token
