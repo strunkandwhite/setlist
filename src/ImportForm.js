@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import './ImportForm.css'
 
-class URIForm extends Component {
+class ImportForm extends Component {
   render() {
     return (
-      <form className='URIForm'>
+      <form className='ImportForm'>
 				<textarea
 					className='uri-list'
 					onChange={this.handleChange}
 					value={this.state.value}
+					placeholder='Enter URIs here'
 				/>
 				<button onClick={this.handleClick}>click</button>
       </form>
@@ -16,7 +18,7 @@ class URIForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {value: 'Enter URIs here'}
+		this.state = {value: ''}
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -24,7 +26,7 @@ class URIForm extends Component {
 
 	handleClick(e) {
 		e.preventDefault();
-		this.props.handleURIFormSubmit();
+		this.props.handleImportFormSubmit(this.state.value);
 	}
 
 	handleChange(event) {
@@ -32,4 +34,4 @@ class URIForm extends Component {
 	}
 }
 
-export default URIForm;
+export default ImportForm;

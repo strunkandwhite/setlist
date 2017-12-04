@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
-import URIForm from './URIForm'
+import ImportForm from './ImportForm'
 
 class App extends Component {
   render() {
     return (
       <div className='App'>
-				<URIForm handleURIFormSubmit={this.handleURIFormSubmit}/>
+				<ImportForm handleImportFormSubmit={this.handleImportFormSubmit}/>
       </div>
     );
   }
 
 	constructor() {
 		super();
+		this.state = {
+			URIs: []
+		}
 
-		this.handleURIFormSubmit = this.handleURIFormSubmit.bind(this);
+		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
+		this.splitTracks = this.splitTracks.bind(this);
 	}
 
-	handleURIFormSubmit() {
-		console.log("form");
+	handleImportFormSubmit(value) {
+		this.splitTracks(value)
+	}
+
+	splitTracks(tracks) {
+		const splitTracks = tracks.split('\n');
+		const URIs = splitTracks.map(item => {
+			return item.split(':')[2];
+		});
+
+		this.setState({ URIs: URIs });
 	}
 }
 
