@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import ImportForm from './ImportForm'
+import SongList from './SongList'
 
 class App extends Component {
   render() {
     return (
       <div className='App'>
 				<ImportForm handleImportFormSubmit={this.handleImportFormSubmit}/>
+				<SongList songs={this.state.URIs} />
       </div>
     );
   }
@@ -26,8 +28,15 @@ class App extends Component {
 
 	splitTracks(tracks) {
 		const splitTracks = tracks.split('\n');
-		const URIs = splitTracks.map(item => {
-			return item.split(':')[2];
+
+		const filteredTracks = splitTracks.filter(track => {
+			return track !== '';
+		});
+
+		const URIs = filteredTracks.map(item => {
+			return {
+				URI: item.split(':')[2]
+			}
 		});
 
 		this.setState({ URIs: URIs });
