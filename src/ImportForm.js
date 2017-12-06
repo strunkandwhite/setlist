@@ -29,8 +29,8 @@ class ImportForm extends Component {
 		this.props.handleImportFormSubmit(this.state.value);
 	}
 
-	handleChange(event) {
-		this.setState({value: event.target.value });
+	handleChange(e) {
+		this.setState({value: e.target.value });
 	}
 }
 

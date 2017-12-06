@@ -5,7 +5,14 @@ import './TrackList.css';
 class TrackList extends Component {
   render() {
 		const listItems = this.props.tracks.map(track => {
-			return <Track key={track.id} artist={track.artists[0].name} name={track.name}/>
+			return <Track
+					key={track.id}
+					id={track.id}
+					artist={track.artist}
+					name={track.name}
+					bpm={track.bpm}
+					handleTrackBPMChange={this.props.handleTrackBPMChange}
+				/>
 		})
 
     return (
