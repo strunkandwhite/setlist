@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import Track from './Track';
+import './TrackList.css';
 
 class TrackList extends Component {
   render() {
 		const listItems = this.props.tracks.map(track => {
-			console.log(track);
-			return <li key={track.id}>{track.artists[0].name} - {track.name}</li>;
+			return <Track key={track.id} artist={track.artists[0].name} name={track.name}/>
 		})
 
     return (
-			<ul>
+			<ul className='TrackList'>
 				{listItems}
 			</ul>
     );

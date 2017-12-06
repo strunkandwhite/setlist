@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-import ImportForm from './ImportForm'
-import TrackList from './TrackList'
+import './App.css';
+
+import ImportForm from './ImportForm';
+import TrackList from './TrackList';
 
 const spotify = new SpotifyWebApi();
-spotify.setAccessToken('BQDDrHtDAOU9S_TfavtFxj0YeElOndaujsFYQsy3jHmMfXWRpeisWN_VWfiLg_F7HH1_0N53vGmZYbWAfFU');
+spotify.setAccessToken('BQB6Sx61D3nq9Iu8TlI8hrpX6al2d-TKtbacjkQYoy7mnSbvXujkR5Ga_Lm10VVnnXJ1mKP8P31Kcktr1jk');
 
 class App extends Component {
   render() {

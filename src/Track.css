@@ -1,0 +1,13 @@
+.Track {
+	display: flex;
+}
+
+.artist, .name {
+	padding: 5px;
+	background: #efefef;
+	border: 1px solid gray;
+}
+
+.bpm {
+	focus: none;
+}
