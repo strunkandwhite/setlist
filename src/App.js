@@ -58,7 +58,7 @@ class App extends Component {
 				artist: track.artists[0].name,
 				name: track.name,
 				id: track.id,
-				bpm: 0
+				bpm: ''
 			}
 		});
 
