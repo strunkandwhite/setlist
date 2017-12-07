@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import _ from 'lodash';
+import update from 'immutability-helper';
 import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
@@ -45,12 +46,15 @@ class App extends Component {
 	}
 
 	handleTrackBPMChange(key, input) {
-		//TODO: Is this a bad way to update state?
-		const tracks = this.state.tracks;
-
-		tracks[key].bpm = input;
-
-		this.setState({ tracks: tracks });
+		this.setState(
+			update(this.state, {
+				tracks: {
+					[key]: {
+						bpm: {$set: input}
+					}
+				}
+			})
+		);
 	}
 
 	getTracksFromSpotify(IDs) {
