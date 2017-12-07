@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
+import _ from 'lodash';
 import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
 
-const accessToken = 'BQAYJ3mWrdO6V6wvAVFkkBkRPbKtWpcFBEZOEpbMYPndWBsa1M67C8HmQSJxEu8HCa8Ad1jCtGTLVvS3k4I';
+const accessToken = 'BQDNKiUmymQ-3AUv48R44l0_zUfW7HYdv5nbPt-DT0UpGcp8jSVjGax3vXQRrdiqDQZjfY_yXaYWcD17a7o';
 
 class App extends Component {
   render() {
@@ -30,10 +31,9 @@ class App extends Component {
 
 		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
 		this.handleTrackBPMChange = this.handleTrackBPMChange.bind(this);
-		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
-		this.parseIDFromURI = this.parseIDFromURI.bind(this);
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.setTracks = this.setTracks.bind(this);
+		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
 
 		this.spotify = new SpotifyWebApi();
 		this.spotify.setAccessToken(accessToken);
@@ -44,6 +44,15 @@ class App extends Component {
 		this.getTracksFromSpotify(IDs);
 	}
 
+	handleTrackBPMChange(key, input) {
+		//TODO: Is this a bad way to update state?
+		const tracks = this.state.tracks;
+
+		tracks[key].bpm = input;
+
+		this.setState({ tracks: tracks });
+	}
+
 	getTracksFromSpotify(IDs) {
 		this.spotify.getTracks(IDs, (err, data) => {
 			if (err) console.error(err);
@@ -52,9 +61,10 @@ class App extends Component {
 	}
 
 	setTracks(tracks) {
-		//TODO: should these not be keyed? why not?
-		const tracksToSet = tracks.map(track => {
-			return {
+		const tracksToSet = {};
+
+		_.each(tracks, track => {
+			tracksToSet[track.id] = {
 				artist: track.artists[0].name,
 				name: track.name,
 				id: track.id,
@@ -65,22 +75,6 @@ class App extends Component {
 		this.setState({ tracks: tracksToSet });
 	}
 
-	handleTrackBPMChange(key, input) {
-		//TODO: better, non-mutating way to pick out and modify the right track?
-		let tracks = this.state.tracks;
-		const indexOfTrackToChange = tracks.findIndex(track => {
-			return track.id === key;
-		});
-
-		tracks[indexOfTrackToChange].bpm = input;
-
-		this.setState({ tracks: tracks });
-	}
-
-	parseIDFromURI(URI) {
-		return URI.split(':')[2];
-	}
-
 	parseIDsFromInput(formInput) {
 		const URIList = formInput.split('\n');
 
@@ -89,7 +83,7 @@ class App extends Component {
 		});
 
 		const IDs = filteredURIList.map(URI => {
-			return this.parseIDFromURI(URI);
+			return URI.split(':')[2];
 		});
 
 		return IDs;
