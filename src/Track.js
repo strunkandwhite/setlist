@@ -50,7 +50,7 @@ const trackTarget = {
 		}
 
 		// Time to actually perform the action
-		props.movetrack(dragIndex, hoverIndex)
+		props.moveTrack(dragIndex, hoverIndex)
 
 		// Note: we're mutating the monitor item here!
 		// Generally it's better to avoid mutations,
@@ -62,6 +62,7 @@ const trackTarget = {
 
 class Track extends Component {
   render() {
+		const { connectDragSource, connectDropTarget } = this.props
     return connectDragSource(
 			connectDropTarget(
 				<li className='Track'>
