@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
+import ItemTypes from './ItemTypes'
 import './Track.css';
 
 const trackSource = {
@@ -61,25 +63,6 @@ const trackTarget = {
 }
 
 class Track extends Component {
-  render() {
-		const { connectDragSource, connectDropTarget } = this.props
-    return connectDragSource(
-			connectDropTarget(
-				<li className='Track'>
-					<div className='artist'>{this.props.artist}</div>
-					<div className='name'>{this.props.name}</div>
-					<input
-						type='text'
-						className='bpm'
-						placeholder='bpm'
-						onChange={this.handleChange}
-						value={this.props.bpm}
-					/>
-				</li>
-			)
-    );
-  }
-
 	constructor(props) {
 		super(props);
 
@@ -91,16 +74,55 @@ class Track extends Component {
 		const letters = /[a-zA-Z]/;
 
 		if(!letters.test(input)) {
-			this.props.handleTrackBPMChange(this.props.id, input);
+			this.props.handleTrackBPMChange(this.props.index, input);
 		}
 	}
+
+  render() {
+		const {
+			connectDragSource,
+			connectDropTarget,
+			isDragging,
+			artist,
+			name,
+			bpm
+		} = this.props
+
+		const selector = 'Track' + (isDragging ? ' dragging' : '');
+
+    return connectDragSource(
+			connectDropTarget(
+				<li className={selector}>
+					<span>{artist} - {name}</span>
+					<input
+						type='text'
+						className='bpm'
+						placeholder='bpm'
+						onChange={this.handleChange}
+						value={bpm}
+					/>
+				</li>
+			)
+    );
+  }
+}
+
+Track.propTypes = {
+	connectDragSource: PropTypes.func.isRequired,
+	connectDropTarget: PropTypes.func.isRequired,
+	handleTrackBPMChange: PropTypes.func.isRequired,
+	isDragging: PropTypes.bool.isRequired,
+	index: PropTypes.number.isRequired,
+	artist: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	bpm: PropTypes.string.isRequired,
 }
 
 export default _.flow(
-	DropTarget('track', trackTarget, connect => ({
+	DropTarget(ItemTypes.TRACK, trackTarget, connect => ({
 		connectDropTarget: connect.dropTarget(),
 	})),
-	DragSource('track', trackSource, (connect, monitor) => ({
+	DragSource(ItemTypes.TRACK, trackSource, (connect, monitor) => ({
 		connectDragSource: connect.dragSource(),
 		isDragging: monitor.isDragging(),
 	}))

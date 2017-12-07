@@ -47,29 +47,16 @@ class App extends Component {
 		)
 	}
 
-	handleTrackBPMChange(key, input) {
-		const { tracks } = this.state;
-
-		const indexToChange = tracks.findIndex(track => {
-			return track.id === key;
-		});
-
-		tracks[indexToChange].bpm = input;
-
-		this.setState({ tracks: tracks });
-
-		//TODO: non-mutating state update
-		/*
+	handleTrackBPMChange(index, input) {
 		this.setState(
 			update(this.state, {
 				tracks: {
-					[key]: {
+					[index]: {
 						bpm: {$set: input}
 					}
 				}
 			})
 		);
-		*/
 	}
 
 	getTracksFromSpotify(IDs) {

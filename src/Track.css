@@ -1,13 +1,20 @@
 .Track {
 	display: flex;
+	cursor: move;
+	margin: .25em 0;
+	padding: .25em;
+	background: #f0f0f0;
 }
 
-.artist, .name {
-	padding: 5px;
-	background: #efefef;
-	border: 1px solid gray;
+.Track.dragging {
+	opacity: 0;
 }
 
-.bpm {
-	focus: none;
+.Track .bpm {
+	margin-left: .5em;
+	width: 5em;
+}
+
+.Track .bpm:focus {
+	outline: none;
 }

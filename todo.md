@@ -1,6 +1,5 @@
 ## TODO
 
-[ ] drag n drop
 [ ] Add localStorage
+[ ] Add setlist spacers
 [ ] Get rid of need for manual access token
-[ ] Add proptypes
