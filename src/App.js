@@ -6,23 +6,9 @@ import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
 
-const accessToken = 'BQDNKiUmymQ-3AUv48R44l0_zUfW7HYdv5nbPt-DT0UpGcp8jSVjGax3vXQRrdiqDQZjfY_yXaYWcD17a7o';
+const accessToken = 'BQB5MXWzgC1k-AQoQf1twX8mOR6xOroJFqV3rauqyLwmV-dj-J8jSDFWQyqvnbdsWKGd2P8JaYd4mux4ZTw';
 
 class App extends Component {
-  render() {
-    return (
-      <div className='App'>
-				<ImportForm
-					handleImportFormSubmit={this.handleImportFormSubmit}
-				/>
-				<TrackList
-					tracks={this.state.tracks}
-					handleTrackBPMChange={this.handleTrackBPMChange}
-				/>
-      </div>
-    );
-  }
-
 	constructor() {
 		super();
 
@@ -92,6 +78,20 @@ class App extends Component {
 
 		return IDs;
 	}
+
+  render() {
+    return (
+      <div className='App'>
+				<ImportForm
+					handleImportFormSubmit={this.handleImportFormSubmit}
+				/>
+				<TrackList
+					tracks={this.state.tracks}
+					handleTrackBPMChange={this.handleTrackBPMChange}
+				/>
+      </div>
+    );
+  }
 }
 
 export default App;
