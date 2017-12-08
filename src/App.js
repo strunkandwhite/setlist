@@ -22,10 +22,12 @@ class App extends Component {
 		this.handleSubmitImportForm = this.handleSubmitImportForm.bind(this);
 		this.handleChangeTrackBPM = this.handleChangeTrackBPM.bind(this);
 		this.handleRemoveTrack = this.handleRemoveTrack.bind(this);
+		this.handleRemoveAllTracks = this.handleRemoveAllTracks.bind(this);
 
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.addTracks = this.addTracks.bind(this);
 		this.removeTrack = this.removeTrack.bind(this);
+		this.removeAllTracks = this.removeAllTracks.bind(this);
 		this.changeTrackBPM = this.changeTrackBPM.bind(this);
 		this.moveTrack = this.moveTrack.bind(this);
 
@@ -52,6 +54,10 @@ class App extends Component {
 
 	handleRemoveTrack(index) {
 		this.removeTrack(index);
+	}
+
+	handleRemoveAllTracks() {
+		this.removeAllTracks();
 	}
 
 	getTracksFromSpotify(IDs) {
@@ -111,6 +117,11 @@ class App extends Component {
 		this.storeAndSetTracksState(filteredTracks);
 	}
 
+	removeAllTracks() {
+		const emptyTracks = [];
+		this.storeAndSetTracksState(emptyTracks);
+	}
+
 	moveTrack(dragIndex, hoverIndex) {
 		const { tracks } = this.state
 		const dragTrack = tracks[dragIndex]
@@ -147,6 +158,7 @@ class App extends Component {
 					tracks={this.state.tracks}
 					handleChangeTrackBPM={this.handleChangeTrackBPM}
 					handleRemoveTrack={this.handleRemoveTrack}
+					handleRemoveAllTracks={this.handleRemoveAllTracks}
 					moveTrack={this.moveTrack}
 				/>
       </div>

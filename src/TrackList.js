@@ -12,13 +12,19 @@ class TrackList extends Component {
 		tracks: PropTypes.array.isRequired,
 		handleChangeTrackBPM: PropTypes.func.isRequired,
 		handleRemoveTrack: PropTypes.func.isRequired,
+		handleRemoveAllTracks: PropTypes.func.isRequired,
 		moveTrack: PropTypes.func.isRequired
 	}
 
 	constructor(props) {
 		super(props);
 
+		this.handleClick = this.handleClick.bind(this);
 		this.getFormattedListLength = this.getFormattedListLength.bind(this);
+	}
+
+	handleClick() {
+		this.props.handleRemoveAllTracks();
 	}
 
 	getFormattedListLength() {
@@ -65,6 +71,7 @@ class TrackList extends Component {
 				<ul>
 					{listItems}
 				</ul>
+				<button onClick={this.handleClick}>Remove all tracks</button>
 			</section>
     )
 	}
