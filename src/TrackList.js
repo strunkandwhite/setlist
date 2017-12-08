@@ -5,6 +5,7 @@ import 'moment-duration-format';
 import _ from 'lodash';
 
 import Track from './Track';
+import CONSTANTS from './constants';
 
 import './TrackList.css';
 
@@ -73,7 +74,7 @@ class TrackList extends Component {
 		const overrunDuration = 6600000;
 
 		const selector = `TrackList ${list}`
-		const durationSelector = (listDuration > overrunDuration) ? 'duration too-long' : 'duration';
+		const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
 
 		const button = (listItems.length > 0) ? <button onClick={this.handleClick}>Remove all tracks</button> : null;
 
