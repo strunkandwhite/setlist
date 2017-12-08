@@ -3,6 +3,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import update from 'immutability-helper';
+import Moment from 'moment';
 import _ from 'lodash';
 
 import ImportForm from './ImportForm';
@@ -11,7 +12,7 @@ import CONSTANTS from './constants';
 
 import './App.css';
 
-const accessToken = 'BQDlW4AK0ID-5SboaTujcoLLfaJ6rhetQSUq5ybwo6lqMdu-g05eTZR1t5FAf9LbucLpqU87i5ld_GUAIRQ';
+const accessToken = 'BQD_rQfTSKQyStyaEbT61lFC9mTzgOKb9OJR6d5rrOUuloV6DvI6C41vSUAAH4fehodBa6PIbtYn4Ojid7A';
 
 class App extends Component {
 	constructor() {
@@ -27,10 +28,12 @@ class App extends Component {
 		this.handleRemoveTrack = this.handleRemoveTrack.bind(this);
 		this.handleRemoveAllTracks = this.handleRemoveAllTracks.bind(this);
 		this.handleSwitchTrack = this.handleSwitchTrack.bind(this);
+		this.handleAddSpacer = this.handleAddSpacer.bind(this);
 
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.addTrack = this.addTrack.bind(this);
 		this.addTracks = this.addTracks.bind(this);
+		this.addSpacer = this.addSpacer.bind(this);
 		this.removeTrack = this.removeTrack.bind(this);
 		this.removeAllTracks = this.removeAllTracks.bind(this);
 		this.switchTrack = this.switchTrack.bind(this);
@@ -78,6 +81,10 @@ class App extends Component {
 		this.switchTrack(index, list);
 	}
 
+	handleAddSpacer(list) {
+		this.addSpacer(list);
+	}
+
 	getTracksFromSpotify(ids, list) {
 		const spotify = new SpotifyWebApi();
 		spotify.setAccessToken(accessToken);
@@ -102,6 +109,15 @@ class App extends Component {
 	addTrack(track, list) {
 		const mergedTracks = update(this.state[list], {
 			$push: [track]
+		});
+
+		this.storeAndSetTracksState(mergedTracks, list);
+	}
+
+	addSpacer(list) {
+		const dummyTrack = Object.assign({ id: Moment().format('x') }, CONSTANTS.DUMMY_TRACK)
+		const mergedTracks = update(this.state[list], {
+			$push: [dummyTrack]
 		});
 
 		this.storeAndSetTracksState(mergedTracks, list);
@@ -171,7 +187,8 @@ class App extends Component {
 				name: name,
 				id: id,
 				duration_ms: duration_ms,
-				bpm: bpm
+				bpm: bpm,
+				type: CONSTANTS.SONG
 			}
 		});
 	}
@@ -202,6 +219,7 @@ class App extends Component {
 					handleChangeTrackBPM={this.handleChangeTrackBPM}
 					handleRemoveTrack={this.handleRemoveTrack}
 					handleRemoveAllTracks={this.handleRemoveAllTracks}
+					handleAddSpacer={this.handleAddSpacer}
 					handleSwitchTrack={this.handleSwitchTrack}
 					moveTrack={this.moveTrack}
 				/>
@@ -212,6 +230,7 @@ class App extends Component {
 					handleChangeTrackBPM={this.handleChangeTrackBPM}
 					handleRemoveTrack={this.handleRemoveTrack}
 					handleRemoveAllTracks={this.handleRemoveAllTracks}
+					handleAddSpacer={this.handleAddSpacer}
 					handleSwitchTrack={this.handleSwitchTrack}
 					moveTrack={this.moveTrack}
 				/>

@@ -16,22 +16,33 @@ class TrackList extends Component {
 		handleChangeTrackBPM: PropTypes.func.isRequired,
 		handleRemoveTrack: PropTypes.func.isRequired,
 		handleRemoveAllTracks: PropTypes.func.isRequired,
+		handleAddSpacer: PropTypes.func.isRequired,
 		moveTrack: PropTypes.func.isRequired
 	}
 
 	constructor(props) {
 		super(props);
 
-		this.handleClick = this.handleClick.bind(this);
+		this.handleRemoveAllClick = this.handleRemoveAllClick.bind(this);
+		this.handleAddSpacerClick = this.handleAddSpacerClick.bind(this);
 	}
 
-	handleClick() {
+	handleRemoveAllClick() {
 		const {
 			handleRemoveAllTracks,
 			list
 		} = this.props;
 
 		handleRemoveAllTracks(list);
+	}
+
+	handleAddSpacerClick() {
+		const {
+			handleAddSpacer,
+			list
+		} = this.props;
+
+		handleAddSpacer(list);
 	}
 
   render() {
@@ -50,7 +61,8 @@ class TrackList extends Component {
 				duration_ms,
 				artist,
 				name,
-				bpm
+				bpm,
+				type
 			} = track;
 
 			return <Track
@@ -61,6 +73,7 @@ class TrackList extends Component {
 				artist={artist}
 				name={name}
 				bpm={bpm}
+				type={type}
 				handleChangeTrackBPM={handleChangeTrackBPM}
 				handleRemoveTrack={handleRemoveTrack}
 				handleSwitchTrack={handleSwitchTrack}
@@ -76,7 +89,8 @@ class TrackList extends Component {
 		const selector = `TrackList ${list}`
 		const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
 
-		const button = (listItems.length > 0) ? <button onClick={this.handleClick}>Remove all tracks</button> : null;
+		const removeButton = (listItems.length > 0) ? <button onClick={this.handleRemoveAllClick}>Remove all tracks</button> : null;
+		const addSpacerButton = (list === CONSTANTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
 
     return (
 			<section className={selector}>
@@ -85,7 +99,10 @@ class TrackList extends Component {
 				<ul>
 					{listItems}
 				</ul>
-				{button}
+				<section className='buttons'>
+					{removeButton}
+					{addSpacerButton}
+				</section>
 			</section>
     )
 	}

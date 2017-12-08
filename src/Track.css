@@ -3,12 +3,24 @@
 	cursor: move;
 	margin: .25em 0;
 	padding: .25em;
-	background: #f0f0f0;
 	justify-content: space-between;
+}
+
+.Track.song {
+	background: #f0f0f0;
+}
+
+.Track.spacer {
+	background: #ffffff;
 }
 
 .Track .track-info {
 	display: flex;
+}
+
+.Track.spacer .track-info {
+	display: flex;
+	text-align: center;
 }
 
 .Track span {
@@ -29,6 +41,10 @@
 	background: #ddeaff;
 	border: none;
 	font-size: 14px;
+}
+
+.Track.spacer .bpm {
+	opacity: 0;
 }
 
 .Track .bpm:focus {

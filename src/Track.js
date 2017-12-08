@@ -7,6 +7,7 @@ import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 
 import ItemTypes from './ItemTypes'
+import CONSTANTS from './constants';
 
 import './Track.css';
 
@@ -53,6 +54,7 @@ class Track extends Component {
 		artist: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
 		bpm: PropTypes.string.isRequired,
+		type: PropTypes.string.isRequired,
 		list: PropTypes.string.isRequired
 	}
 
@@ -108,10 +110,11 @@ class Track extends Component {
 			artist,
 			name,
 			bpm,
+			type,
 			list
 		} = this.props
 
-		const selector = 'Track' + (isDragging ? ' dragging' : '');
+		const selector = `Track ${type} ${(isDragging ? 'dragging' : '')}`
 		const trackLength = Moment(duration_ms).format('m:ss');
 		const switchButton = <button onClick={this.handleSwitchClick}>{(list === 'set') ? '>' : '<'}</button>
 
@@ -125,6 +128,7 @@ class Track extends Component {
 							placeholder='bpm'
 							onChange={this.handleChange}
 							value={bpm}
+							disabled={(type !== CONSTANTS.SONG)}
 						/>
 						<span>({trackLength}) {artist} - {name}</span>
 					</div>
