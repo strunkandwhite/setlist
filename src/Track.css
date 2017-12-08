@@ -25,7 +25,10 @@
 
 .Track .bpm {
 	margin-right: .5em;
-	width: 5em;
+	width: 3em;
+	background: #ddeaff;
+	border: none;
+	font-size: 14px;
 }
 
 .Track .bpm:focus {

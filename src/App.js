@@ -7,71 +7,156 @@ import _ from 'lodash';
 
 import ImportForm from './ImportForm';
 import TrackList from './TrackList';
+import CONSTANTS from './constants';
+
 import './App.css';
 
-const accessToken = 'BQAYUPRb3BdIPUckDVjRLq02WNJb5e8b_LGRSSLH7UZ_dBFkVV1IJOhVCkDMhe9aALyVhiETMaoONFft8-w';
+const accessToken = 'BQDlW4AK0ID-5SboaTujcoLLfaJ6rhetQSUq5ybwo6lqMdu-g05eTZR1t5FAf9LbucLpqU87i5ld_GUAIRQ';
 
 class App extends Component {
 	constructor() {
 		super();
 
 		this.state = {
-			tracks: []
+			set: [],
+			reserve: []
 		}
 
 		this.handleSubmitImportForm = this.handleSubmitImportForm.bind(this);
 		this.handleChangeTrackBPM = this.handleChangeTrackBPM.bind(this);
 		this.handleRemoveTrack = this.handleRemoveTrack.bind(this);
 		this.handleRemoveAllTracks = this.handleRemoveAllTracks.bind(this);
+		this.handleSwitchTrack = this.handleSwitchTrack.bind(this);
 
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
+		this.addTrack = this.addTrack.bind(this);
 		this.addTracks = this.addTracks.bind(this);
 		this.removeTrack = this.removeTrack.bind(this);
 		this.removeAllTracks = this.removeAllTracks.bind(this);
+		this.switchTrack = this.switchTrack.bind(this);
 		this.changeTrackBPM = this.changeTrackBPM.bind(this);
 		this.moveTrack = this.moveTrack.bind(this);
 
+		this.removeDuplicates = this.removeDuplicates.bind(this);
+		this.slimTracks = this.slimTracks.bind(this);
 		this.storeAndSetTracksState = this.storeAndSetTracksState.bind(this);
-		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
+		this.parseidsFromInput = this.parseidsFromInput.bind(this);
 
 	}
 
 	componentWillMount() {
-		const cachedTracks = JSON.parse(localStorage.getItem('tracks'));
-		if(cachedTracks.length > 0) {
-			this.setState({ tracks: cachedTracks });
+		const cachedSet = JSON.parse(localStorage.getItem(CONSTANTS.SET));
+		const cachedReserve = JSON.parse(localStorage.getItem(CONSTANTS.RESERVE));
+
+		if(cachedSet && cachedSet.length > 0) {
+			this.setState({ set: cachedSet });
+		}
+
+		if(cachedReserve && cachedReserve.length > 0) {
+			this.setState({ reserve: cachedReserve });
 		}
 	}
 
-	handleSubmitImportForm(formInput) {
-		const IDs = this.parseIDsFromInput(formInput)
-		this.getTracksFromSpotify(IDs);
+	handleSubmitImportForm(formInput, list) {
+		const ids = this.parseidsFromInput(formInput)
+		this.getTracksFromSpotify(ids, list);
 	}
 
-	handleChangeTrackBPM(index, id, input) {
-		this.changeTrackBPM(index, id, input);
+	handleChangeTrackBPM(index, list, id, input) {
+		this.changeTrackBPM(index, list, id, input);
 	}
 
-	handleRemoveTrack(index) {
-		this.removeTrack(index);
+	handleRemoveTrack(index, list) {
+		this.removeTrack(index, list);
 	}
 
-	handleRemoveAllTracks() {
-		this.removeAllTracks();
+	handleRemoveAllTracks(list) {
+		this.removeAllTracks(list);
 	}
 
-	getTracksFromSpotify(IDs) {
+	handleSwitchTrack(index, list) {
+		this.switchTrack(index, list);
+	}
+
+	getTracksFromSpotify(ids, list) {
 		const spotify = new SpotifyWebApi();
 		spotify.setAccessToken(accessToken);
-		spotify.getTracks(IDs, (err, data) => {
+		spotify.getTracks(ids, (err, data) => {
 			if (err) console.error(err);
-			else this.addTracks(data.tracks);
+			else {
+				const newTracks = this.removeDuplicates(data.tracks);
+				const slimTracks = this.slimTracks(newTracks);
+				this.addTracks(slimTracks, list);
+			}
 		});
 	}
 
-	addTracks(tracks) {
-		const diffTracks = tracks.filter(newTrack => this.state.tracks.filter(oldTrack => oldTrack.id === newTrack.id).length === 0);
-		const tracksToAdd = diffTracks.map(track => {
+	addTracks(tracks, list) {
+		const mergedTracks = update(this.state[list], {
+			$push: tracks
+		});
+
+		this.storeAndSetTracksState(mergedTracks, list);
+	}
+
+	addTrack(track, list) {
+		const mergedTracks = update(this.state[list], {
+			$push: [track]
+		});
+
+		this.storeAndSetTracksState(mergedTracks, list);
+	}
+
+	changeTrackBPM(index, list, id, input) {
+		const modifiedTracks = update(this.state[list], {
+			[index]: {
+				bpm: {$set: input}
+			}
+		});
+
+		localStorage.setItem(id, input);
+
+		this.storeAndSetTracksState(modifiedTracks, list);
+	}
+
+	removeTrack(index, list) {
+		const filteredTracks = update(this.state[list], {
+			$splice: [[index, 1]]
+		});
+
+		this.storeAndSetTracksState(filteredTracks, list);
+	}
+
+	removeAllTracks(list) {
+		const emptyTracks = [];
+		this.storeAndSetTracksState(emptyTracks, list)
+	}
+
+	switchTrack(index, list) {
+		const otherList = (list === CONSTANTS.SET) ? CONSTANTS.RESERVE : CONSTANTS.SET;
+		const trackToMove = this.state[list][index];
+
+		this.removeTrack(index, list);
+		this.addTrack(trackToMove, otherList);
+	}
+
+	moveTrack(dragIndex, hoverIndex, list) {
+		const dragTrack = this.state[list][dragIndex]
+		const modifiedTracks = update(this.state[list], {
+			$splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
+		});
+
+		this.storeAndSetTracksState(modifiedTracks, list)
+	}
+
+	removeDuplicates(tracks) {
+		const allTracks = this.state.set.concat(this.state.reserve);
+
+		return tracks.filter(newTrack => allTracks.filter(oldTrack => oldTrack.id === newTrack.id).length === 0);
+	}
+
+	slimTracks(tracks) {
+		return tracks.map(track => {
 			const {
 				artists,
 				name,
@@ -89,63 +174,19 @@ class App extends Component {
 				bpm: bpm
 			}
 		});
-
-		const mergedTracks = update(this.state.tracks, {
-			$push: tracksToAdd
-		});
-
-		this.storeAndSetTracksState(mergedTracks);
 	}
 
-	changeTrackBPM(index, id, input) {
-		const modifiedTracks = update(this.state.tracks, {
-			[index]: {
-				bpm: {$set: input}
-			}
-		});
-
-		localStorage.setItem(id, input);
-
-		this.storeAndSetTracksState(modifiedTracks);
-	}
-
-	removeTrack(index) {
-		const filteredTracks = update(this.state.tracks, {
-			$splice: [[index, 1]]
-		});
-
-		this.storeAndSetTracksState(filteredTracks);
-	}
-
-	removeAllTracks() {
-		const emptyTracks = [];
-		this.storeAndSetTracksState(emptyTracks);
-	}
-
-	moveTrack(dragIndex, hoverIndex) {
-		const { tracks } = this.state
-		const dragTrack = tracks[dragIndex]
-
-		this.setState(
-			update(this.state, {
-				tracks: {
-					$splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
-				}
-			})
-		)
-	}
-
-	parseIDsFromInput(formInput) {
+	parseidsFromInput(formInput) {
 		const URIList = formInput.split('\n');
 		const filteredURIList = URIList.filter(URI => URI !== '');
-		const IDs = filteredURIList.map(URI => URI.split(':')[2]);
+		const ids = filteredURIList.map(URI => URI.split(':')[2]);
 
-		return IDs;
+		return ids;
 	}
 
-	storeAndSetTracksState(tracks) {
-		localStorage.setItem('tracks', JSON.stringify(tracks));
-		this.setState({ tracks: tracks });
+	storeAndSetTracksState(tracks, list) {
+		localStorage.setItem(list, JSON.stringify(tracks));
+		this.setState({ [list]: tracks });
 	}
 
   render() {
@@ -155,10 +196,23 @@ class App extends Component {
 					handleSubmitImportForm={this.handleSubmitImportForm}
 				/>
 				<TrackList
-					tracks={this.state.tracks}
+					key={CONSTANTS.SET}
+					list={CONSTANTS.SET}
+					tracks={this.state.set}
 					handleChangeTrackBPM={this.handleChangeTrackBPM}
 					handleRemoveTrack={this.handleRemoveTrack}
 					handleRemoveAllTracks={this.handleRemoveAllTracks}
+					handleSwitchTrack={this.handleSwitchTrack}
+					moveTrack={this.moveTrack}
+				/>
+				<TrackList
+					key={CONSTANTS.RESERVE}
+					list={CONSTANTS.RESERVE}
+					tracks={this.state.reserve}
+					handleChangeTrackBPM={this.handleChangeTrackBPM}
+					handleRemoveTrack={this.handleRemoveTrack}
+					handleRemoveAllTracks={this.handleRemoveAllTracks}
+					handleSwitchTrack={this.handleSwitchTrack}
 					moveTrack={this.moveTrack}
 				/>
       </div>

@@ -7,6 +7,7 @@ import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 
 import ItemTypes from './ItemTypes'
+
 import './Track.css';
 
 const trackSource = {
@@ -34,7 +35,7 @@ const trackTarget = {
 
 		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
-		props.moveTrack(dragIndex, hoverIndex)
+		props.moveTrack(dragIndex, hoverIndex, props.list)
 		monitor.getItem().index = hoverIndex
 	}
 }
@@ -45,19 +46,22 @@ class Track extends Component {
 		connectDropTarget: PropTypes.func.isRequired,
 		handleChangeTrackBPM: PropTypes.func.isRequired,
 		handleRemoveTrack: PropTypes.func.isRequired,
+		handleSwitchTrack: PropTypes.func.isRequired,
 		isDragging: PropTypes.bool.isRequired,
 		index: PropTypes.number.isRequired,
 		id: PropTypes.string.isRequired,
 		artist: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
-		bpm: PropTypes.string.isRequired
+		bpm: PropTypes.string.isRequired,
+		list: PropTypes.string.isRequired
 	}
 
 	constructor(props) {
 		super(props);
 
 		this.handleChange = this.handleChange.bind(this);
-		this.handleClick = this.handleClick.bind(this);
+		this.handleSwitchClick = this.handleSwitchClick.bind(this);
+		this.handleRemoveClick = this.handleRemoveClick.bind(this);
 	}
 
 	handleChange(e) {
@@ -66,21 +70,33 @@ class Track extends Component {
 		const {
 			handleChangeTrackBPM,
 			index,
+			list,
 			id
 		} = this.props;
 
 		if(!letters.test(input)) {
-			handleChangeTrackBPM(index, id, input);
+			handleChangeTrackBPM(index, list, id, input);
 		}
 	}
 
-	handleClick(e) {
+	handleSwitchClick() {
 		const {
-			handleRemoveTrack,
-			index
+			handleSwitchTrack,
+			index,
+			list
 		} = this.props;
 
-		handleRemoveTrack(index);
+		handleSwitchTrack(index, list);
+	}
+
+	handleRemoveClick(e) {
+		const {
+			handleRemoveTrack,
+			index,
+			list
+		} = this.props;
+
+		handleRemoveTrack(index, list);
 	}
 
   render() {
@@ -91,11 +107,13 @@ class Track extends Component {
 			duration_ms,
 			artist,
 			name,
-			bpm
+			bpm,
+			list
 		} = this.props
 
 		const selector = 'Track' + (isDragging ? ' dragging' : '');
 		const trackLength = Moment(duration_ms).format('m:ss');
+		const switchButton = <button onClick={this.handleSwitchClick}>{(list === 'set') ? '>' : '<'}</button>
 
     return connectDragSource(
 			connectDropTarget(
@@ -110,7 +128,8 @@ class Track extends Component {
 						/>
 						<span>({trackLength}) {artist} - {name}</span>
 					</div>
-					<button onClick={this.handleClick}>x</button>
+					{switchButton}
+					<button onClick={this.handleRemoveClick}>x</button>
 				</li>
 			)
     );

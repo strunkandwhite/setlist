@@ -5,10 +5,12 @@ import 'moment-duration-format';
 import _ from 'lodash';
 
 import Track from './Track';
+
 import './TrackList.css';
 
 class TrackList extends Component {
 	static propTypes = {
+		list: PropTypes.string.isRequired,
 		tracks: PropTypes.array.isRequired,
 		handleChangeTrackBPM: PropTypes.func.isRequired,
 		handleRemoveTrack: PropTypes.func.isRequired,
@@ -20,26 +22,25 @@ class TrackList extends Component {
 		super(props);
 
 		this.handleClick = this.handleClick.bind(this);
-		this.getFormattedListLength = this.getFormattedListLength.bind(this);
 	}
 
 	handleClick() {
-		this.props.handleRemoveAllTracks();
-	}
+		const {
+			handleRemoveAllTracks,
+			list
+		} = this.props;
 
-	getFormattedListLength() {
-		const listLength = _.sumBy(this.props.tracks, track => track.duration_ms);
-		const formattedListLength = Moment.duration(listLength).format('h:mm:ss');
-
-		return formattedListLength;
+		handleRemoveAllTracks(list);
 	}
 
   render() {
 		const {
 			handleChangeTrackBPM,
 			handleRemoveTrack,
+			handleSwitchTrack,
 			moveTrack,
-			tracks
+			tracks,
+			list
 		} = this.props;
 
 		const listItems = tracks.map((track, i) => {
@@ -61,17 +62,29 @@ class TrackList extends Component {
 				bpm={bpm}
 				handleChangeTrackBPM={handleChangeTrackBPM}
 				handleRemoveTrack={handleRemoveTrack}
+				handleSwitchTrack={handleSwitchTrack}
 				moveTrack={moveTrack}
+				list={list}
 			/>
 		})
 
+		const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
+		const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
+		const overrunDuration = 6600000;
+
+		const selector = `TrackList ${list}`
+		const durationSelector = (listDuration > overrunDuration) ? 'duration too-long' : 'duration';
+
+		const button = (listItems.length > 0) ? <button onClick={this.handleClick}>Remove all tracks</button> : null;
+
     return (
-			<section className='TrackList'>
-				{this.getFormattedListLength()}
+			<section className={selector}>
+			<h3>{list}</h3>
+				<span className={durationSelector}>{formattedListDuration}</span>
 				<ul>
 					{listItems}
 				</ul>
-				<button onClick={this.handleClick}>Remove all tracks</button>
+				{button}
 			</section>
     )
 	}
