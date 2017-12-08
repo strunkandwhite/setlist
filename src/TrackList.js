@@ -8,6 +8,26 @@ import Track from './Track';
 import './TrackList.css';
 
 class TrackList extends Component {
+	static propTypes = {
+		tracks: PropTypes.array.isRequired,
+		handleChangeTrackBPM: PropTypes.func.isRequired,
+		handleRemoveTrack: PropTypes.func.isRequired,
+		moveTrack: PropTypes.func.isRequired
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.getFormattedListLength = this.getFormattedListLength.bind(this);
+	}
+
+	getFormattedListLength() {
+		const listLength = _.sumBy(this.props.tracks, track => track.duration_ms);
+		const formattedListLength = Moment.duration(listLength).format('h:mm:ss');
+
+		return formattedListLength;
+	}
+
   render() {
 		const {
 			handleChangeTrackBPM,
@@ -15,9 +35,6 @@ class TrackList extends Component {
 			moveTrack,
 			tracks
 		} = this.props;
-
-		const listLength = _.sumBy(tracks, track => { return track.duration_ms });
-		const formattedListLength = Moment.duration(listLength).format('h:mm:ss');
 
 		const listItems = tracks.map((track, i) => {
 			const {
@@ -44,19 +61,13 @@ class TrackList extends Component {
 
     return (
 			<section className='TrackList'>
-				{formattedListLength}
+				{this.getFormattedListLength()}
 				<ul>
 					{listItems}
 				</ul>
 			</section>
     )
 	}
-}
-
-TrackList.propTypes = {
-	tracks: PropTypes.array.isRequired,
-	handleChangeTrackBPM: PropTypes.func.isRequired,
-	moveTrack: PropTypes.func.isRequired
 }
 
 export default TrackList;

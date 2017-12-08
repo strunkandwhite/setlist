@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
-import _ from 'lodash';
-import update from 'immutability-helper';
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import update from 'immutability-helper';
+import _ from 'lodash';
+
 import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
 
-const spotify = new SpotifyWebApi();
-const accessToken = 'BQDo9yYqGQuSzQIYlEKWnlJZF4U7-R_FUeoJHl9BkXDQgfzOcyOWj2LZb-_7Yvzqu-AfnlRlYhSBmCXDunM';
-spotify.setAccessToken(accessToken);
+const accessToken = 'BQAYUPRb3BdIPUckDVjRLq02WNJb5e8b_LGRSSLH7UZ_dBFkVV1IJOhVCkDMhe9aALyVhiETMaoONFft8-w';
 
 class App extends Component {
 	constructor() {
@@ -20,13 +19,14 @@ class App extends Component {
 			tracks: []
 		}
 
-		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
+		this.handleSubmitImportForm = this.handleSubmitImportForm.bind(this);
 		this.handleChangeTrackBPM = this.handleChangeTrackBPM.bind(this);
 		this.handleRemoveTrack = this.handleRemoveTrack.bind(this);
 
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.addTracks = this.addTracks.bind(this);
 		this.removeTrack = this.removeTrack.bind(this);
+		this.changeTrackBPM = this.changeTrackBPM.bind(this);
 		this.moveTrack = this.moveTrack.bind(this);
 
 		this.storeAndSetTracksState = this.storeAndSetTracksState.bind(this);
@@ -41,49 +41,22 @@ class App extends Component {
 		}
 	}
 
-	handleImportFormSubmit(formInput) {
+	handleSubmitImportForm(formInput) {
 		const IDs = this.parseIDsFromInput(formInput)
 		this.getTracksFromSpotify(IDs);
 	}
 
-	moveTrack(dragIndex, hoverIndex) {
-		const { tracks } = this.state
-		const dragTrack = tracks[dragIndex]
-
-		this.setState(
-			update(this.state, {
-				tracks: {
-					$splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
-				}
-			})
-		)
-	}
-
 	handleChangeTrackBPM(index, id, input) {
-		const modifiedTracks = update(this.state.tracks, {
-			[index]: {
-				bpm: {$set: input}
-			}
-		});
-
-		localStorage.setItem(id, input);
-
-		this.storeAndSetTracksState(modifiedTracks);
+		this.changeTrackBPM(index, id, input);
 	}
 
 	handleRemoveTrack(index) {
 		this.removeTrack(index);
 	}
 
-	removeTrack(index) {
-		const filteredTracks = update(this.state.tracks, {
-			$splice: [[index, 1]]
-		});
-
-		this.storeAndSetTracksState(filteredTracks);
-	}
-
 	getTracksFromSpotify(IDs) {
+		const spotify = new SpotifyWebApi();
+		spotify.setAccessToken(accessToken);
 		spotify.getTracks(IDs, (err, data) => {
 			if (err) console.error(err);
 			else this.addTracks(data.tracks);
@@ -118,16 +91,43 @@ class App extends Component {
 		this.storeAndSetTracksState(mergedTracks);
 	}
 
+	changeTrackBPM(index, id, input) {
+		const modifiedTracks = update(this.state.tracks, {
+			[index]: {
+				bpm: {$set: input}
+			}
+		});
+
+		localStorage.setItem(id, input);
+
+		this.storeAndSetTracksState(modifiedTracks);
+	}
+
+	removeTrack(index) {
+		const filteredTracks = update(this.state.tracks, {
+			$splice: [[index, 1]]
+		});
+
+		this.storeAndSetTracksState(filteredTracks);
+	}
+
+	moveTrack(dragIndex, hoverIndex) {
+		const { tracks } = this.state
+		const dragTrack = tracks[dragIndex]
+
+		this.setState(
+			update(this.state, {
+				tracks: {
+					$splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
+				}
+			})
+		)
+	}
+
 	parseIDsFromInput(formInput) {
 		const URIList = formInput.split('\n');
-
-		const filteredURIList = URIList.filter(URI => {
-			return URI !== '';
-		});
-
-		const IDs = filteredURIList.map(URI => {
-			return URI.split(':')[2];
-		});
+		const filteredURIList = URIList.filter(URI => URI !== '');
+		const IDs = filteredURIList.map(URI => URI.split(':')[2]);
 
 		return IDs;
 	}
@@ -141,7 +141,7 @@ class App extends Component {
     return (
       <div className='App'>
 				<ImportForm
-					handleImportFormSubmit={this.handleImportFormSubmit}
+					handleSubmitImportForm={this.handleSubmitImportForm}
 				/>
 				<TrackList
 					tracks={this.state.tracks}
