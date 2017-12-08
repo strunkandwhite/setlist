@@ -84,7 +84,7 @@ class TrackList extends Component {
 
 		const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
 		const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
-		const overrunDuration = 6600000;
+		const overrunDuration = 6900000;
 
 		const selector = `TrackList ${list}`
 		const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';

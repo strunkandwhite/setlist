@@ -13,7 +13,7 @@ import CONSTANTS from './constants';
 
 import './App.css';
 
-const accessToken = 'BQAJnXtnRjEcP_83OnZfUCa1dyerSnXLsbU6bTmMJAwVykoWe_axgDoFFSNONBp-bJilxe2t6Wafhmvp2Gk';
+const accessToken = 'BQDOgjwL8FcdCBqwnFn-ikFqrGUkT7a_NAK12cXzK_5eOeGoKGhLhuSYZztBjjOW5X9gihDlt1RTzc9czr0';
 
 class App extends Component {
 	constructor() {

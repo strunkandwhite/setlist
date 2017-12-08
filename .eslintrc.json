@@ -1,4 +1,8 @@
 {
+	"parser": "babel-eslint",
+	"rules": {
+		"strict": 0
+	},
 	"parserOptions": {
 		"ecmaVersion": 7,
 		"sourceType": "module",
@@ -7,6 +11,6 @@
 		}
   },
 	"env": {
-		"es7": true
+		"es6": true
 	}
 }
