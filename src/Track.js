@@ -116,7 +116,7 @@ class Track extends Component {
 
 		const selector = `Track ${type} ${(isDragging ? 'dragging' : '')}`
 		const trackLength = Moment(duration_ms).format('m:ss');
-		const switchButton = <button onClick={this.handleSwitchClick}>{(list === 'set') ? '>' : '<'}</button>;
+		const switchButton = <button onClick={this.handleSwitchClick}>{(list === CONSTANTS.SET) ? '>' : '<'}</button>;
 		const displayString = (type === CONSTANTS.SONG) ? `${artist} - ${name}` : CONSTANTS.BREAK;
 
     return connectDragSource(

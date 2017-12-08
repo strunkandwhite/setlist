@@ -168,38 +168,27 @@ class App extends Component {
 	}
 
 	exportTracks() {
-		const {
-			set,
-			reserve
-		} = this.state;
+		const { state } = this;
+		const convertTrackToString = track => {
+			const {
+				artist,
+				name,
+				bpm,
+				type
+			} = track;
+
+			return (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
+		}
 
 		let stringToWrite = '';
 
-		stringToWrite = 'Set:\n';
+		for(let list in state) {
+			stringToWrite += (list === CONSTANTS.SET) ? 'Set:\n' : 'Reserve:\n';
 
-		set.forEach(track => {
-			const {
-				artist,
-				name,
-				bpm,
-				type
-			} = track;
-
-			stringToWrite += (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
-		});
-
-		stringToWrite += 'Reserve:\n';
-
-		reserve.forEach(track => {
-			const {
-				artist,
-				name,
-				bpm,
-				type
-			} = track;
-
-			stringToWrite += (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
-		});
+			for(let track in state[list]) {
+				stringToWrite += convertTrackToString(state[list][track]);
+			}
+		};
 
 		const blob = new Blob([stringToWrite], {type: "text/plain;charset=utf-8"});
 
