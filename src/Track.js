@@ -76,9 +76,10 @@ class Track extends Component {
 			id
 		} = this.props;
 
-		if(!letters.test(input)) {
-			handleChangeTrackBPM(index, list, id, input);
-		}
+		if(input.length > 3) return;
+		if(letters.test(input)) return;
+
+		handleChangeTrackBPM(index, list, id, input);
 	}
 
 	handleSwitchClick() {
