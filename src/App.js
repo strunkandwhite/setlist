@@ -8,7 +8,7 @@ import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
 
-const accessToken = 'BQB8D45K5YsOeFWE56RnzJLo_Q_r6bhDPJldP9tGFzIIs5PHaCoWYgaxA7WHw3boUmboEy5uinh6_cB3stI';
+const accessToken = 'BQDePQTOMM8GX-R3C42-w7VCm_C2U6QBNWEMNq_h3xs4q0z-xO7fZQ3QuXFY2DAHdj2YLBLcDGt2rxA43Uo';
 
 class App extends Component {
 	constructor() {
@@ -20,6 +20,7 @@ class App extends Component {
 
 		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
 		this.handleTrackBPMChange = this.handleTrackBPMChange.bind(this);
+		this.handleTrackRemove = this.handleTrackRemove.bind(this);
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.setTracks = this.setTracks.bind(this);
 		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
@@ -59,6 +60,16 @@ class App extends Component {
 		);
 	}
 
+	handleTrackRemove(index) {
+		this.setState(
+			update(this.state, {
+				tracks: {
+					$splice: [[index, 1]]
+				},
+			})
+		);
+	}
+
 	getTracksFromSpotify(IDs) {
 		this.spotify.getTracks(IDs, (err, data) => {
 			if (err) console.error(err);
@@ -67,11 +78,20 @@ class App extends Component {
 	}
 
 	setTracks(tracks) {
+		console.log(tracks);
 		const tracksToSet = tracks.map(track => {
+			const {
+				artists,
+				name,
+				id,
+				duration_ms
+			} = track;
+
 			return {
-				artist: track.artists[0].name,
-				name: track.name,
-				id: track.id,
+				artist: artists[0].name,
+				name: name,
+				id: id,
+				duration_ms: duration_ms,
 				bpm: ''
 			}
 		});
@@ -102,6 +122,7 @@ class App extends Component {
 				<TrackList
 					tracks={this.state.tracks}
 					handleTrackBPMChange={this.handleTrackBPMChange}
+					handleTrackRemove={this.handleTrackRemove}
 					moveTrack={this.moveTrack}
 				/>
       </div>

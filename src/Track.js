@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import Moment from 'moment';
+import 'moment-duration-format';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import ItemTypes from './ItemTypes'
@@ -66,10 +68,11 @@ class Track extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleChange = this.handleChange.bind(this);
+		this.handleBPMChange = this.handleBPMChange.bind(this);
+		this.handleButtonClick = this.handleButtonClick.bind(this);
 	}
 
-	handleChange(e) {
+	handleBPMChange(e) {
 		const input = e.target.value;
 		const letters = /[a-zA-Z]/;
 
@@ -78,29 +81,38 @@ class Track extends Component {
 		}
 	}
 
+	handleButtonClick(e) {
+		this.props.handleTrackRemove(this.props.index);
+	}
+
   render() {
 		const {
 			connectDragSource,
 			connectDropTarget,
 			isDragging,
+			duration_ms,
 			artist,
 			name,
 			bpm
 		} = this.props
 
 		const selector = 'Track' + (isDragging ? ' dragging' : '');
+		const trackLength = Moment(duration_ms).format('m:ss');
 
     return connectDragSource(
 			connectDropTarget(
 				<li className={selector}>
-					<span>{artist} - {name}</span>
-					<input
-						type='text'
-						className='bpm'
-						placeholder='bpm'
-						onChange={this.handleChange}
-						value={bpm}
-					/>
+					<div className='track-info'>
+						<input
+							type='text'
+							className='bpm'
+							placeholder='bpm'
+							onChange={this.handleBPMChange}
+							value={bpm}
+						/>
+						<span>({trackLength}) {artist} - {name}</span>
+					</div>
+					<button onClick={this.handleButtonClick}>x</button>
 				</li>
 			)
     );
@@ -111,6 +123,7 @@ Track.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,
 	connectDropTarget: PropTypes.func.isRequired,
 	handleTrackBPMChange: PropTypes.func.isRequired,
+	handleTrackRemove: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
 	index: PropTypes.number.isRequired,
 	artist: PropTypes.string.isRequired,

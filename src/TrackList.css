@@ -1,8 +1,13 @@
 .TrackList {
 	grid-column-start: 2;
 	grid-column-end: 3;
-	list-style-type: none;
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: flex-start;
+}
+
+.TrackList ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }

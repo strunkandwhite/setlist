@@ -4,14 +4,27 @@
 	margin: .25em 0;
 	padding: .25em;
 	background: #f0f0f0;
+	justify-content: space-between;
+}
+
+.Track .track-info {
+	display: flex;
+}
+
+.Track span {
+	width: 25em;
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .Track.dragging {
-	opacity: 0;
+	opacity: 0.25;
 }
 
 .Track .bpm {
-	margin-left: .5em;
+	margin-right: .5em;
 	width: 5em;
 }
 

@@ -1,6 +1,8 @@
+.ImportForm {
+	grid-column-start: 1;
+	grid-column-end: 2;
+}
 .ImportForm textarea {
 	width: 500px;
 	height: 500px;
-	grid-column-start: 1;
-	grid-column-end: 2;
 }

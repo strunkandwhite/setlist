@@ -1,5 +1,5 @@
 .App {
 	display: grid;
-	grid-template-columns: 50%;
+	grid-template-columns: 33%;
 	font-family: Helvetica;
 }

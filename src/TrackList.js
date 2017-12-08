@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'moment';
+import 'moment-duration-format';
+import _ from 'lodash';
+
 import Track from './Track';
 import './TrackList.css';
 
@@ -7,33 +11,45 @@ class TrackList extends Component {
   render() {
 		const {
 			handleTrackBPMChange,
-			moveTrack
+			handleTrackRemove,
+			moveTrack,
+			tracks
 		} = this.props;
 
-    return (
-			<ul className='TrackList'>
-				{this.props.tracks.map((track, i) => {
-					const {
-						id,
-						artist,
-						name,
-						bpm
-					} = track;
+		const listLength = _.sumBy(tracks, track => { return track.duration_ms });
+		const formattedListLength = Moment.duration(listLength).format('h:mm:ss');
 
-					return <Track
-						key={id}
-						index={i}
-						artist={artist}
-						name={name}
-						bpm={bpm}
-						handleTrackBPMChange={handleTrackBPMChange}
-						moveTrack={moveTrack}
-					/>
-				})
-			}
-			</ul>
-    );
-  }
+		const listItems = tracks.map((track, i) => {
+			const {
+				id,
+				duration_ms,
+				artist,
+				name,
+				bpm
+			} = track;
+
+			return <Track
+				key={id}
+				index={i}
+				duration_ms={duration_ms}
+				artist={artist}
+				name={name}
+				bpm={bpm}
+				handleTrackBPMChange={handleTrackBPMChange}
+				handleTrackRemove={handleTrackRemove}
+				moveTrack={moveTrack}
+			/>
+		})
+
+    return (
+			<section className='TrackList'>
+				{formattedListLength}
+				<ul>
+					{listItems}
+				</ul>
+			</section>
+    )
+	}
 }
 
 TrackList.propTypes = {
