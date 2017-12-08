@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import update from 'immutability-helper';
 import Moment from 'moment';
+import FileSaver from 'file-saver';
 import _ from 'lodash';
 
 import ImportForm from './ImportForm';
@@ -12,7 +13,7 @@ import CONSTANTS from './constants';
 
 import './App.css';
 
-const accessToken = 'BQD_rQfTSKQyStyaEbT61lFC9mTzgOKb9OJR6d5rrOUuloV6DvI6C41vSUAAH4fehodBa6PIbtYn4Ojid7A';
+const accessToken = 'BQAJnXtnRjEcP_83OnZfUCa1dyerSnXLsbU6bTmMJAwVykoWe_axgDoFFSNONBp-bJilxe2t6Wafhmvp2Gk';
 
 class App extends Component {
 	constructor() {
@@ -39,6 +40,7 @@ class App extends Component {
 		this.switchTrack = this.switchTrack.bind(this);
 		this.changeTrackBPM = this.changeTrackBPM.bind(this);
 		this.moveTrack = this.moveTrack.bind(this);
+		this.exportTracks = this.exportTracks.bind(this);
 
 		this.removeDuplicates = this.removeDuplicates.bind(this);
 		this.slimTracks = this.slimTracks.bind(this);
@@ -165,6 +167,45 @@ class App extends Component {
 		this.storeAndSetTracksState(modifiedTracks, list)
 	}
 
+	exportTracks() {
+		const {
+			set,
+			reserve
+		} = this.state;
+
+		let stringToWrite = '';
+
+		stringToWrite = 'Set:\n';
+
+		set.forEach(track => {
+			const {
+				artist,
+				name,
+				bpm,
+				type
+			} = track;
+
+			stringToWrite += (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
+		});
+
+		stringToWrite += 'Reserve:\n';
+
+		reserve.forEach(track => {
+			const {
+				artist,
+				name,
+				bpm,
+				type
+			} = track;
+
+			stringToWrite += (type === CONSTANTS.SONG) ? `[${bpm}] ${artist} - ${name}\n` : `${CONSTANTS.BREAK}\n`
+		});
+
+		const blob = new Blob([stringToWrite], {type: "text/plain;charset=utf-8"});
+
+		FileSaver.saveAs(blob, 'setlist.txt');
+	}
+
 	removeDuplicates(tracks) {
 		const allTracks = this.state.set.concat(this.state.reserve);
 
@@ -234,6 +275,7 @@ class App extends Component {
 					handleSwitchTrack={this.handleSwitchTrack}
 					moveTrack={this.moveTrack}
 				/>
+				<button onClick={this.exportTracks} className='export'>Export</button>
       </div>
     );
   }

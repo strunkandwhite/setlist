@@ -4,6 +4,7 @@ const CONSTANTS = {
 	RESERVE: 'reserve',
 	SONG: 'song',
 	SPACER: 'spacer',
+	BREAK: '-BREAK-',
 	DUMMY_TRACK: {
 		artist: '---CHILL---',
 		name: '---DUDES---',
