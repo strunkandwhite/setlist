@@ -11,7 +11,7 @@ class ImportForm extends Component {
 					value={this.state.value}
 					placeholder='Enter URIs here'
 				/>
-				<button onClick={this.handleClick}>import</button>
+				<button onClick={this.handleClick}>Add to set</button>
       </form>
     );
   }

@@ -8,7 +8,9 @@ import ImportForm from './ImportForm';
 import TrackList from './TrackList';
 import './App.css';
 
+const spotify = new SpotifyWebApi();
 const accessToken = 'BQDo9yYqGQuSzQIYlEKWnlJZF4U7-R_FUeoJHl9BkXDQgfzOcyOWj2LZb-_7Yvzqu-AfnlRlYhSBmCXDunM';
+spotify.setAccessToken(accessToken);
 
 class App extends Component {
 	constructor() {
@@ -21,13 +23,22 @@ class App extends Component {
 		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
 		this.handleTrackBPMChange = this.handleTrackBPMChange.bind(this);
 		this.handleTrackRemove = this.handleTrackRemove.bind(this);
+
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.addTracks = this.addTracks.bind(this);
-		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
+		this.removeTrack = this.removeTrack.bind(this);
 		this.moveTrack = this.moveTrack.bind(this);
 
-		this.spotify = new SpotifyWebApi();
-		this.spotify.setAccessToken(accessToken);
+		this.storeAndSetTracksState = this.storeAndSetTracksState.bind(this);
+		this.parseIDsFromInput = this.parseIDsFromInput.bind(this);
+
+	}
+
+	componentWillMount() {
+		const cachedTracks = JSON.parse(localStorage.getItem('tracks'));
+		if(cachedTracks.length > 0) {
+			this.setState({ tracks: cachedTracks });
+		}
 	}
 
 	handleImportFormSubmit(formInput) {
@@ -48,37 +59,40 @@ class App extends Component {
 		)
 	}
 
-	handleTrackBPMChange(index, input) {
-		this.setState(
-			update(this.state, {
-				tracks: {
-					[index]: {
-						bpm: {$set: input}
-					}
-				}
-			})
-		);
+	handleTrackBPMChange(index, id, input) {
+		const modifiedTracks = update(this.state.tracks, {
+			[index]: {
+				bpm: {$set: input}
+			}
+		});
+
+		localStorage.setItem(id, input);
+
+		this.storeAndSetTracksState(modifiedTracks);
 	}
 
 	handleTrackRemove(index) {
-		this.setState(
-			update(this.state, {
-				tracks: {
-					$splice: [[index, 1]]
-				},
-			})
-		);
+		this.removeTrack(index);
+	}
+
+	removeTrack(index) {
+		const filteredTracks = update(this.state.tracks, {
+			$splice: [[index, 1]]
+		});
+
+		this.storeAndSetTracksState(filteredTracks);
 	}
 
 	getTracksFromSpotify(IDs) {
-		this.spotify.getTracks(IDs, (err, data) => {
+		spotify.getTracks(IDs, (err, data) => {
 			if (err) console.error(err);
 			else this.addTracks(data.tracks);
 		});
 	}
 
 	addTracks(tracks) {
-		const tracksToAdd = tracks.map(track => {
+		const diffTracks = tracks.filter(newTrack => this.state.tracks.filter(oldTrack => oldTrack.id === newTrack.id).length === 0);
+		const tracksToAdd = diffTracks.map(track => {
 			const {
 				artists,
 				name,
@@ -86,22 +100,22 @@ class App extends Component {
 				duration_ms
 			} = track;
 
+			const bpm = localStorage.getItem(id) || '';
+
 			return {
 				artist: artists[0].name,
 				name: name,
 				id: id,
 				duration_ms: duration_ms,
-				bpm: ''
+				bpm: bpm
 			}
 		});
 
-		this.setState(
-			update(this.state, {
-				tracks: {
-					$push: tracksToAdd
-				}
-			})
-		)
+		const mergedTracks = update(this.state.tracks, {
+			$push: tracksToAdd
+		});
+
+		this.storeAndSetTracksState(mergedTracks);
 	}
 
 	parseIDsFromInput(formInput) {
@@ -116,6 +130,11 @@ class App extends Component {
 		});
 
 		return IDs;
+	}
+
+	storeAndSetTracksState(tracks) {
+		localStorage.setItem('tracks', JSON.stringify(tracks));
+		this.setState({ tracks: tracks });
 	}
 
   render() {

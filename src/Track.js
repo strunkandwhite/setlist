@@ -77,7 +77,7 @@ class Track extends Component {
 		const letters = /[a-zA-Z]/;
 
 		if(!letters.test(input)) {
-			this.props.handleTrackBPMChange(this.props.index, input);
+			this.props.handleTrackBPMChange(this.props.index, this.props.id, input);
 		}
 	}
 
@@ -126,6 +126,7 @@ Track.propTypes = {
 	handleTrackRemove: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
 	index: PropTypes.number.isRequired,
+	id: PropTypes.string.isRequired,
 	artist: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	bpm: PropTypes.string.isRequired,

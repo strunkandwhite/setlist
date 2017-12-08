@@ -30,6 +30,7 @@ class TrackList extends Component {
 
 			return <Track
 				key={id}
+				id={id}
 				index={i}
 				duration_ms={duration_ms}
 				artist={artist}
