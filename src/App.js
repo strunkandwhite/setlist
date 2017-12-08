@@ -21,8 +21,8 @@ class App extends Component {
 		}
 
 		this.handleImportFormSubmit = this.handleImportFormSubmit.bind(this);
-		this.handleTrackBPMChange = this.handleTrackBPMChange.bind(this);
-		this.handleTrackRemove = this.handleTrackRemove.bind(this);
+		this.handleChangeTrackBPM = this.handleChangeTrackBPM.bind(this);
+		this.handleRemoveTrack = this.handleRemoveTrack.bind(this);
 
 		this.getTracksFromSpotify = this.getTracksFromSpotify.bind(this);
 		this.addTracks = this.addTracks.bind(this);
@@ -59,7 +59,7 @@ class App extends Component {
 		)
 	}
 
-	handleTrackBPMChange(index, id, input) {
+	handleChangeTrackBPM(index, id, input) {
 		const modifiedTracks = update(this.state.tracks, {
 			[index]: {
 				bpm: {$set: input}
@@ -71,7 +71,7 @@ class App extends Component {
 		this.storeAndSetTracksState(modifiedTracks);
 	}
 
-	handleTrackRemove(index) {
+	handleRemoveTrack(index) {
 		this.removeTrack(index);
 	}
 
@@ -145,8 +145,8 @@ class App extends Component {
 				/>
 				<TrackList
 					tracks={this.state.tracks}
-					handleTrackBPMChange={this.handleTrackBPMChange}
-					handleTrackRemove={this.handleTrackRemove}
+					handleChangeTrackBPM={this.handleChangeTrackBPM}
+					handleRemoveTrack={this.handleRemoveTrack}
 					moveTrack={this.moveTrack}
 				/>
       </div>

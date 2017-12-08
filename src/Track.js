@@ -77,12 +77,12 @@ class Track extends Component {
 		const letters = /[a-zA-Z]/;
 
 		if(!letters.test(input)) {
-			this.props.handleTrackBPMChange(this.props.index, this.props.id, input);
+			this.props.handleChangeTrackBPM(this.props.index, this.props.id, input);
 		}
 	}
 
 	handleButtonClick(e) {
-		this.props.handleTrackRemove(this.props.index);
+		this.props.handleRemoveTrack(this.props.index);
 	}
 
   render() {
@@ -122,8 +122,8 @@ class Track extends Component {
 Track.propTypes = {
 	connectDragSource: PropTypes.func.isRequired,
 	connectDropTarget: PropTypes.func.isRequired,
-	handleTrackBPMChange: PropTypes.func.isRequired,
-	handleTrackRemove: PropTypes.func.isRequired,
+	handleChangeTrackBPM: PropTypes.func.isRequired,
+	handleRemoveTrack: PropTypes.func.isRequired,
 	isDragging: PropTypes.bool.isRequired,
 	index: PropTypes.number.isRequired,
 	id: PropTypes.string.isRequired,

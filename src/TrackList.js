@@ -10,8 +10,8 @@ import './TrackList.css';
 class TrackList extends Component {
   render() {
 		const {
-			handleTrackBPMChange,
-			handleTrackRemove,
+			handleChangeTrackBPM,
+			handleRemoveTrack,
 			moveTrack,
 			tracks
 		} = this.props;
@@ -36,8 +36,8 @@ class TrackList extends Component {
 				artist={artist}
 				name={name}
 				bpm={bpm}
-				handleTrackBPMChange={handleTrackBPMChange}
-				handleTrackRemove={handleTrackRemove}
+				handleChangeTrackBPM={handleChangeTrackBPM}
+				handleRemoveTrack={handleRemoveTrack}
 				moveTrack={moveTrack}
 			/>
 		})
@@ -55,7 +55,7 @@ class TrackList extends Component {
 
 TrackList.propTypes = {
 	tracks: PropTypes.array.isRequired,
-	handleTrackBPMChange: PropTypes.func.isRequired,
+	handleChangeTrackBPM: PropTypes.func.isRequired,
 	moveTrack: PropTypes.func.isRequired
 }
 
