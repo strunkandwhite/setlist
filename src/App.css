@@ -1,5 +1,6 @@
 .App {
+	min-width: 1300px;
 	display: grid;
-	grid-template-columns: 33%;
+	grid-template-columns: 20% 40% 40%;
 	font-family: Helvetica;
 }
