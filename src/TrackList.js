@@ -10,102 +10,102 @@ import CONSTANTS from './constants';
 import './TrackList.css';
 
 class TrackList extends Component {
-	static propTypes = {
-		list: PropTypes.string.isRequired,
-		tracks: PropTypes.array.isRequired,
-		handleChangeTrackBPM: PropTypes.func.isRequired,
-		handleRemoveTrack: PropTypes.func.isRequired,
-		handleRemoveAllTracks: PropTypes.func.isRequired,
-		handleAddSpacer: PropTypes.func.isRequired,
-		moveTrack: PropTypes.func.isRequired
-	}
+  static propTypes = {
+    list: PropTypes.string.isRequired,
+    tracks: PropTypes.array.isRequired,
+    handleChangeTrackBPM: PropTypes.func.isRequired,
+    handleRemoveTrack: PropTypes.func.isRequired,
+    handleRemoveAllTracks: PropTypes.func.isRequired,
+    handleAddSpacer: PropTypes.func.isRequired,
+    moveTrack: PropTypes.func.isRequired
+  }
 
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.handleRemoveAllClick = this.handleRemoveAllClick.bind(this);
-		this.handleAddSpacerClick = this.handleAddSpacerClick.bind(this);
-	}
+    this.handleRemoveAllClick = this.handleRemoveAllClick.bind(this);
+    this.handleAddSpacerClick = this.handleAddSpacerClick.bind(this);
+  }
 
-	handleRemoveAllClick() {
-		const {
-			handleRemoveAllTracks,
-			list
-		} = this.props;
+  handleRemoveAllClick() {
+    const {
+      handleRemoveAllTracks,
+      list
+    } = this.props;
 
-		handleRemoveAllTracks(list);
-	}
+    handleRemoveAllTracks(list);
+  }
 
-	handleAddSpacerClick() {
-		const {
-			handleAddSpacer,
-			list
-		} = this.props;
+  handleAddSpacerClick() {
+    const {
+      handleAddSpacer,
+      list
+    } = this.props;
 
-		handleAddSpacer(list);
-	}
+    handleAddSpacer(list);
+  }
 
   render() {
-		const {
-			handleChangeTrackBPM,
-			handleRemoveTrack,
-			handleSwitchTrack,
-			moveTrack,
-			tracks,
-			list
-		} = this.props;
+    const {
+      handleChangeTrackBPM,
+      handleRemoveTrack,
+      handleSwitchTrack,
+      moveTrack,
+      tracks,
+      list
+    } = this.props;
 
-		const listItems = tracks.map((track, i) => {
-			const {
-				id,
-				duration_ms,
-				artist,
-				name,
-				bpm,
-				type
-			} = track;
+    const listItems = tracks.map((track, i) => {
+      const {
+        id,
+        duration_ms,
+        artist,
+        name,
+        bpm,
+        type
+      } = track;
 
-			return <Track
-				key={id}
-				id={id}
-				index={i}
-				duration_ms={duration_ms}
-				artist={artist}
-				name={name}
-				bpm={bpm}
-				type={type}
-				handleChangeTrackBPM={handleChangeTrackBPM}
-				handleRemoveTrack={handleRemoveTrack}
-				handleSwitchTrack={handleSwitchTrack}
-				moveTrack={moveTrack}
-				list={list}
-			/>
-		})
+      return <Track
+        key={id}
+        id={id}
+        index={i}
+        duration_ms={duration_ms}
+        artist={artist}
+        name={name}
+        bpm={bpm}
+        type={type}
+        handleChangeTrackBPM={handleChangeTrackBPM}
+        handleRemoveTrack={handleRemoveTrack}
+        handleSwitchTrack={handleSwitchTrack}
+        moveTrack={moveTrack}
+        list={list}
+      />
+    })
 
-		const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
-		const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
-		const overrunDuration = 6900000;
+    const listDuration = _.sumBy(this.props.tracks, track => track.duration_ms);
+    const formattedListDuration = Moment.duration(listDuration).format('h:mm:ss');
+    const overrunDuration = 6900000;
 
-		const selector = `TrackList ${list}`
-		const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
+    const selector = `TrackList ${list}`
+    const durationSelector = ((listDuration > overrunDuration) && list === CONSTANTS.SET) ? 'duration too-long' : 'duration';
 
-		const removeButton = (listItems.length > 0) ? <button onClick={this.handleRemoveAllClick}>Remove all tracks</button> : null;
-		const addSpacerButton = (list === CONSTANTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
+    const removeButton = (listItems.length > 0) ? <button onClick={this.handleRemoveAllClick}>Remove all tracks</button> : null;
+    const addSpacerButton = (list === CONSTANTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
 
     return (
-			<section className={selector}>
-			<h3>{list}</h3>
-				<span className={durationSelector}>{formattedListDuration}</span>
-				<ul>
-					{listItems}
-				</ul>
-				<section className='buttons'>
-					{removeButton}
-					{addSpacerButton}
-				</section>
-			</section>
+      <section className={selector}>
+      <h3>{list}</h3>
+        <span className={durationSelector}>{formattedListDuration}</span>
+        <ul>
+          {listItems}
+        </ul>
+        <section className='buttons'>
+          {removeButton}
+          {addSpacerButton}
+        </section>
+      </section>
     )
-	}
+  }
 }
 
 export default TrackList;
