@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Moment from 'moment';
-import 'moment-duration-format';
 import { flow } from 'lodash';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
@@ -47,9 +45,12 @@ class Track extends Component {
     handleTrackBPMChange: PropTypes.func.isRequired,
     handleRemoveTrackClick: PropTypes.func.isRequired,
     handleSwitchTrackClick: PropTypes.func.isRequired,
+    moveTrack: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     id: PropTypes.string.isRequired,
+    length: PropTypes.string.isRequired,
+    buttonDir: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     bpm: PropTypes.string.isRequired,
@@ -72,6 +73,7 @@ class Track extends Component {
       list,
       id
     } = this.props;
+
     const input = e.target.value;
     const letters = /[a-zA-Z]/;
 
@@ -106,22 +108,17 @@ class Track extends Component {
       connectDragSource,
       connectDropTarget,
       isDragging,
-      duration_ms,
+      buttonDir,
+      length,
       artist,
       name,
-      bpm,
       type,
-      list
+      bpm
     } = this.props
-
-    const selector = `Track ${type} ${(isDragging ? 'dragging' : '')}`
-    const trackLength = Moment(duration_ms).format('m:ss');
-    const switchButton = <button onClick={this.handleSwitchClick}>{(list === CONSTANTS.LISTS.SET) ? '>' : '<'}</button>;
-    const displayString = `${artist} - ${name}`;
 
     return connectDragSource(
       connectDropTarget(
-        <li className={selector}>
+        <li className={`Track ${type} ${(isDragging ? 'dragging' : '')}`}>
           <input
             type='text'
             className='bpm'
@@ -130,8 +127,8 @@ class Track extends Component {
             value={bpm}
             disabled={(type !== CONSTANTS.TYPES.SONG)}
           />
-          <span>({trackLength}) {displayString}</span>
-          {switchButton}
+          <span>({length}) {artist} - {name}</span>
+          <button onClick={this.handleSwitchClick}>{buttonDir}</button>
           <button onClick={this.handleRemoveClick}>x</button>
         </li>
       )

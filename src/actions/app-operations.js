@@ -1,6 +1,8 @@
 import SpotifyWebApi from 'spotify-web-api-js';
 import FileSaver from 'file-saver';
+import update from 'immutability-helper';
 
+import CONSTANTS from '../constants';
 import token from '../token';
 
 const appOps = {
@@ -17,10 +19,14 @@ const appOps = {
     });
   },
   toggleImportForm: function() {
-    this.setState({ showImport: !this.state.showImport });
+    const newState = update(this.state, {
+      showImport: (showImport) => !showImport
+    });
+
+    this.setState(newState);
   },
   removeDuplicates: function(tracks) {
-    const allTracks = this.state.set.concat(this.state.reserve);
+    const allTracks = this.state.lists.set.tracks.concat(this.state.lists.reserve.tracks);
 
     return tracks.filter(newTrack => allTracks.filter(oldTrack => oldTrack.id === newTrack.id).length === 0);
   },
@@ -51,11 +57,11 @@ const appOps = {
 
     let stringToWrite = '';
 
-    for(let list in state) {
-      stringToWrite += (list === CONSTANTS.SET) ? 'Set:\n' : 'Reserve:\n';
+    for(let list in state.lists) {
+      stringToWrite += list[0].toUpperCase() + list.slice(1) + '\n';
 
-      for(let track in state[list]) {
-        stringToWrite += convertTrackToString(state[list][track]);
+      for(let track in state.lists[list].tracks) {
+        stringToWrite += convertTrackToString(state.lists[list].tracks[track]);
       }
     };
 
@@ -63,16 +69,8 @@ const appOps = {
 
     FileSaver.saveAs(blob, 'setlist.txt');
   },
-  storeAndSetTracksState: function(list, tracks) {
-    localStorage.setItem(list, JSON.stringify(tracks));
-    this.setState({ [list]: tracks });
-  },
   parseidsFromInput: function(input) {
-    const URIList = input.split('\n');
-    const filteredURIList = URIList.filter(URI => URI !== '');
-    const ids = filteredURIList.map(URI => URI.split(':')[2]);
-
-    return ids;
+    return input.trim().split('\n').map(URI => URI.split(':')[2]);
   }
 }
 

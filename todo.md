@@ -2,10 +2,13 @@
 
 [/] Show/hide import section
 [/] Break App functions out into separate files
-[ ] Why doesn't => work for ^^ ?
-[ ] Best practice for ^^ ?
-[ ] Use update to set toggle state better
-[ ] Really no better way to conditionally set content?
+[/] Use destructuring/assignment for action definitions in App.js
+[/] Move function definitions out of render
+[/] Really no better way to conditionally set content?
+[/] Find a way not to use strings in the App render map
+[/] Why doesn't => work for ^^ ?
+[/] Best practice for ^^ ?
+[/] Use update to set toggle state better
 [ ] Manually set "danger" time
 [ ] Install testing modules
 [ ] Tests

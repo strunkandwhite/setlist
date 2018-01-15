@@ -1,53 +1,112 @@
 import update from 'immutability-helper';
-import Moment from 'moment';
-
 import CONSTANTS from '../constants';
+
+const applyDuration = (obj, list) => update(obj, {
+  lists: {
+    [list]: {
+      duration: () => obj.lists[list].tracks.map(t => t.duration_ms).reduce((acc, val) => acc + val, 0)
+    }
+  }
+});
 
 const trackOps = {
   addTracks: function(list, tracks) {
-    const mergedTracks = update(this.state[list], {
-      $push: tracks
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            $push: tracks
+          },
+        }
+      }
     });
 
-    this.storeAndSetTracksState(list, mergedTracks);
+    const newStateWithDuration = applyDuration(newState, list)
+    this.storeAndSetState(newStateWithDuration);
   },
   removeTrack: function(list, index) {
-    const filteredTracks = update(this.state[list], {
-      $splice: [[index, 1]]
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            $splice: [[index, 1]]
+          }
+        }
+      }
     });
 
-    this.storeAndSetTracksState(list, filteredTracks);
+    const newStateWithDuration = applyDuration(newState, list)
+    this.storeAndSetState(newStateWithDuration);
   },
   removeAllTracks: function(list) {
-    const emptyTracks = [];
-
-    this.storeAndSetTracksState(list, emptyTracks)
-  },
-  moveTrack: function(list, dragIndex, hoverIndex) {
-    const dragTrack = this.state[list][dragIndex];
-    const modifiedTracks = update(this.state[list], {
-      $splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            $set: []
+          }
+        }
+      }
     });
 
-    this.storeAndSetTracksState(list, modifiedTracks)
+    const newStateWithDuration = applyDuration(newState, list)
+    this.storeAndSetState(newStateWithDuration);
+  },
+  moveTrack: function(list, dragIndex, hoverIndex) {
+    const dragTrack = this.state.lists[list].tracks[dragIndex];
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            $splice: [[dragIndex, 1], [hoverIndex, 0, dragTrack]],
+          }
+        }
+      }
+    });
+
+    this.storeAndSetState(newState)
   },
   switchTrack: function(list, index) {
     const otherList = (list === CONSTANTS.LISTS.SET) ? CONSTANTS.LISTS.RESERVE : CONSTANTS.LISTS.SET;
-    const trackToMove = this.state[list][index];
+    const trackToMove = [this.state.lists[list].tracks[index]];
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            $splice: [[index, 1]]
+          }
+        },
+        [otherList]: {
+          tracks: {
+            $push: trackToMove
+          }
+        }
+      }
+    });
 
-    this.removeTrack(list, index);
-    this.addTracks(otherList, [trackToMove]);
+    const newStateWithDuration = applyDuration(newState, list)
+    const newStateWithOtherDuration = applyDuration(newStateWithDuration, otherList)
+    this.storeAndSetState(newStateWithOtherDuration);
   },
   changeTrackBPM: function(list, index, id, input) {
-    const modifiedTracks = update(this.state[list], {
-      [index]: {
-        bpm: {$set: input}
+    const newState = update(this.state, {
+      lists: {
+        [list]: {
+          tracks: {
+            [index]: {
+              bpm: {$set: input}
+            }
+          }
+        }
       }
     });
 
     localStorage.setItem(id, input);
-
-    this.storeAndSetTracksState(list, modifiedTracks);
+    this.storeAndSetState(newState);
+  },
+  storeAndSetState: function(state) {
+    localStorage.setItem('state', JSON.stringify(state));
+    this.setState(state);
   }
 }
 
