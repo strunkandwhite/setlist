@@ -1,26 +1,29 @@
 const express = require('express');
 const axios = require('axios');
+const secret = require('./secret');
 
-const app = express();
+const spotifyRequestObj = {
+  url: 'https://accounts.spotify.com/api/token',
+  method: 'POST',
+  params: {
+    grant_type: 'client_credentials'
+  },
+  headers: {
+    'Authorization': `Basic ${secret}`,
+    'Content-Type':'application/x-www-form-urlencoded'
+  }
+}
 
 const getSpotifyToken = async(req, res) => {
   try {
-    const spotifyAPICall = await axios({
-      url: 'https://accounts.spotify.com/api/token',
-      method: 'POST',
-      params: {
-        grant_type: 'client_credentials'
-      },
-      headers: {
-        'Authorization': 'Basic YTQ1M2NhOGFjZmU5NDdiZWJmN2JkMTY3M2UzZTVmNTM6NDU0MTY3MzUyNDI2NDkwNTg0Nzg1YWVjOGI5ZGNlODE=',
-        'Content-Type':'application/x-www-form-urlencoded'
-      }
-    });
+    const spotifyAPICall = await axios(spotifyRequestObj);
     res.send({ token: spotifyAPICall.data.access_token });
   } catch(e) {
     console.log(e);
   }
 }
+
+const app = express();
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

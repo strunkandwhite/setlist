@@ -13,8 +13,7 @@ server/build
 client/build
 
 # access token stuff
-client/src/token.js
-client/token.sh
+server/secret.js
 
 # misc
 .DS_Store
