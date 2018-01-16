@@ -20,16 +20,19 @@ class App extends Component {
 
     this.state = {
       showImport: true,
-      lists: {}
-    };
+      lists: (() => {
+        let obj = {};
+        [CONSTANTS.LISTS.SET, CONSTANTS.LISTS.RESERVE].forEach(list => (
+          obj[list] = {
+            tracks: [],
+            duration: 0,
+            maxDuration: 0
+          }
+        ));
 
-    [CONSTANTS.LISTS.SET, CONSTANTS.LISTS.RESERVE].forEach(list => (
-      this.state.lists[list] = {
-        tracks: [],
-        duration: 0,
-        maxDuration: 0
-      }
-    ));
+        return obj;
+      })()
+    };
 
     [handlers, appOps, trackOps].forEach(set => {
       for(let func in set) {
