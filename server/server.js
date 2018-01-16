@@ -5,7 +5,7 @@ const app = express();
 
 const getSpotifyToken = async(req, res) => {
   try {
-    const spot = await axios({
+    const spotifyAPICall = await axios({
       url: 'https://accounts.spotify.com/api/token',
       method: 'POST',
       params: {
@@ -16,11 +16,17 @@ const getSpotifyToken = async(req, res) => {
         'Content-Type':'application/x-www-form-urlencoded'
       }
     });
-    res.send(spot.data.access_token);
+    res.send({ token: spotifyAPICall.data.access_token });
   } catch(e) {
     console.log(e);
   }
 }
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/get-spotify-token', getSpotifyToken);
 

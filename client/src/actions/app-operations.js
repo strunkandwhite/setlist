@@ -3,12 +3,13 @@ import FileSaver from 'file-saver';
 import update from 'immutability-helper';
 
 import CONSTANTS from '../constants';
-import token from '../token';
 
 const appOps = {
-  getTracksFromSpotify: function(list, ids) {
+  getTracksFromSpotify: async function(list, ids) {
+    const response = await fetch('http://localhost:3001/get-spotify-token');
+    const responseJSON = await response.json();
     const spotify = new SpotifyWebApi();
-    spotify.setAccessToken(token);
+    spotify.setAccessToken(responseJSON.token);
     spotify.getTracks(ids, (err, data) => {
       if (err) console.error(err);
       else {

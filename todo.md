@@ -9,8 +9,12 @@
 [/] Why doesn't => work for ^^ ?
 [/] Best practice for ^^ ?
 [/] Use update to set toggle state better
-[ ] Get rid of need for manual access token
+[/] Get rid of need for manual access token
+[ ] Move client secret out of server code
+[ ] Avoid redefining axios object every time
+[ ] Cache access token for 1 hr
 [ ] Set state in one declaration?
+[ ] Best practice for client/server split?
 [ ] Install testing modules
 [ ] Tests
 [ ] Install sass module
