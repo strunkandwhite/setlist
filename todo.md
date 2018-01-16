@@ -9,12 +9,13 @@
 [/] Why doesn't => work for ^^ ?
 [/] Best practice for ^^ ?
 [/] Use update to set toggle state better
-[ ] Manually set "danger" time
+[ ] Get rid of need for manual access token
+[ ] Set state in one declaration?
 [ ] Install testing modules
 [ ] Tests
 [ ] Install sass module
 [ ] Convert to scss
-[ ] Get rid of need for manual access token
+[ ] Manually set "danger" time
 [ ] Automatically get BPMs if possible
 [ ] Real user authentication, get real playlists
 [ ] Spotify error handling

@@ -1,0 +1,14 @@
+{
+  "name": "setlist-server",
+  "version": "0.1.0",
+  "description": "Server for Setlist.",
+  "main": "server.js",
+  "repository": "https://www.github.com/jacklenehan/setlist",
+  "author": "Jack Lenehan",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2"
+  }
+}

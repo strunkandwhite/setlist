@@ -1,7 +1,13 @@
 {
-  "name": "setlist",
-  "version": "0.1.0",
-  "private": true,
+  "name": "setlist-client",
+  "version": "0.9.0",
+  "description": "Server for Setlist.",
+  "main": "index.js",
+  "repository": "https://www.github.com/jacklenehan/setlist",
+  "homepage" : "http://www.jacklenehan.io/setlist",
+  "author": "Jack Lenehan",
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
