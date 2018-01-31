@@ -1,0 +1,65 @@
+.Track {
+  display: flex;
+  cursor: move;
+  margin: .25em 0;
+  padding: .25em;
+  justify-content: space-between;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.song {
+    background: #f0f0f0;
+  }
+
+  &.spacer {
+    background: #ffffff;
+
+    .track-info {
+      text-align: center;
+    }
+
+    .bpm {
+      opacity: 0;
+    }
+  }
+
+  &.dragging {
+    opacity: 0.25;
+  }
+
+  .track-info {
+    display: flex;
+  }
+
+  span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  button {
+    width: 2rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  .bpm {
+    margin-right: .5em;
+    width: 3em;
+    background: #ddeaff;
+    border: none;
+    font-size: 14px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

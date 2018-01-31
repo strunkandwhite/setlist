@@ -11,6 +11,7 @@ client/coverage
 # production
 server/build
 client/build
+*.css
 
 # access token stuff
 server/secret.js

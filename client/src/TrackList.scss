@@ -1,0 +1,27 @@
+.TrackList {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+  padding: 0 .5rem;
+
+  ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .duration.too-long {
+    color: red;
+  }
+
+  &.set {
+    grid-column-start: 3;
+    grid-column-end: 7;
+  }
+
+  &.reserve {
+    grid-column-start: 7;
+    grid-column-end: 11;
+  }
+}
