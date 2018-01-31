@@ -4,7 +4,7 @@
   "description": "Server for Setlist.",
   "main": "index.js",
   "repository": "https://www.github.com/jacklenehan/setlist",
-  "homepage" : "http://www.jacklenehan.io/setlist",
+  "homepage": "http://www.jacklenehan.io/setlist",
   "author": "Jack Lenehan",
   "license": "MIT",
   "private": false,
@@ -37,6 +37,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.3",
     "moment-duration-format": "^1.3.0",
+    "node-sass-chokidar": "^0.0.3",
     "normalize.css": "^7.0.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
@@ -61,7 +62,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
   },
   "jest": {
     "collectCoverageFrom": [
