@@ -13,16 +13,17 @@
 [/] Move client secret out of server code
 [/] Avoid redefining axios object every time
 [/] Set state in one declaration?
+[/] Install sass module
+[/] Convert to scss
 [ ] Better secrets mgmt?
 [ ] Cache access token for 1 hr
 [ ] Best practice for client/server split?
 [ ] Install testing modules
 [ ] Tests
-[ ] Install sass module
-[ ] Convert to scss
 [ ] Manually set "danger" time
 [ ] Automatically get BPMs if possible
 [ ] Real user authentication, get real playlists
 [ ] Spotify error handling
 [ ] PUT playlist back to Spotify? Or POST as new?
 [ ] Play track from app
+[ ] Create components out of Toggle and Export buttons
