@@ -15,15 +15,18 @@
 [/] Set state in one declaration?
 [/] Install sass module
 [/] Convert to scss
+[/] Install testing modules
+[ ] Tests
 [ ] Better secrets mgmt?
 [ ] Cache access token for 1 hr
 [ ] Best practice for client/server split?
-[ ] Install testing modules
-[ ] Tests
 [ ] Manually set "danger" time
 [ ] Automatically get BPMs if possible
 [ ] Real user authentication, get real playlists
 [ ] Spotify error handling
 [ ] PUT playlist back to Spotify? Or POST as new?
+[ ] Styling pass
+[ ] Favicon
+[ ] Serve from AWS
 [ ] Play track from app
 [ ] Create components out of Toggle and Export buttons
