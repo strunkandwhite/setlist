@@ -2,6 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const secret = require('./secret');
 
+const port = process.env.NODE_ENV === 'test' ? 3002 : 3001;
+
 const spotifyRequestObj = {
   url: 'https://accounts.spotify.com/api/token',
   method: 'POST',
@@ -32,5 +34,10 @@ app.use((req, res, next) => {
 });
 
 app.get('/get-spotify-token', getSpotifyToken);
+app.get('/', (req, res) => res.send('ok'));
 
-app.listen(3001, () => console.log('listening on 3001'));
+if(!module.parent) {
+  app.listen(port, () => console.log(`listening on ${port}`));
+}
+
+module.exports = app;

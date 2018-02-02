@@ -16,10 +16,11 @@
 [/] Install sass module
 [/] Convert to scss
 [/] Install testing modules
+[/] Best practice for client/server split?
 [ ] Tests
+[ ] Increase coverage
 [ ] Better secrets mgmt?
 [ ] Cache access token for 1 hr
-[ ] Best practice for client/server split?
 [ ] Manually set "danger" time
 [ ] Automatically get BPMs if possible
 [ ] Real user authentication, get real playlists
