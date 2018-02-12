@@ -50,11 +50,11 @@ class TrackList extends Component {
   }
 
   outputRemoveButton() {
-    return (this.props.list.length > 0) ? <button onClick={this.handleRemoveAllTracksClick}>Remove all tracks</button> : null;
+    return (this.props.tracks.length > 0) ? <button className='remove-all' onClick={this.handleRemoveAllTracksClick}>Remove all tracks</button> : null;
   }
 
   outputAddSpacerButton() {
-    return (this.props.list === CONSTANTS.LISTS.SET) ? <button onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
+    return (this.props.list === CONSTANTS.LISTS.SET) ? <button className='add-spacer' onClick={this.handleAddSpacerClick}>Add spacer</button> : null;
   }
 
   render() {
