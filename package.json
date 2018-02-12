@@ -66,8 +66,9 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "client": "node scripts/client.js",
-    "server": "nodemon src/server/server.js",
+    "start": "concurrently 'yarn start-client' 'yarn start-server'",
+    "start-client": "node scripts/client.js",
+    "start-server": "nodemon src/server/server.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "build-css": "node-sass-chokidar src/ -o src/",
