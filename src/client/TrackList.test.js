@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TrackList from './TrackList';
+import Track from './Track';
 
 describe('TrackList', () => {
   let props;
@@ -15,25 +16,24 @@ describe('TrackList', () => {
     return wrapper;
   }
 
-  describe('basic render', () => {
-    beforeEach(() => {
-      const fn = jest.fn;
-      props = {
-        buttonDir: '>',
-        list: 'foo',
-        tracks: [],
-        maxDuration: 0,
-        duration: 0,
-        handleAddSpacerClick: fn,
-        handleTrackBPMChange: fn,
-        handleRemoveTrackClick: fn,
-        handleRemoveAllTracksClick: fn,
-        moveTrack: fn
-      };
+  beforeEach(() => {
+    props = {
+      buttonDir: '>',
+      list: 'foo',
+      tracks: [],
+      maxDuration: 0,
+      duration: 0,
+      handleAddSpacerClick: jest.fn(),
+      handleTrackBPMChange: jest.fn(),
+      handleRemoveTrackClick: jest.fn(),
+      handleRemoveAllTracksClick: jest.fn(),
+      moveTrack: jest.fn()
+    };
 
-      wrapper = undefined;
-    });
+    wrapper = undefined;
+  });
 
+  describe('render', () => {
     it('renders without crashing', () => {
       trackList();
     });
@@ -42,23 +42,23 @@ describe('TrackList', () => {
       expect(trackList().is('section')).toBe(true);
     });
 
-    describe('duration behavior', () => {
+    describe('props.duration behavior', () => {
       it('indicates the list duration', () => {
         expect(trackList().find('.duration').text()).toContain(props.duration);
       });
 
       describe('when duration is greater than maxDuration', () => {
         beforeEach(() => {
-          props.duration = 10;
         });
 
         it('indicates that the duration is too long', () => {
+          props.duration = 10;
           expect(trackList().find('.duration').is('.too-long')).toBe(true);
         });
       });
     });
 
-    describe('list behavior', () => {
+    describe('props.list behavior', () => {
       it('includes the list as a selector', () => {
         expect(trackList().is(`.${props.list}`)).toBe(true);
       });
@@ -74,11 +74,8 @@ describe('TrackList', () => {
       });
 
       describe('when rendering the \'set\' list', () => {
-        beforeEach(() => {
-          props.list = 'set';
-        });
-
         it('renders a button to add a spacer', () => {
+          props.list = 'set';
           expect(trackList().find('.add-spacer').length).toBe(1);
         });
       });
@@ -90,13 +87,47 @@ describe('TrackList', () => {
       });
 
       describe('when rendering a non-empty list', () => {
-        beforeEach(() => {
-          props.tracks = [{id: 1}];
-        });
-
         it('renders a button to remove all tracks', () => {
+          props.tracks = [{id: 1}];
           expect(trackList().find('.remove-all').length).toBe(1);
         });
+      });
+    });
+    describe('props.tracks behavior', () => {
+      it('renders a <Track> for each track', () => {
+        props.tracks = [{id: 1}, {id: 2}];
+        expect(trackList().find(Track).length).toBe(2);
+      });
+    });
+  });
+  describe('event handling', () => {
+    describe('add spacer button', () => {
+      beforeEach(() => {
+        props.list = 'set';
+        trackList().find('.add-spacer').simulate('click');
+      });
+
+      it('calls the handleAddSpacerClick function once when the \'add spacer\' button is clicked', () => {
+        expect(props.handleAddSpacerClick.mock.calls.length).toBe(1);
+      });
+
+      it('calls the handleAddSpacerClick function with the correct argument when the \'add spacer\' button is clicked', () => {
+        expect(props.handleAddSpacerClick.mock.calls[0][0]).toBe(props.list);
+      });
+    });
+
+    describe('remove all button', () => {
+      beforeEach(() => {
+        props.tracks = [{id: 1}];
+        trackList().find('.remove-all').simulate('click');
+      });
+
+      it('calls the handleRemoveAllTracksClick function once when the \'remove all\' button is clicked', () => {
+        expect(props.handleRemoveAllTracksClick.mock.calls.length).toBe(1);
+      });
+
+      it('calls the handleRemoveAllTracksClick function with the correct argument when the \'remove all\' button is clicked', () => {
+        expect(props.handleRemoveAllTracksClick.mock.calls[0][0]).toBe(props.list);
       });
     });
   });

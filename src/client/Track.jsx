@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { flow } from 'lodash';
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
+import Moment from 'moment';
+import 'moment-duration-format';
 
 import CONSTANTS from './constants';
 
@@ -49,7 +51,7 @@ class Track extends Component {
     isDragging: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     id: PropTypes.string.isRequired,
-    length: PropTypes.string.isRequired,
+    duration_ms: PropTypes.number.isRequired,
     buttonDir: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -109,7 +111,7 @@ class Track extends Component {
       connectDropTarget,
       isDragging,
       buttonDir,
-      length,
+      duration_ms,
       artist,
       name,
       type,
@@ -127,7 +129,7 @@ class Track extends Component {
             value={bpm}
             disabled={(type !== CONSTANTS.TYPES.SONG)}
           />
-          <span>({length}) {artist} - {name}</span>
+          <span>({Moment(duration_ms).format('m:ss')}) {artist} - {name}</span>
           <button onClick={this.handleSwitchClick}>{buttonDir}</button>
           <button onClick={this.handleRemoveClick}>x</button>
         </li>

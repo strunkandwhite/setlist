@@ -82,7 +82,7 @@ class TrackList extends Component {
               key={id}
               id={id}
               index={i}
-              length={Moment(duration_ms).format('m:ss')}
+              duration_ms={duration_ms}
               artist={artist}
               name={name}
               bpm={bpm}
