@@ -17,10 +17,10 @@
 [/] Convert to scss
 [/] Install testing modules
 [/] Best practice for client/server split?
-[ ] Re-implement bpm handling in track-ops
-[ ] Remove findDOMnode from Track?
-[ ] Spread operator in TrackList?
-[ ] Break Track up?
+[/] Spread operator in TrackList?
+[/] Re-implement bpm handling in track-ops
+[ ] Break Track up? -> BPMInput, Info, ListControls?
+[ ] Break TrackList up? -> Header, List?
 [ ] Redux
 [ ] Tests
 [ ] Increase coverage

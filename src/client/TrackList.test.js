@@ -27,6 +27,7 @@ describe('TrackList', () => {
       handleTrackBPMChange: jest.fn(),
       handleRemoveTrackClick: jest.fn(),
       handleRemoveAllTracksClick: jest.fn(),
+      handleSwitchTrackClick: jest.fn(),
       moveTrack: jest.fn()
     };
 
