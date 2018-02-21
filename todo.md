@@ -17,6 +17,11 @@
 [/] Convert to scss
 [/] Install testing modules
 [/] Best practice for client/server split?
+[ ] Re-implement bpm handling in track-ops
+[ ] Remove findDOMnode from Track?
+[ ] Spread operator in TrackList?
+[ ] Break Track up?
+[ ] Redux
 [ ] Tests
 [ ] Increase coverage
 [ ] Better secrets mgmt?

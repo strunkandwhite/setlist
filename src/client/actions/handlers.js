@@ -6,7 +6,13 @@ const handlers = {
     const ids = this.parseidsFromInput(input)
     this.getTracksFromSpotify(list, ids);
   },
-  handleTrackBPMChange: function(list, index, id, input) {
+  handleTrackBPMChange: function(list, index, id, e) {
+    const input = e.target.value;
+    const letters = /[a-zA-Z]/;
+
+    if(input.length > 3) return;
+    if(letters.test(input)) return;
+
     this.changeTrackBPM(list, index, id, input);
   },
   handleRemoveTrackClick: function(list, index) {

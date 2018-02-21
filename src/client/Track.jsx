@@ -10,6 +10,65 @@ import CONSTANTS from './constants';
 
 import './Track.css';
 
+class Track extends Component {
+  static propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    connectDropTarget: PropTypes.func.isRequired,
+    handleTrackBPMChange: PropTypes.func.isRequired,
+    handleRemoveTrackClick: PropTypes.func.isRequired,
+    handleSwitchTrackClick: PropTypes.func.isRequired,
+    moveTrack: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired,
+    index: PropTypes.number.isRequired,
+    duration_ms: PropTypes.number.isRequired,
+    buttonDir: PropTypes.string.isRequired,
+    artist: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    bpm: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    list: PropTypes.string.isRequired
+  };
+
+  render() {
+    const {
+      connectDragSource,
+      connectDropTarget,
+      handleTrackBPMChange,
+      handleRemoveTrackClick,
+      handleSwitchTrackClick,
+      isDragging,
+      index,
+      duration_ms,
+      buttonDir,
+      artist,
+      name,
+      bpm,
+      type,
+      list,
+      id
+    } = this.props;
+
+    return connectDragSource(
+      connectDropTarget(
+        <li className={`Track ${type} ${(isDragging ? 'dragging' : '')}`}>
+          <input
+            onChange={(e) => handleTrackBPMChange(list, index, id, e)}
+            disabled={(type !== CONSTANTS.TYPES.SONG)}
+            placeholder='bpm'
+            className='bpm'
+            value={bpm}
+            type='text'
+          />
+          <span>({Moment(duration_ms).format('m:ss')}) {artist} - {name}</span>
+          <button onClick={() => handleSwitchTrackClick(list, index)}>{buttonDir}</button>
+          <button onClick={() => handleRemoveTrackClick(list, index)}>x</button>
+        </li>
+      )
+    )
+  }
+};
+
+
 const trackSource = {
   beginDrag(props) {
     return {
@@ -37,104 +96,6 @@ const trackTarget = {
 
     props.moveTrack(props.list, dragIndex, hoverIndex);
     monitor.getItem().index = hoverIndex;
-  }
-}
-
-class Track extends Component {
-  static propTypes = {
-    connectDragSource: PropTypes.func.isRequired,
-    connectDropTarget: PropTypes.func.isRequired,
-    handleTrackBPMChange: PropTypes.func.isRequired,
-    handleRemoveTrackClick: PropTypes.func.isRequired,
-    handleSwitchTrackClick: PropTypes.func.isRequired,
-    moveTrack: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool.isRequired,
-    index: PropTypes.number.isRequired,
-    id: PropTypes.string.isRequired,
-    duration_ms: PropTypes.number.isRequired,
-    buttonDir: PropTypes.string.isRequired,
-    artist: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    bpm: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    list: PropTypes.string.isRequired
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSwitchClick = this.handleSwitchClick.bind(this);
-    this.handleRemoveClick = this.handleRemoveClick.bind(this);
-  }
-
-  handleChange(e) {
-    const {
-      handleTrackBPMChange,
-      index,
-      list,
-      id
-    } = this.props;
-
-    const input = e.target.value;
-    const letters = /[a-zA-Z]/;
-
-    if(input.length > 3) return;
-    if(letters.test(input)) return;
-
-    handleTrackBPMChange(list, index, id, input);
-  }
-
-  handleSwitchClick() {
-    const {
-      handleSwitchTrackClick,
-      index,
-      list
-    } = this.props;
-
-    handleSwitchTrackClick(list, index);
-  }
-
-  handleRemoveClick(e) {
-    const {
-      handleRemoveTrackClick,
-      index,
-      list
-    } = this.props;
-
-    handleRemoveTrackClick(list, index);
-  }
-
-  render() {
-    const {
-      connectDragSource,
-      connectDropTarget,
-      isDragging,
-      buttonDir,
-      duration_ms,
-      artist,
-      name,
-      type,
-      bpm
-    } = this.props
-
-    return connectDragSource(
-      connectDropTarget(
-        <li className={`Track ${type} ${(isDragging ? 'dragging' : '')}`}>
-          <input
-            type='text'
-            className='bpm'
-            placeholder='bpm'
-            onChange={this.handleChange}
-            value={bpm}
-            disabled={(type !== CONSTANTS.TYPES.SONG)}
-          />
-          <span>({Moment(duration_ms).format('m:ss')}) {artist} - {name}</span>
-          <button onClick={this.handleSwitchClick}>{buttonDir}</button>
-          <button onClick={this.handleRemoveClick}>x</button>
-        </li>
-      )
-    );
   }
 }
 
