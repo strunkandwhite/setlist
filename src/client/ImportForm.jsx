@@ -1,55 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { importTracks } from './actions';
 
 import CONSTANTS from './constants';
 
 import './ImportForm.css'
 
-class ImportForm extends Component {
-  static propTypes = {
-    handleImportFormSubmit: PropTypes.func.isRequired,
-  }
+let ImportForm = ({ dispatch }) => {
+  let textarea;
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      value: CONSTANTS.SETLIST
-    }
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-  }
-
-  handleButtonClick(e) {
-    e.preventDefault();
-    const list = e.target.value;
-
-    this.props.handleImportFormSubmit(list, this.state.value);
-  }
-
-  handleChange(e) {
-    this.setState({value: e.target.value });
-  }
-
-  render() {
-    return (
-      <section className='ImportForm'>
-        <h3>import</h3>
-        <form>
-          <textarea
-            className='uri-list'
-            onChange={this.handleChange}
-            value={this.state.value}
-            placeholder='Enter URIs here'
-          />
-          {[CONSTANTS.LISTS.SET, CONSTANTS.LISTS.RESERVE].map(list => (
-            <button key={list} value={list} onClick={this.handleButtonClick}> Add to {list}</button>
-          ))}
-        </form>
-      </section>
-    );
-  }
+  return (
+    <section className='ImportForm'>
+      <h3>import</h3>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          if(!textarea.value.trim()) {
+            return;
+          }
+          dispatch(importTracks('foo'));
+        }}
+      >
+        <textarea
+          className='uri-list'
+          placeholder='Enter URIs here'
+          ref={node => {textarea = node}}
+        />
+        <button type='submit'>Add to tracks</button>
+      </form>
+    </section>
+  )
 }
+
+ImportForm.propTypes = {
+  handleImportFormSubmit: PropTypes.func.isRequired,
+}
+
+ImportForm = connect()(ImportForm);
 
 export default ImportForm;
