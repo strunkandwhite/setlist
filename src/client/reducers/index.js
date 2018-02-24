@@ -70,16 +70,18 @@ const lists = (
     }
   }) => state
 
-const tracksBySet = (state = {set: {tracks: []}, reserve: {tracks: []}}, action) => {
+const tracksByList = (state = {set: {tracks: []}, reserve: {tracks: []}}, action) => {
   switch(action.type) {
     case ADD_TRACK_TO_LIST:
-      return Object.assign(state,
-        {
-          [action.list]: {
-            tracks: state[action.list].tracks.concat([action.trackId])
-          }
+      return {
+        ...state,
+        [action.list]: {
+          tracks: [
+            action.trackId,
+            ...state[action.list].tracks
+          ]
         }
-      );
+      }
     default:
       return state;
   }
@@ -96,7 +98,7 @@ const setlistApp = combineReducers({
   isAuthorizedWithSpotify,
   spotifyToken,
   entities,
-  tracksBySet
+  tracksByList
 });
 
 export default setlistApp;

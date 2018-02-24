@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import ImportForm from '../containers/ImportForm';
+import FilteredTrackList from '../containers/FilteredTrackList';
 
 import '../styles/App.css';
 
@@ -11,6 +13,7 @@ const SetlistBuilder = ({ showImport, toggleImportForm }) => (
       ? <ImportForm/>
       : null
     }
+    <FilteredTrackList list='set' />
     <button onClick={() => {}} className='export'>Export</button>
     <button onClick={toggleImportForm} className='toggle-import-form'>Toggle Import Form</button>
   </div>
