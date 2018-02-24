@@ -4,6 +4,7 @@ export const formatTracks = tracks => tracks.reduce((collection, {artists, name,
   collection[id] = {
     artist: artists[0].name,
     name,
+    id,
     duration_ms,
     bpm: localStorage.getItem(id) || ''
   };

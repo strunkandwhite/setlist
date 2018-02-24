@@ -6,7 +6,7 @@ import 'moment-duration-format';
 import TrackList from '../components/TrackList';
 
 const mapStateToProps = (state, { name }) => {
-  const listTracks = state.tracksByList[name].tracks;
+  const listTracks = state.tracksByList[name].tracks.map(track => state.entities.tracks[track]);
   const totalDuration = listTracks.reduce((acc, track) => acc += track.duration_ms, 0);
 
   return {

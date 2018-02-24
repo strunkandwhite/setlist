@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Track from '../containers/Track';
 
 import '../styles/TrackList.css';
 
@@ -20,9 +21,7 @@ const TrackList = ({
         </span>
       </h3>
       <ul>
-        {tracks.map((track, index) => (
-          <span>{track}</span>
-        ))}
+        {tracks.map(track => <Track key={track.id} {...track} />)}
       </ul>
     </section>
   )
