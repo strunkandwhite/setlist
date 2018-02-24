@@ -14,7 +14,7 @@ const SetlistBuilder = ({ lists, showImport, toggleImportForm }) => (
       : null
     }
     {lists.map(list => (
-        <FilteredTrackList list={list.name} maxDuration={list.maxDuration} key={list.id}/>
+        <FilteredTrackList key={list.id} {...list}/>
       )
     )}
     <button onClick={() => {}} className='export'>Export</button>

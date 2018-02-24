@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import '../styles/TrackList.css';
 
 const TrackList = ({
-  list,
+  name,
   tracks,
   isTooLong,
   formattedDuration
@@ -12,9 +12,9 @@ const TrackList = ({
   const className = (isTooLong) ? 'duration too-long' : 'duration';
 
   return (
-    <section className={`TrackList ${list}`}>
+    <section className={`TrackList ${name}`}>
       <h3>
-        {list}&nbsp;
+        {name}&nbsp;
         <span className={className}>
           ({formattedDuration})
         </span>
@@ -29,7 +29,7 @@ const TrackList = ({
 };
 
 TrackList.propTypes = {
-  list: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   tracks: PropTypes.array.isRequired,
   formattedDuration: PropTypes.string.isRequired,
   isTooLong: PropTypes.bool.isRequired

@@ -5,12 +5,15 @@ import 'moment-duration-format';
 
 import TrackList from '../components/TrackList';
 
-const mapStateToProps = (state, { list }) => {
+const mapStateToProps = (state, { name }) => {
+  const listTracks = state.tracksByList[name].tracks;
+  const totalDuration = listTracks.reduce((acc, track) => acc += track.duration_ms, 0);
+
   return {
-    tracks: state.tracksByList[list].tracks,
     isTooLong: false,
     formattedDuration: '0:00:00',
-    list
+    tracks: listTracks,
+    name
   }
 };
 
@@ -19,7 +22,7 @@ const FilteredTrackList = connect(
 )(TrackList);
 
 FilteredTrackList.propTypes = {
-  list: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired
 }
 
 export default FilteredTrackList;
