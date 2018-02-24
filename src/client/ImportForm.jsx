@@ -1,9 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { importTracks } from './actions';
-
-import CONSTANTS from './constants';
 
 import './ImportForm.css'
 
@@ -16,10 +13,11 @@ let ImportForm = ({ dispatch }) => {
       <form
         onSubmit={e => {
           e.preventDefault();
-          if(!textarea.value.trim()) {
+          const value = textarea.value;
+          if(!value.trim()) {
             return;
           }
-          dispatch(importTracks('foo'));
+          dispatch(importTracks(value));
         }}
       >
         <textarea
@@ -31,10 +29,6 @@ let ImportForm = ({ dispatch }) => {
       </form>
     </section>
   )
-}
-
-ImportForm.propTypes = {
-  handleImportFormSubmit: PropTypes.func.isRequired,
 }
 
 ImportForm = connect()(ImportForm);
