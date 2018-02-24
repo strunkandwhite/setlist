@@ -63,10 +63,12 @@ const tracks = (state = {}, action) => {
 const lists = (
   state = {
     1: {
-      name: 'set'
+      name: 'set',
+      maxDuration: 10
     },
     2: {
-      name: 'reserve'
+      name: 'reserve',
+      maxDuration: 0
     }
   }) => state
 
