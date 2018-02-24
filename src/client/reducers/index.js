@@ -6,8 +6,8 @@ import {
   REQUEST_TRACKS,
   RECEIVE_TRACKS,
   ADD_TRACK_TO_LIST
-} from './actions'
-import { formatTracks } from './helpers'
+} from '../actions'
+import { formatTracks } from '../helpers'
 
 const showImport = (state = true, action) => {
   switch(action.type) {

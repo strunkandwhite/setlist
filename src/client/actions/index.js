@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import spotifyApi from 'spotify-web-api-js';
-import { parseIds } from './helpers'
+import { parseIds } from '../helpers'
 
 const spotify = new spotifyApi();
 
