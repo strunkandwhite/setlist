@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { TOGGLE_IMPORT_FORM } from './actions'
-import SetlistBuilder from './SetlistBuilder';
+import { TOGGLE_IMPORT_FORM } from '../actions'
+import SetlistBuilder from '../components/SetlistBuilder';
 
 const mapStateToProps = state => {
   return {

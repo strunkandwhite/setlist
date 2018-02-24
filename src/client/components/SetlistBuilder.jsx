@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImportForm from './ImportForm';
+import ImportForm from '../containers/ImportForm';
 
-import './App.css';
+import '../styles/App.css';
 
 const SetlistBuilder = ({ showImport, toggleImportForm }) => (
   <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>

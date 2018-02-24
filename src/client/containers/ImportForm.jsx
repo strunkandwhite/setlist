@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { importTracks } from './actions';
+import { importTracks } from '../actions';
 
-import './ImportForm.css'
+import '../styles/ImportForm.css'
 
 let ImportForm = ({ dispatch }) => {
   let textarea;
