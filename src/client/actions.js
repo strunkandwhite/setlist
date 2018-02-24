@@ -34,7 +34,10 @@ export const importTracks = input => {
         return spotify.getTracks(parseIds(input), (error, data) => {
           if (error) console.error(error);
           else {
-            dispatch(receiveTracks(data))
+            dispatch(receiveTracks(data));
+            data.tracks.forEach(track => {
+              dispatch(addTrackToList(track.id, 'set'));
+            });
           }
         });
       }
@@ -49,7 +52,7 @@ export const RECEIVE_TRACKS = 'RECEIVE_TRACKS';
 export const receiveTracks = data => ({ type: RECEIVE_TRACKS, data });
 
 export const ADD_TRACK_TO_LIST = 'ADD_TRACK_TO_LIST';
-export const addTrackToList = (trackId, listId) => ({ type: ADD_TRACK_TO_LIST, trackId, listId });
+export const addTrackToList = (trackId, list) => ({ type: ADD_TRACK_TO_LIST, trackId, list });
 
 export const CHANGE_TRACK_BPM = 'CHANGE_TRACK_BPM';
 export const changeTrackBPM = (trackId, bpm) => ({ type: CHANGE_TRACK_BPM, trackId, bpm });

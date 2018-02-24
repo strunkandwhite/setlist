@@ -21,6 +21,7 @@
 [/] Re-implement bpm handling in track-ops
 [ ] Redux
 [ ] Normalize state
+[ ] Remove hard-coding of set/reserve lists
 [ ] Add error handling action/thunk
 [ ] Break Track up? -> BPMInput, Info, ListControls?
 [ ] Break TrackList up? -> Header, List?

@@ -4,7 +4,8 @@ import {
   REQUEST_AUTH,
   RECEIVE_AUTH,
   REQUEST_TRACKS,
-  RECEIVE_TRACKS
+  RECEIVE_TRACKS,
+  ADD_TRACK_TO_LIST
 } from './actions'
 import { formatTracks } from './helpers'
 
@@ -59,12 +60,43 @@ const tracks = (state = {}, action) => {
   }
 }
 
+const lists = (
+  state = {
+    1: {
+      name: 'set'
+    },
+    2: {
+      name: 'reserve'
+    }
+  }) => state
+
+const tracksBySet = (state = {set: {tracks: []}, reserve: {tracks: []}}, action) => {
+  switch(action.type) {
+    case ADD_TRACK_TO_LIST:
+      return Object.assign(state,
+        {
+          [action.list]: {
+            tracks: state[action.list].tracks.concat([action.trackId])
+          }
+        }
+      );
+    default:
+      return state;
+  }
+}
+
+const entities = combineReducers({
+  tracks,
+  lists
+});
+
 const setlistApp = combineReducers({
   showImport,
   isFetching,
   isAuthorizedWithSpotify,
   spotifyToken,
-  tracks
+  entities,
+  tracksBySet
 });
 
 export default setlistApp;
