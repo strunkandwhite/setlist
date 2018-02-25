@@ -5,7 +5,8 @@ import {
   RECEIVE_AUTH,
   REQUEST_TRACKS,
   RECEIVE_TRACKS,
-  ADD_TRACK_TO_LIST
+  ADD_TRACK_TO_LIST,
+  CHANGE_TRACK_BPM
 } from '../actions'
 import { formatTracks } from '../helpers'
 
@@ -55,6 +56,14 @@ const tracks = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_TRACKS:
       return Object.assign(state, formatTracks(action.data.tracks));
+    case CHANGE_TRACK_BPM:
+      return {
+        ...state,
+        [action.trackId]: {
+          ...state[action.trackId],
+          bpm: action.bpm
+        }
+      }
     default:
       return state;
   }

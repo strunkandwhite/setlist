@@ -6,20 +6,19 @@ import '../styles/ImportForm.css'
 
 let ImportForm = ({ dispatch }) => {
   let textarea;
+  const handleSubmit = e => {
+    e.preventDefault();
+    const value = textarea.value;
+    if(!value.trim()) {
+      return;
+    }
+    dispatch(importTracks(value));
+  };
 
   return (
     <section className='ImportForm'>
       <h3>import</h3>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          const value = textarea.value;
-          if(!value.trim()) {
-            return;
-          }
-          dispatch(importTracks(value));
-        }}
-      >
+      <form onSubmit={handleSubmit} >
         <textarea
           className='uri-list'
           placeholder='Enter URIs here'

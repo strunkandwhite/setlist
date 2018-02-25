@@ -55,7 +55,7 @@ export const ADD_TRACK_TO_LIST = 'ADD_TRACK_TO_LIST';
 export const addTrackToList = (trackId, list) => ({ type: ADD_TRACK_TO_LIST, trackId, list });
 
 export const CHANGE_TRACK_BPM = 'CHANGE_TRACK_BPM';
-export const changeTrackBPM = (trackId, bpm) => ({ type: CHANGE_TRACK_BPM, trackId, bpm });
+export const changeTrackBpm = (trackId, bpm) => ({ type: CHANGE_TRACK_BPM, trackId, bpm });
 
 export const REMOVE_TRACK = 'REMOVE_TRACK';
 export const removeTrack = trackId => ({ type: REMOVE_TRACK, trackId });
