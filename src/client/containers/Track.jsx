@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeTrackBpm } from '../actions';
+import { changeTrackBpm, removeTrackFromList } from '../actions';
 import Moment from 'moment';
 import 'moment-duration-format';
 
 import '../styles/Track.css';
 
-let Track = ({ id, artist, name, duration_ms, bpm, dispatch }) => {
+let Track = ({ id, artist, name, duration_ms, bpm, list, dispatch }) => {
   let input;
   const handleChange = e => {
     e.preventDefault();
@@ -32,7 +32,7 @@ let Track = ({ id, artist, name, duration_ms, bpm, dispatch }) => {
       />
       <span>({Moment.duration(duration_ms).format('m:ss')}) {artist} - {name}</span>
       <button onClick={() => {}}>></button>
-      <button onClick={() => {}}>x</button>
+      <button onClick={() => {dispatch(removeTrackFromList(id, list))}}>x</button>
     </li>
   );
 }
@@ -42,6 +42,7 @@ Track.propTypes = {
   artist: PropTypes.string.isRequired,
   bpm: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  list: PropTypes.string.isRequired,
   duration_ms: PropTypes.number.isRequired
 };
 

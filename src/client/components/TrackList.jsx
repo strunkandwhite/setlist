@@ -9,7 +9,7 @@ const TrackList = ({
   formattedDuration,
   listTracks,
   isTooLong,
-  name,
+  list,
 }) => {
   const className = (isTooLong) ? 'duration too-long' : 'duration';
 
@@ -22,17 +22,17 @@ const TrackList = ({
         </span>
       </h3>
       <ul>
-        {listTracks.map(track => <Track key={track.id} {...track} />)}
+        {listTracks.map(track => <Track key={track.id} list={list} {...track} />)}
       </ul>
     </section>
   )
 };
 
 TrackList.propTypes = {
-  name: PropTypes.string.isRequired,
-  listTracks: PropTypes.array.isRequired,
   formattedDuration: PropTypes.string.isRequired,
-  isTooLong: PropTypes.bool.isRequired
+  listTracks: PropTypes.array.isRequired,
+  isTooLong: PropTypes.bool.isRequired,
+  list: PropTypes.string.isRequired
 }
 
 export default TrackList;

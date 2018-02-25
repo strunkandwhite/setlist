@@ -57,11 +57,8 @@ export const addTrackToList = (trackId, list) => ({ type: ADD_TRACK_TO_LIST, tra
 export const CHANGE_TRACK_BPM = 'CHANGE_TRACK_BPM';
 export const changeTrackBpm = (trackId, bpm) => ({ type: CHANGE_TRACK_BPM, trackId, bpm });
 
-export const REMOVE_TRACK = 'REMOVE_TRACK';
-export const removeTrack = trackId => ({ type: REMOVE_TRACK, trackId });
-
 export const REMOVE_TRACK_FROM_LIST = 'REMOVE_TRACK_FROM_LIST';
-export const removeTrackFromList = trackId => ({ type: REMOVE_TRACK_FROM_LIST, trackId });
+export const removeTrackFromList = (trackId, list) => ({ type: REMOVE_TRACK_FROM_LIST, trackId, list });
 
 export const REMOVE_ALL_TRACKS = 'REMOVE_ALL_TRACKS';
 export const TOGGLE_IMPORT_FORM = 'TOGGLE_IMPORT_FORM';

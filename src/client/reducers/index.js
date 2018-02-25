@@ -6,6 +6,7 @@ import {
   REQUEST_TRACKS,
   RECEIVE_TRACKS,
   ADD_TRACK_TO_LIST,
+  REMOVE_TRACK_FROM_LIST,
   CHANGE_TRACK_BPM
 } from '../actions'
 import { formatTracks } from '../helpers'
@@ -72,11 +73,11 @@ const tracks = (state = {}, action) => {
 const lists = (
   state = {
     1: {
-      name: 'set',
+      list: 'set',
       maxDuration: 10
     },
     2: {
-      name: 'reserve',
+      list: 'reserve',
       maxDuration: 0
     }
   }) => state
@@ -90,6 +91,17 @@ const tracksByList = (state = {set: {tracks: []}, reserve: {tracks: []}}, action
           tracks: [
             ...state[action.list].tracks,
             action.trackId
+          ]
+        }
+      }
+    case REMOVE_TRACK_FROM_LIST:
+      const trackIndex = state[action.list].tracks.indexOf(action.trackId);
+      return {
+        ...state,
+        [action.list]: {
+          tracks: [
+            ...state[action.list].tracks.slice(0, trackIndex),
+            ...state[action.list].tracks.slice(trackIndex + 1)
           ]
         }
       }
