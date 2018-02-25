@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
-import { TOGGLE_IMPORT_FORM } from '../actions'
+
+import { exportToText } from '../helpers';
+import { TOGGLE_IMPORT_FORM } from '../actions';
 import SetlistBuilder from '../components/SetlistBuilder';
 
 const mapStateToProps = state => {
@@ -13,9 +15,12 @@ const mapStateToProps = state => {
     })
   }
 
+  const boundExportToText = exportToText(state);
+
   return {
     showImport: state.showImport,
-    lists: materializedLists
+    lists: materializedLists,
+    boundExportToText
   }
 };
 

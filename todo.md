@@ -19,8 +19,10 @@
 [/] Best practice for client/server split?
 [/] Spread operator in TrackList?
 [/] Re-implement bpm handling in track-ops
-[ ] Redux
-[ ] Normalize state
+[/] Redux
+[/] Normalize state
+[ ] Implement drag n drop
+[ ] Implement localStorage
 [ ] Remove hard-coding of set/reserve lists
 [ ] Add error handling action/thunk
 [ ] Break Track up? -> BPMInput, Info, ListControls?
