@@ -1,4 +1,5 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
+import { union } from 'lodash';
 import {
   TOGGLE_IMPORT_FORM,
   REQUEST_AUTH,
@@ -56,7 +57,7 @@ const spotifyToken = (state = '', action) => {
 const tracks = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_TRACKS:
-      return Object.assign(state, formatTracks(action.data.tracks));
+      return Object.assign({}, formatTracks(action.data.tracks), state);
     case CHANGE_TRACK_BPM:
       return {
         ...state,
@@ -88,10 +89,7 @@ const tracksByList = (state = {set: {tracks: []}, reserve: {tracks: []}}, action
       return {
         ...state,
         [action.list]: {
-          tracks: [
-            ...state[action.list].tracks,
-            action.trackId
-          ]
+          tracks: union([action.trackId], state[action.list].tracks)
         }
       }
     case REMOVE_TRACK_FROM_LIST:
