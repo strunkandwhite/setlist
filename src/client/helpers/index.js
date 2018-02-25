@@ -2,11 +2,11 @@ export const parseIds = input => input.trim().split('\n').map(URI => URI.split('
 
 export const formatTracks = tracks => tracks.reduce((collection, {artists, name, id, duration_ms}) => {
   collection[id] = {
+    bpm: localStorage.getItem(id) || '',
     artist: artists[0].name,
-    name,
-    id,
     duration_ms,
-    bpm: localStorage.getItem(id) || ''
+    name,
+    id
   };
   return collection;
 }, {});

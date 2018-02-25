@@ -7,8 +7,8 @@ const mapStateToProps = state => {
 
   for(let list in state.entities.lists) {
     materializedLists.push({
-      name: state.entities.lists[list].name,
       maxDuration: state.entities.lists[list].maxDuration,
+      name: state.entities.lists[list].name,
       id: list
     })
   }

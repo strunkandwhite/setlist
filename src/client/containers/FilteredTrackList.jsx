@@ -5,14 +5,16 @@ import 'moment-duration-format';
 
 import TrackList from '../components/TrackList';
 
-const mapStateToProps = (state, { name }) => {
+const mapStateToProps = (state, { name, maxDuration }) => {
   const listTracks = state.tracksByList[name].tracks.map(track => state.entities.tracks[track]);
   const totalDuration = listTracks.reduce((acc, track) => acc += track.duration_ms, 0);
+  const isTooLong = (totalDuration > maxDuration);
+  const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', {trim: false});
 
   return {
-    isTooLong: false,
-    formattedDuration: '0:00:00',
-    tracks: listTracks,
+    formattedDuration,
+    listTracks,
+    isTooLong,
     name
   }
 };
@@ -22,6 +24,7 @@ const FilteredTrackList = connect(
 )(TrackList);
 
 FilteredTrackList.propTypes = {
+  maxDuration: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired
 }
 

@@ -79,8 +79,8 @@ const tracksByList = (state = {set: {tracks: []}, reserve: {tracks: []}}, action
         ...state,
         [action.list]: {
           tracks: [
-            action.trackId,
-            ...state[action.list].tracks
+            ...state[action.list].tracks,
+            action.trackId
           ]
         }
       }

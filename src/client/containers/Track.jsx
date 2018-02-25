@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 
 import '../styles/Track.css';
 
-let Track = ({ id }) => (
+let Track = ({ id, artist, name }) => (
   <li className={`Track`}>
     <input
       placeholder='bpm'
       className='bpm'
       type='text'
     />
-    <span>(0) {id}</span>
+    <span>(0) {artist} - {name}</span>
     <button onClick={() => {}}>></button>
     <button onClick={() => {}}>x</button>
   </li>

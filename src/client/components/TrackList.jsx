@@ -5,10 +5,10 @@ import Track from '../containers/Track';
 import '../styles/TrackList.css';
 
 const TrackList = ({
-  name,
-  tracks,
+  formattedDuration,
+  listTracks,
   isTooLong,
-  formattedDuration
+  name,
 }) => {
   const className = (isTooLong) ? 'duration too-long' : 'duration';
 
@@ -21,7 +21,7 @@ const TrackList = ({
         </span>
       </h3>
       <ul>
-        {tracks.map(track => <Track key={track.id} {...track} />)}
+        {listTracks.map(track => <Track key={track.id} {...track} />)}
       </ul>
     </section>
   )
@@ -29,7 +29,7 @@ const TrackList = ({
 
 TrackList.propTypes = {
   name: PropTypes.string.isRequired,
-  tracks: PropTypes.array.isRequired,
+  listTracks: PropTypes.array.isRequired,
   formattedDuration: PropTypes.string.isRequired,
   isTooLong: PropTypes.bool.isRequired
 }
