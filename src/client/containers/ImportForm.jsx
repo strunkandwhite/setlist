@@ -2,9 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { importTracks } from '../actions';
 
-import '../styles/ImportForm.css'
-
-let ImportForm = ({ dispatch }) => {
+export const ImportForm = ({ dispatch }) => {
   let textarea;
   const handleSubmit = e => {
     e.preventDefault();
@@ -30,6 +28,4 @@ let ImportForm = ({ dispatch }) => {
   )
 }
 
-ImportForm = connect()(ImportForm);
-
-export default ImportForm;
+export default connect()(ImportForm);

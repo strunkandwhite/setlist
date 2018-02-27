@@ -7,6 +7,11 @@ import { createStore, applyMiddleware } from 'redux';
 import setlistApp from './reducers';
 import App from './containers/App';
 
+import './styles/App.css';
+import './styles/ImportForm.css'
+import './styles/TrackList.css';
+import './styles/Track.css';
+
 const store = createStore(
   setlistApp,
   applyMiddleware(
@@ -14,6 +19,7 @@ const store = createStore(
   )
 );
 
+//testing only!
 window.store = store;
 
 render(

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import Track from '../containers/Track';
 
-import '../styles/TrackList.css';
-
 const TrackList = ({
   formattedDuration,
   listTracks,

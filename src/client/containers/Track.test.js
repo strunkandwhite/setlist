@@ -1,30 +1,38 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import WrappedTrack from './Track';
+import { Track } from './Track';
 
-it('renders without crashing', () => {
-  const Track = WrappedTrack.DecoratedComponent;
-  const identity = el => el;
-  const fn = () => {};
+describe('Track', () => {
+  let props;
+  let wrapper;
 
-  shallow(
-    <Track
-      artist='foo'
-      bpm='0'
-      buttonDir='>'
-      id='bar'
-      index={0}
-      duration_ms={0}
-      list='baz'
-      name='qunx'
-      type='qiz'
-      isDragging={false}
-      connectDragSource={identity}
-      connectDropTarget={fn}
-      handleTrackBPMChange={fn}
-      handleRemoveTrackClick={fn}
-      handleSwitchTrackClick={fn}
-      moveTrack={fn}
-    />
-  );
+  const track = () => {
+    if(!wrapper) {
+      wrapper = shallow(
+        <Track {...props} />
+      );
+    }
+    return wrapper;
+  }
+
+  beforeEach(() => {
+    props = {
+      id: '123abc',
+      artist: 'Iron Maiden',
+      bpm: '666',
+      name: 'Number of the Beast',
+      list: 'foo',
+      otherList: 'bar',
+      button: '>',
+      duration_ms: 1000
+    };
+
+    wrapper = undefined;
+  });
+
+  describe('render', () => {
+    it('renders without crashing', () => {
+      track();
+    });
+  });
 });

@@ -5,9 +5,7 @@ import { changeTrackBpm, removeTrackFromList, addTrackToList } from '../actions'
 import Moment from 'moment';
 import 'moment-duration-format';
 
-import '../styles/Track.css';
-
-let Track = ({
+export const Track = ({
   id,
   artist,
   name,
@@ -64,6 +62,4 @@ Track.propTypes = {
   duration_ms: PropTypes.number.isRequired
 };
 
-Track = connect()(Track);
-
-export default Track;
+export default connect()(Track);

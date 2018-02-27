@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import ImportForm from '../containers/ImportForm';
 import FilteredTrackList from '../containers/FilteredTrackList';
 
-import '../styles/App.css';
-
 const SetlistBuilder = ({ lists, showImport, boundExportToText, toggleImportForm }) => (
   <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>
     {
