@@ -60,5 +60,5 @@ export const changeTrackBpm = (trackId, bpm) => ({ type: CHANGE_TRACK_BPM, track
 export const REMOVE_TRACK_FROM_LIST = 'REMOVE_TRACK_FROM_LIST';
 export const removeTrackFromList = (trackId, list) => ({ type: REMOVE_TRACK_FROM_LIST, trackId, list });
 
-export const REMOVE_ALL_TRACKS = 'REMOVE_ALL_TRACKS';
 export const TOGGLE_IMPORT_FORM = 'TOGGLE_IMPORT_FORM';
+export const toggleImportForm = () => ({ type: TOGGLE_IMPORT_FORM });

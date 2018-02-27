@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { exportToText } from '../helpers';
-import { TOGGLE_IMPORT_FORM } from '../actions';
+import { toggleImportForm } from '../actions';
 import SetlistBuilder from '../components/SetlistBuilder';
 
 const mapStateToProps = state => {
@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleImportForm: () => {
-      dispatch({type: TOGGLE_IMPORT_FORM});
+      dispatch(toggleImportForm());
     }
   }
 };
