@@ -10,9 +10,6 @@
 build
 *.css
 
-# access token stuff
-src/server/secret.js
-
 # misc
 .DS_Store
 .env.local
