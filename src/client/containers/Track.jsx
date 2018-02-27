@@ -5,7 +5,7 @@ import { changeTrackBpm, removeTrackFromList, addTrackToList } from '../actions'
 import Moment from 'moment';
 import 'moment-duration-format';
 
-export const Track = ({
+const Track = ({
   id,
   artist,
   name,
@@ -35,7 +35,7 @@ export const Track = ({
   }
 
   return (
-    <li className={`Track`}>
+    <li className='Track'>
       <input
         placeholder='bpm'
         className='bpm'

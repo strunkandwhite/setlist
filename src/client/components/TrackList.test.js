@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 import TrackList from './TrackList';
+import Track from '../containers/Track';
 
 describe('TrackList', () => {
   let props;
@@ -38,6 +39,11 @@ describe('TrackList', () => {
     it('renders correctly', () => {
       const tree = renderer.create(<TrackList {...props} />).toJSON();
       expect(tree).toMatchSnapshot();
+    });
+
+    it('renders one Track for each listTrack', () => {
+      props.listTracks = [{id: 1}, {id: 2}];
+      expect(trackList().find(Track).length).toBe(2);
     });
   });
 });

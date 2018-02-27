@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetlistBuilder render renders correctly 1`] = `
+<div
+  className="foo"
+>
+  <button
+    className="export"
+    onClick={[Function]}
+  >
+    Export
+  </button>
+  <button
+    className="toggle-import-form"
+    onClick={[Function]}
+  >
+    Toggle Import Form
+  </button>
+</div>
+`;

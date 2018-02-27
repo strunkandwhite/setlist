@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import ImportForm from '../containers/ImportForm';
 import FilteredTrackList from '../containers/FilteredTrackList';
 
-const SetlistBuilder = ({ lists, showImport, boundExportToText, toggleImportForm }) => (
-  <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>
+const SetlistBuilder = ({ lists, className, showImport, boundExportToText, toggleImportForm }) => (
+  <div className={className}>
     {
       showImport
-      ? <ImportForm/>
+      ? <ImportForm />
       : null
     }
     {lists.map(list => <FilteredTrackList key={list.id} {...list}/>)}
@@ -21,7 +21,8 @@ SetlistBuilder.propTypes = {
   lists: PropTypes.array.isRequired,
   showImport: PropTypes.bool.isRequired,
   toggleImportForm: PropTypes.func.isRequired,
-  boundExportToText: PropTypes.func.isRequired
+  boundExportToText: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired
 }
 
 export default SetlistBuilder;

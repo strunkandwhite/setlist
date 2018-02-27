@@ -16,11 +16,13 @@ const mapStateToProps = state => {
   }
 
   const boundExportToText = exportToText(state);
+  const className = `App ${state.showImport ? 'show' : 'hide'}-import-form`;
 
   return {
     showImport: state.showImport,
     lists: materializedLists,
-    boundExportToText
+    boundExportToText,
+    className
   }
 };
 
