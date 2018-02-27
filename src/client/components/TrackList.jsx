@@ -5,33 +5,26 @@ import Track from '../containers/Track';
 
 const TrackList = ({
   formattedDuration,
+  durationClassName,
   listTracks,
-  isTooLong,
+  otherList,
+  button,
   list,
-}) => {
-  const className = (isTooLong) ? 'duration too-long' : 'duration';
-  const otherList = (list === 'set') ? 'reserve' : 'set';
-  const button = (list === 'set') ? '>' : '<';
-
-  return (
-    <section className={`TrackList ${list}`}>
-      <h3>
-        {list}&nbsp;
-        <span className={className}>
-          ({formattedDuration})
-        </span>
-      </h3>
-      <ul>
-        {listTracks.map(track => <Track key={track.id} button={button} list={list} otherList={otherList} {...track} />)}
-      </ul>
-    </section>
-  )
-};
+}) => (
+  <section className={`TrackList ${list}`}>
+    <h3>{list} <span className={durationClassName}>({formattedDuration})</span></h3>
+    <ul>
+      {listTracks.map(track => <Track key={track.id} button={button} list={list} otherList={otherList} {...track} />)}
+    </ul>
+  </section>
+);
 
 TrackList.propTypes = {
   formattedDuration: PropTypes.string.isRequired,
+  durationClassName: PropTypes.string.isRequired,
   listTracks: PropTypes.array.isRequired,
-  isTooLong: PropTypes.bool.isRequired,
+  otherList: PropTypes.string.isRequired,
+  button: PropTypes.string.isRequired,
   list: PropTypes.string.isRequired
 }
 
