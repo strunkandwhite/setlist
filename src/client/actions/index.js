@@ -1,14 +1,13 @@
-import fetch from 'cross-fetch';
-import spotifyApi from 'spotify-web-api-js';
-import { parseIds } from '../helpers'
+import 'isomorphic-fetch';
 
-const spotify = new spotifyApi();
+export const SPOTIFY_TOKEN_URL = 'http://localhost:3001/get-spotify-token';
+export const SPOTIFY_TRACKS_URL = 'https://api.spotify.com/v1/tracks/?ids=';
 
 export const AUTHORIZE = 'AUTHORIZE';
 export const authorize = () => {
   return dispatch => {
     dispatch(requestAuth());
-    return fetch('http://localhost:3001/get-spotify-token').then(
+    return fetch(SPOTIFY_TOKEN_URL).then(
       response => response.json(),
       error => console.log(error)
     ).then(
@@ -24,22 +23,27 @@ export const RECEIVE_AUTH = 'RECEIVE_AUTH';
 export const receiveAuth = json => ({ type: RECEIVE_AUTH, json });
 
 export const IMPORT_TRACKS = 'IMPORT_TRACKS';
-export const importTracks = input => {
+export const importTracks = joinedIds => {
   return (dispatch, getState) => {
     dispatch(requestTracks());
     dispatch(authorize()).then(
       () => {
         dispatch(requestTracks());
-        spotify.setAccessToken(getState().spotifyToken);
-        return spotify.getTracks(parseIds(input), (error, data) => {
-          if (error) console.error(error);
-          else {
-            dispatch(receiveTracks(data));
-            data.tracks.forEach(track => {
+        return fetch(SPOTIFY_TRACKS_URL + joinedIds, {
+          headers: {
+            'Authorization': `Bearer ${getState().spotifyToken}`
+          }
+        }).then(
+          response => response.json(),
+          error => console.log(error)
+        ).then(
+          json => {
+            dispatch(receiveTracks(json));
+            json.tracks.forEach(track => {
               dispatch(addTrackToList(track.id, 'set'));
             });
           }
-        });
+        );
       }
     );
   }
@@ -49,7 +53,7 @@ export const REQUEST_TRACKS = 'REQUEST_TRACKS';
 export const requestTracks = () => ({ type: REQUEST_TRACKS });
 
 export const RECEIVE_TRACKS = 'RECEIVE_TRACKS';
-export const receiveTracks = data => ({ type: RECEIVE_TRACKS, data });
+export const receiveTracks = json => ({ type: RECEIVE_TRACKS, json });
 
 export const ADD_TRACK_TO_LIST = 'ADD_TRACK_TO_LIST';
 export const addTrackToList = (trackId, list) => ({ type: ADD_TRACK_TO_LIST, trackId, list });

@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { importTracks } from '../actions';
+import { parseIds } from '../helpers'
 
 export const ImportForm = ({ dispatch }) => {
   let textarea;
   const handleSubmit = e => {
     e.preventDefault();
-    const value = textarea.value;
-    if(!value.trim()) {
-      return;
+    const joinedIds = parseIds(textarea.value).join(',');
+    if(joinedIds.length > 0) {
+      dispatch(importTracks(joinedIds));
     }
-    dispatch(importTracks(value));
   };
 
   return (

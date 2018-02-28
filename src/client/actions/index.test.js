@@ -1,6 +1,11 @@
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import fetchMock from 'fetch-mock';
+
+import { parseIds } from '../helpers'
 import * as actions from './';
 
-describe('action creators', () => {
+describe('normal action creators', () => {
   describe('requestAuth', () => {
     it('should create an action to request authorization', () => {
       const expectedAction = { type: actions.REQUEST_AUTH };
@@ -24,7 +29,7 @@ describe('action creators', () => {
 
   describe('receiveTracks', () => {
     it('should create an action to request tracks', () => {
-      const expectedAction = { type: actions.RECEIVE_TRACKS, data: {} };
+      const expectedAction = { type: actions.RECEIVE_TRACKS, json: {} };
       expect(actions.receiveTracks({})).toEqual(expectedAction);
     });
   });
@@ -54,6 +59,37 @@ describe('action creators', () => {
     it('should create an action to toggle the import form', () => {
       const expectedAction = { type: actions.TOGGLE_IMPORT_FORM };
       expect(actions.toggleImportForm()).toEqual(expectedAction);
+    });
+  });
+});
+
+describe('async action creators', () => {
+  const middlewares = [thunk]
+  const mockStore = configureMockStore(middlewares)
+
+  beforeEach(() => {
+    fetchMock.get(actions.SPOTIFY_TOKEN_URL, {
+      body: {token: '1234'}
+    });
+  });
+
+  afterEach(() => {
+    fetchMock.reset()
+    fetchMock.restore()
+  })
+
+  describe('authorize', () => {
+    it('dispatches actions to request and receive auth', () => {
+      const expectedActions = [
+        {type: actions.REQUEST_AUTH},
+        {type: actions.RECEIVE_AUTH, json: {token: '1234'}}
+      ];
+
+      const store = mockStore({})
+
+      return store.dispatch(actions.authorize()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
     });
   });
 });

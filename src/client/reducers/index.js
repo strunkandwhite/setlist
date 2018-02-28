@@ -57,7 +57,7 @@ const spotifyToken = (state = '', action) => {
 const tracks = (state = {}, action) => {
   switch(action.type) {
     case RECEIVE_TRACKS:
-      return Object.assign({}, formatTracks(action.data.tracks), state);
+      return Object.assign({}, formatTracks(action.json.tracks), state);
     case CHANGE_TRACK_BPM:
       return {
         ...state,
