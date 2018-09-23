@@ -1,9 +1,9 @@
-const request = require('supertest');
-const app = require('./server');
+const request = require('supertest')
+const app = require('./')
 
 describe('GET ', () => {
   test('It should respond', async () => {
-    const response = await request(app).get('/');
-    expect(response.statusCode).toBe(200);
-  });
+    const response = await request(app).get('/')
+    expect(response.statusCode).toBe(200)
+  })
 })

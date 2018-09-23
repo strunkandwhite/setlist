@@ -1,43 +1,10 @@
-## TODO
-
-[/] Show/hide import section
-[/] Break App functions out into separate files
-[/] Use destructuring/assignment for action definitions in App.js
-[/] Move function definitions out of render
-[/] Really no better way to conditionally set content?
-[/] Find a way not to use strings in the App render map
-[/] Why doesn't => work for ^^ ?
-[/] Best practice for ^^ ?
-[/] Use update to set toggle state better
-[/] Get rid of need for manual access token
-[/] Move client secret out of server code
-[/] Avoid redefining axios object every time
-[/] Set state in one declaration?
-[/] Install sass module
-[/] Convert to scss
-[/] Install testing modules
-[/] Best practice for client/server split?
-[/] Spread operator in TrackList?
-[/] Re-implement bpm handling in track-ops
-[/] Redux
-[/] Normalize state
-[ ] Implement drag n drop
-[ ] Implement localStorage
-[ ] Remove hard-coding of set/reserve lists
-[ ] Add error handling action/thunk
-[ ] Break Track up? -> BPMInput, Info, ListControls?
-[ ] Break TrackList up? -> Header, List?
-[ ] Tests
-[ ] Increase coverage
-[ ] Better secrets mgmt?
-[ ] Cache access token for 1 hr
-[ ] Manually set "danger" time
-[ ] Automatically get BPMs if possible
-[ ] Real user authentication, get real playlists
-[ ] Spotify error handling
-[ ] PUT playlist back to Spotify? Or POST as new?
-[ ] Styling pass
-[ ] Favicon
-[ ] Serve from AWS
-[ ] Play track from app
-[ ] Create components out of Toggle and Export buttons
+- [x] secret -> .ENV
+- [x] get server running
+- [x] get client running
+- [ ] css modules
+- [ ] restore functionality
+- [ ] fix directory structure
+- [ ] TODO pass
+- [ ] get tests passing
+- [ ] ducks
+- [ ] App mapStateToProps??
