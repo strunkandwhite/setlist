@@ -22,16 +22,16 @@ export const denormalizeTracks = (tracks) =>
   }, {})
 
 export const exportToText = (state) => () => {
-  const stringToWrite = Object.entries(state.tracksByList).reduce((exportStr, [listName, list]) => {
-    exportStr += `${listName[0].toUpperCase()}${listName.slice(1)}\n`
+  const stringToWrite = Object.entries(state.lists.lists).reduce((str, [listName, list]) => {
+    str += `${listName[0].toUpperCase()}${listName.slice(1)}\n`
 
-    exportStr += list.tracks.reduce((tracksStr, track) => {
-      const { artist, name, bpm } = state.entities.tracks[track]
+    str += list.tracks.reduce((tracksStr, track) => {
+      const { artist, name, bpm } = state.tracks.tracks[track]
       return `${tracksStr}[${bpm}] ${artist} - ${name}\n`
     }, '')
 
-    return exportStr
-  })
+    return str
+  }, '')
 
   const blob = new Blob([stringToWrite], { type: 'text/plain;charset=utf-8' })
 

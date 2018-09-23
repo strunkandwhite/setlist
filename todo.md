@@ -4,9 +4,9 @@
 - [x] import form state -> app
 - [x] ducks
 - [x] App mapStateToProps??
+- [x] fix directory structure
+- [x] restore functionality
 - [ ] css modules
-- [ ] restore functionality
-- [ ] fix directory structure
 - [ ] TODO pass
 - [ ] get tests passing
 - [ ] only re-authorize if not authorized
