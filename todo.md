@@ -1,6 +1,7 @@
 - [x] secret -> .ENV
 - [x] get server running
 - [x] get client running
+- [x] import form state -> app
 - [ ] css modules
 - [ ] restore functionality
 - [ ] fix directory structure
@@ -8,3 +9,5 @@
 - [ ] get tests passing
 - [ ] ducks
 - [ ] App mapStateToProps??
+- [ ] only re-authorize if not authorized
+- [ ] Error handling
