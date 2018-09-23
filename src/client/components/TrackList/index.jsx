@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
+import { connect } from 'react-redux'
 
 import Track from 'Client/components/Track'
 
-const TrackList = ({ id, maxDuration, tracks }) => {
-  const totalDuration = tracks.reduce((acc, track) => acc + track.duration_ms, 0)
-  const durationClassName = totalDuration <= maxDuration ? 'duration' : 'duration too-long'
+const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
+  const durationClassName = totalDuration <= maxDuration ? 'duration' : 'duration too-long' // TODO: Classnames
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
@@ -26,7 +26,14 @@ const TrackList = ({ id, maxDuration, tracks }) => {
 TrackList.propTypes = {
   id: PropTypes.string.isRequired,
   maxDuration: PropTypes.number.isRequired,
+  totalDuration: PropTypes.number.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 }
 
-export default TrackList
+function mapStateToProps(state, ownProps) {
+  return {
+    totalDuration: ownProps.tracks.reduce((duration, track) => duration + state.tracks.tracks[track].durationMs, 0),
+  }
+}
+
+export default connect(mapStateToProps)(TrackList)

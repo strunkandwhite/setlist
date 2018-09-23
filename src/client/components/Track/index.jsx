@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Moment from 'moment'
 
 import { trackActions } from 'Client/redux/track'
+import { listActions } from 'Client/redux/list'
 
 class Track extends React.Component {
   static propTypes = {
@@ -90,8 +91,8 @@ function mapStateToProps(state, ownProps) {
 export default connect(
   mapStateToProps,
   {
-    removeTrackFromList: trackActions.removeTrackFromList,
-    addTrackToList: trackActions.addTrackToList,
+    removeTrackFromList: listActions.removeTrackFromList,
+    addTrackToList: listActions.addTrackToList,
     changeTrackBpm: trackActions.changeTrackBpm,
   },
 )(Track)
