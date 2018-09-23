@@ -4,9 +4,21 @@ import { connect } from 'react-redux'
 import Moment from 'moment'
 import 'moment-duration-format'
 
-import { changeTrackBpm, removeTrackFromList, addTrackToList } from 'Client/redux/actions'
+import { trackActions } from 'Client/redux/track'
 
-const Track = ({ id, artist, name, durationMs, bpm, list, otherList, button }) => {
+const Track = ({
+  id,
+  artist,
+  name,
+  durationMs,
+  bpm,
+  list,
+  otherList,
+  button,
+  changeTrackBpm,
+  removeTrackFromList,
+  addTrackToList,
+}) => {
   let input
   const handleChange = (e) => {
     e.preventDefault()
@@ -61,13 +73,16 @@ Track.propTypes = {
   otherList: PropTypes.string.isRequired,
   button: PropTypes.string.isRequired,
   durationMs: PropTypes.number.isRequired,
+  removeTrackFromList: PropTypes.func.isRequired,
+  addTrackToList: PropTypes.func.isRequired,
+  changeTrackBpm: PropTypes.func.isRequired,
 }
 
 export default connect(
   null,
   {
-    removeTrackFromList,
-    addTrackToList,
-    changeTrackBpm,
+    removeTrackFromList: trackActions.removeTrackFromList,
+    addTrackToList: trackActions.addTrackToList,
+    changeTrackBpm: trackActions.changeTrackBpm,
   },
 )(Track)

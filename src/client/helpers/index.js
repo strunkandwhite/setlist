@@ -6,6 +6,8 @@ export const parseIds = (input) =>
     .split('\n')
     .map((URI) => URI.split(':')[2])
 
+export const normalizeLists = (lists) => Object.entries(lists).map(([id, list]) => ({ id, ...list }))
+
 /* eslint-disable no-param-reassign */
 export const formatTracks = (tracks) =>
   tracks.reduce((collection, { artists, name, id, durationMs }) => {

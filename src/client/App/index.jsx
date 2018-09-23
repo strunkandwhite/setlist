@@ -1,33 +1,63 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 
-import SetlistBuilder from 'Client/components/SetlistBuilder'
+import ImportForm from 'Client/components/ImportForm'
+// import FilteredTrackList from 'Client/components/FilteredTrackList'
 
-import { exportToText } from 'Client/helpers'
-import { toggleImportForm } from 'Client/redux/actions'
+import { exportToText, normalizeLists } from 'Client/helpers'
 
-const mapStateToProps = (state) => {
-  const materializedLists = Object.entries(state.entities.lists).map(([id, list]) => ({
-    maxDuration: list.maxDuration,
-    list: list.list,
-    id,
-  }))
+class App extends React.Component {
+  static propTypes = {
+    // lists: PropTypes.arrayOf(
+    //   PropTypes.shape({
+    //     id: PropTypes.string.isRequired,
+    //     maxDuration: PropTypes.number.isRequired,
+    //   }),
+    // ).isRequired,
+    boundExportToText: PropTypes.func.isRequired,
+  }
 
-  const boundExportToText = exportToText(state)
-  const className = `App ${state.showImport ? 'show' : 'hide'}-import-form`
+  state = {
+    showImport: true,
+  }
 
-  return {
-    showImport: state.showImport,
-    lists: materializedLists,
-    boundExportToText,
-    className,
+  toggleImportForm = () => {
+    this.setState((state) => ({
+      showImport: !state.showImport,
+    }))
+  }
+
+  render() {
+    const { showImport } = this.state
+    const { boundExportToText } = this.props
+
+    return (
+      // TODO: CLASSNAME USED?
+      <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>
+        {showImport && <ImportForm />}
+        {/* {Object.entries(lists).map(([id, list]) => (
+          <FilteredTrackList key={id} {...list} />
+        ))} */}
+        <button onClick={boundExportToText} className="export">
+          Export
+        </button>
+        <button onClick={this.toggleImportForm} className="toggle-import-form">
+          Toggle Import Form
+        </button>
+      </div>
+    )
   }
 }
 
-const App = connect(
-  mapStateToProps,
-  {
-    toggleImportForm,
-  },
-)(SetlistBuilder)
+const mapStateToProps = (state) => {
+  const boundExportToText = exportToText(state) // TODO: Huh???
 
-export default App
+  return {
+    lists: normalizeLists(state.lists.lists),
+    boundExportToText,
+  }
+}
+
+export default connect(mapStateToProps)(App)

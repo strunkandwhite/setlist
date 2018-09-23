@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import configureStore from 'redux-mock-store'
 
-import Track from './Track'
+import Track from './'
 
 describe('Track', () => {
   let props

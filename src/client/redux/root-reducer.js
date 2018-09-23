@@ -1,7 +1,11 @@
 import { combineReducers } from 'redux'
 
-import { userReducer } from './user'
+import { authReducer } from './auth'
+import { trackReducer } from './track'
+import { listReducer } from './list'
 
 export default combineReducers({
-  user: userReducer,
+  auth: authReducer,
+  tracks: trackReducer,
+  lists: listReducer,
 })
