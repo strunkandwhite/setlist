@@ -29,6 +29,7 @@ const lists = (
       return {
         ...state,
         [action.list]: {
+          ...state[action.list],
           tracks: [
             ...state[action.list].tracks.slice(0, trackIndex),
             ...state[action.list].tracks.slice(trackIndex + 1),
