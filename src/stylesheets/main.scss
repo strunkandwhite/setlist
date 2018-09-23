@@ -1,28 +1,3 @@
-.App {
-  min-width: 1300px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  font-family: Helvetica;
-
-  .export {
-    position: absolute;
-    top: 2em;
-    right: 2em;
-  }
-
-  .toggle-import-form {
-    position: absolute;
-    top: 4em;
-    right: 2em;
-  }
-
-  &.hide-import-form .TrackList.set {
-    grid-column-start: 1;
-    grid-column-end: 6;
-  }
-
-  &.hide-import-form .TrackList.reserve {
-    grid-column-start: 6;
-    grid-column-end: 11;
-  }
+html {
+  background: gray;
 }
