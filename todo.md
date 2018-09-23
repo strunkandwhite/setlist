@@ -2,12 +2,14 @@
 - [x] get server running
 - [x] get client running
 - [x] import form state -> app
+- [x] ducks
+- [x] App mapStateToProps??
 - [ ] css modules
 - [ ] restore functionality
 - [ ] fix directory structure
 - [ ] TODO pass
 - [ ] get tests passing
-- [ ] ducks
-- [ ] App mapStateToProps??
 - [ ] only re-authorize if not authorized
+- [ ] use localStorage for auth token
 - [ ] Error handling
+- [ ] use classnames

@@ -1,28 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Moment from 'moment'
 
 import Track from 'Client/components/Track'
 
-const TrackList = ({ formattedDuration, durationClassName, listTracks, otherList, button, list }) => (
-  <section className={`TrackList ${list}`}>
-    <h3>
-      {list} <span className={durationClassName}>({formattedDuration})</span>
-    </h3>
-    <ul>
-      {listTracks.map((track) => (
-        <Track key={track.id} button={button} list={list} otherList={otherList} {...track} />
-      ))}
-    </ul>
-  </section>
-)
+const TrackList = ({ id, maxDuration, tracks }) => {
+  const totalDuration = tracks.reduce((acc, track) => acc + track.duration_ms, 0)
+  const durationClassName = totalDuration <= maxDuration ? 'duration' : 'duration too-long'
+  const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
+
+  return (
+    <section className={`TrackList ${id}`}>
+      <h3>
+        {id} <span className={durationClassName}>({formattedDuration})</span>
+      </h3>
+      <ul>
+        {tracks.map((track) => (
+          <Track key={track} id={track} list={id} />
+        ))}
+      </ul>
+    </section>
+  )
+}
 
 TrackList.propTypes = {
-  formattedDuration: PropTypes.string.isRequired,
-  durationClassName: PropTypes.string.isRequired,
-  listTracks: PropTypes.arrayOf(PropTypes.shape({})).isRequired, // TODO: Shape???
-  otherList: PropTypes.string.isRequired,
-  button: PropTypes.string.isRequired,
-  list: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  maxDuration: PropTypes.number.isRequired,
+  tracks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 }
 
 export default TrackList

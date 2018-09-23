@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
-import ImportForm from 'Client/components/ImportForm'
-// import FilteredTrackList from 'Client/components/FilteredTrackList'
+import { ImportForm, TrackList } from 'Client/components'
 
 import { exportToText, normalizeLists } from 'Client/helpers'
 
 class App extends React.Component {
   static propTypes = {
-    // lists: PropTypes.arrayOf(
-    //   PropTypes.shape({
-    //     id: PropTypes.string.isRequired,
-    //     maxDuration: PropTypes.number.isRequired,
-    //   }),
-    // ).isRequired,
+    normalizedLists: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        maxDuration: PropTypes.number.isRequired,
+        tracks: PropTypes.arrayOf(PropTypes.string.isRequired),
+      }),
+    ).isRequired,
     boundExportToText: PropTypes.func.isRequired,
   }
 
@@ -31,15 +31,14 @@ class App extends React.Component {
 
   render() {
     const { showImport } = this.state
-    const { boundExportToText } = this.props
+    const { normalizedLists, boundExportToText } = this.props
 
     return (
-      // TODO: CLASSNAME USED?
       <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>
         {showImport && <ImportForm />}
-        {/* {Object.entries(lists).map(([id, list]) => (
-          <FilteredTrackList key={id} {...list} />
-        ))} */}
+        {normalizedLists.map((list) => (
+          <TrackList key={list.id} {...list} />
+        ))}
         <button onClick={boundExportToText} className="export">
           Export
         </button>
@@ -55,7 +54,7 @@ const mapStateToProps = (state) => {
   const boundExportToText = exportToText(state) // TODO: Huh???
 
   return {
-    lists: normalizeLists(state.lists.lists),
+    normalizedLists: normalizeLists(state.lists.lists),
     boundExportToText,
   }
 }

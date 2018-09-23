@@ -8,13 +8,13 @@ export const parseIds = (input) =>
 
 export const normalizeLists = (lists) => Object.entries(lists).map(([id, list]) => ({ id, ...list }))
 
-/* eslint-disable no-param-reassign */
-export const formatTracks = (tracks) =>
-  tracks.reduce((collection, { artists, name, id, durationMs }) => {
+/* eslint-disable no-param-reassign,camelcase */
+export const denormalizeTracks = (tracks) =>
+  tracks.reduce((collection, { artists, name, id, duration_ms }) => {
     collection[id] = {
       bpm: localStorage.getItem(id) || '',
       artist: artists[0].name,
-      durationMs,
+      durationMs: duration_ms,
       name,
       id,
     }
@@ -37,4 +37,4 @@ export const exportToText = (state) => () => {
 
   FileSaver.saveAs(blob, 'setlist.txt')
 }
-/* eslint-enable no-param-reassign */
+/* eslint-enable no-param-reassign,camelcase */
