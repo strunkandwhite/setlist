@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { connect } from 'react-redux'
 
 import { ImportForm, TrackList } from 'Client/components'
-
 import { exportToText, normalizeLists } from 'Client/helpers'
+
+import styles from './App.module.scss'
 
 class App extends React.Component {
   static propTypes = {
@@ -34,15 +34,15 @@ class App extends React.Component {
     const { normalizedLists, boundExportToText } = this.props
 
     return (
-      <div className={`App ${showImport ? 'show' : 'hide'}-import-form`}>
+      <div className={styles.root}>
         {showImport && <ImportForm />}
         {normalizedLists.map((list) => (
           <TrackList key={list.id} {...list} />
         ))}
-        <button onClick={boundExportToText} className="export">
+        <button onClick={boundExportToText} className={styles.exportButton}>
           Export
         </button>
-        <button onClick={this.toggleImportForm} className="toggle-import-form">
+        <button onClick={this.toggleImportForm} className={styles.toggleImportFormButton}>
           Toggle Import Form
         </button>
       </div>

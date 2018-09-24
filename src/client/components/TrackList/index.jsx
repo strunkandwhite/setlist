@@ -2,17 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
 import { connect } from 'react-redux'
+import cn from 'classnames'
 
 import Track from 'Client/components/Track'
 
+import styles from './TrackList.module.scss'
+
 const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
-  const durationClassName = totalDuration <= maxDuration ? 'duration' : 'duration too-long' // TODO: Classnames
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
-    <section className={`TrackList ${id}`}>
+    <section className={cn(styles.root, styles[id])}>
       <h3>
-        {id} <span className={durationClassName}>({formattedDuration})</span>
+        {id} <span className={cn({ [styles.tooLong]: totalDuration > maxDuration })}>({formattedDuration})</span>
       </h3>
       <ul>
         {tracks.map((track) => (

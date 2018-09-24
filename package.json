@@ -68,6 +68,7 @@
     "autoprefixer": "^8.6.5",
     "axios": "^0.18.0",
     "chai": "^4.1.2",
+    "classnames": "^2.2.6",
     "concurrently": "^4.0.1",
     "dotenv": "^6.0.0",
     "enzyme": "^3.5.0",

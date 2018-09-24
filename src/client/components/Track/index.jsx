@@ -6,6 +6,8 @@ import Moment from 'moment'
 import { trackActions } from 'Client/redux/track'
 import { listActions } from 'Client/redux/list'
 
+import styles from './Track.module.scss'
+
 class Track extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
@@ -62,8 +64,8 @@ class Track extends React.Component {
     const { button } = this.state
 
     return (
-      <li className="Track">
-        <input placeholder="bpm" className="bpm" type="text" value={bpm} onChange={this.handleChange} />
+      <li className={styles.root}>
+        <input placeholder="bpm" className={styles.bpm} type="text" value={bpm} onChange={this.handleChange} />
         <span>
           ({Moment.duration(durationMs).format('m:ss')}) {artist} - {name}
         </span>

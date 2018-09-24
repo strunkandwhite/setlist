@@ -1,0 +1,18 @@
+.root {
+  min-width: 1300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  font-family: Helvetica;
+}
+
+.exportButton {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.toggleImportFormButton {
+  position: absolute;
+  top: 4em;
+  right: 2em;
+}

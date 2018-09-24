@@ -1,0 +1,46 @@
+.root {
+  display: flex;
+  cursor: move;
+  margin: 0.25em 0;
+  padding: 0.25em;
+  justify-content: space-between;
+  background: #f0f0f0;
+
+  span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
+
+  button {
+    width: 2rem;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.bpm {
+  margin-right: 0.5em;
+  width: 3em;
+  background: #ddeaff;
+  border: none;
+  font-size: 14px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.dragging {
+  opacity: 0.25;
+}

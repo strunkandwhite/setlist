@@ -6,10 +6,13 @@
 - [x] App mapStateToProps??
 - [x] fix directory structure
 - [x] restore functionality
-- [ ] css modules
+- [x] css modules
+- [x] use classnames
+- [ ] human-readable max length
+- [ ] fix import classname toggling
 - [ ] TODO pass
 - [ ] get tests passing
 - [ ] only re-authorize if not authorized
 - [ ] use localStorage for auth token
 - [ ] Error handling
-- [ ] use classnames
+- [ ] greenkeeper
