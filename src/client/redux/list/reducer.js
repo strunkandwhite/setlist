@@ -5,11 +5,11 @@ import { ADD_TRACK_TO_LIST, REMOVE_TRACK_FROM_LIST } from './types'
 const lists = (
   state = {
     set: {
-      maxDuration: 0,
+      maxDuration: '1:00:00',
       tracks: [],
     },
     reserve: {
-      maxDuration: 0,
+      maxDuration: '',
       tracks: [],
     },
   },

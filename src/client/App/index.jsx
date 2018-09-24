@@ -12,7 +12,7 @@ class App extends React.Component {
     normalizedLists: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
-        maxDuration: PropTypes.number.isRequired,
+        maxDuration: PropTypes.string,
         tracks: PropTypes.arrayOf(PropTypes.string.isRequired),
       }),
     ).isRequired,
