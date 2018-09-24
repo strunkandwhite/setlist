@@ -9,10 +9,11 @@
 - [x] css modules
 - [x] use classnames
 - [x] human-readable max length
+- [x] get tests passing
+- [ ] greenkeeper
 - [ ] fix import classname toggling
 - [ ] TODO pass
-- [ ] get tests passing
 - [ ] only re-authorize if not authorized
 - [ ] use localStorage for auth token
 - [ ] Error handling
-- [ ] greenkeeper
+- [ ] test coverage > 80%
