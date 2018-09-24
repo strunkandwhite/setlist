@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/jacklenehan/setlist.svg?branch=master)](https://travis-ci.org/jacklenehan/setlist)
-[![Coverage Status](https://coveralls.io/repos/github/jacklenehan/setlist/badge.svg?branch=master)](https://coveralls.io/github/jacklenehan/setlist?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/jacklenehan/setlist/badge.svg?branch=master)](https://coveralls.io/github/jacklenehan/setlist?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/jacklenehan/setlist.svg)](https://greenkeeper.io/)
 
 ## Setlist
 
