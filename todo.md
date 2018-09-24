@@ -8,7 +8,7 @@
 - [x] restore functionality
 - [x] css modules
 - [x] use classnames
-- [ ] human-readable max length
+- [x] human-readable max length
 - [ ] fix import classname toggling
 - [ ] TODO pass
 - [ ] get tests passing
