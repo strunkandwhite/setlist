@@ -8,12 +8,12 @@ import Track from 'Client/components/Track'
 
 import styles from './TrackList.module.scss'
 
-const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
+const TrackList = ({ id, maxDuration, totalDuration, tracks, importFormHidden }) => {
   const maxDurationInSeconds = Moment.duration(maxDuration).asMilliseconds()
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
-    <section className={cn(styles.root, styles[id])}>
+    <section className={cn(styles.root, styles[id], { [styles.importFormHidden]: importFormHidden })}>
       <h3>
         {id}{' '}
         <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
@@ -32,6 +32,11 @@ TrackList.propTypes = {
   maxDuration: PropTypes.string.isRequired,
   totalDuration: PropTypes.number.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  importFormHidden: PropTypes.bool,
+}
+
+TrackList.defaultProps = {
+  importFormHidden: false,
 }
 
 function mapStateToProps(state, ownProps) {

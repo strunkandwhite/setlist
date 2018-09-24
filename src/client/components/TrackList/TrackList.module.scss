@@ -19,9 +19,19 @@
 .set {
   grid-column-start: 3;
   grid-column-end: 7;
+
+  &.importFormHidden {
+    grid-column-start: 1;
+    grid-column-end: 6;
+  }
 }
 
 .reserve {
   grid-column-start: 7;
   grid-column-end: 11;
+
+  &.importFormHidden {
+    grid-column-start: 6;
+    grid-column-end: 11;
+  }
 }

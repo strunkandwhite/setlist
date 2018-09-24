@@ -37,7 +37,7 @@ class App extends React.Component {
       <div className={styles.root}>
         {showImport && <ImportForm />}
         {normalizedLists.map((list) => (
-          <TrackList key={list.id} {...list} />
+          <TrackList importFormHidden={!showImport} key={list.id} {...list} />
         ))}
         <button onClick={boundExportToText} className={styles.exportButton}>
           Export
@@ -51,7 +51,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const boundExportToText = exportToText(state) // TODO: Huh???
+  const boundExportToText = exportToText(state)
 
   return {
     normalizedLists: normalizeLists(state.lists.lists),

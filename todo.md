@@ -10,10 +10,13 @@
 - [x] use classnames
 - [x] human-readable max length
 - [x] get tests passing
-- [ ] greenkeeper
-- [ ] fix import classname toggling
-- [ ] TODO pass
+- [x] greenkeeper
+- [x] TODO pass
+- [x] fix import classname toggling
+- [ ] drag n drop
 - [ ] only re-authorize if not authorized
 - [ ] use localStorage for auth token
+- [ ] use localStorage for BPMs
 - [ ] Error handling
 - [ ] test coverage > 80%
+- [ ] better way to do export? side effect action?
