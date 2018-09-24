@@ -24,35 +24,4 @@ describe('helpers', () => {
       expect(parsedIds).toEqual(['2r0H9GPWHqxlopFd9WAEdF', '0N2NPFcJNVLQziIBn5LWZi'])
     })
   })
-
-  describe('formatTracks', () => {
-    const unformattedTracks = [
-      {
-        artists: ['Iron Maiden'],
-        name: 'Run to the Hills',
-        duration_ms: 666,
-        id: 666,
-      },
-      {
-        artists: ['Dream Theater', 'Mike Portnoy'],
-        name: 'Pull Me Under',
-        duration_ms: 123,
-        id: 123,
-      },
-    ]
-
-    let formattedTracks
-
-    beforeEach(() => {
-      formattedTracks = helpers.formatTracks(unformattedTracks)
-    })
-
-    afterEach(() => {
-      formattedTracks = null
-    })
-
-    it('should return an object of the appropriate length', () => {
-      expect(formattedTracks.length).toBe(2)
-    })
-  })
 })
