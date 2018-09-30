@@ -15,6 +15,8 @@
 - [x] fix import classname toggling
 - [x] babel 7
 - [ ] drag n drop
+- [ ] arbitrary setlists
+- [ ] get bpm from API
 - [ ] only re-authorize if not authorized
 - [ ] use localStorage for auth token
 - [ ] use localStorage for BPMs
