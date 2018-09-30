@@ -39,10 +39,10 @@ class App extends React.Component {
         {normalizedLists.map((list) => (
           <TrackList importFormHidden={!showImport} key={list.id} {...list} />
         ))}
-        <button onClick={boundExportToText} className={styles.exportButton}>
+        <button type="button" onClick={boundExportToText} className={styles.exportButton}>
           Export
         </button>
-        <button onClick={this.toggleImportForm} className={styles.toggleImportFormButton}>
+        <button type="button" onClick={this.toggleImportForm} className={styles.toggleImportFormButton}>
           Toggle Import Form
         </button>
       </div>

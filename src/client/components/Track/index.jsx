@@ -69,8 +69,11 @@ class Track extends React.Component {
         <span>
           ({Moment.duration(durationMs).format('m:ss')}) {artist} - {name}
         </span>
-        <button onClick={this.switchTrackList}>{button}</button>
+        <button type="button" onClick={this.switchTrackList}>
+          {button}
+        </button>
         <button
+          type="button"
           onClick={() => {
             removeTrackFromList(id, list)
           }}
