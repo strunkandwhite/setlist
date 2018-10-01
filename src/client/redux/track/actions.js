@@ -1,6 +1,7 @@
 import { SPOTIFY_TRACKS_URL, SPOTIFY_FEATURES_URL } from 'Client/consts'
 import { authActions } from 'Client/redux/auth'
 import { listActions } from 'Client/redux/list'
+import { transformTrack } from 'Client/helpers'
 
 import { REQUEST_TRACKS, RECEIVE_TRACKS, CHANGE_TRACK_TEMPO } from './types'
 
@@ -50,9 +51,14 @@ export const importTracks = (joinedIds) => (dispatch, getState) => {
         }
         return mergedTrack
       })
-      dispatch(receiveTracks(mergedTracks))
-      mergedTracks.forEach((track) => {
-        dispatch(listActions.addTrackToList(track.id, 'set'))
+      /* eslint-disable no-param-reassign,camelcase */
+      const normalizedTracks = mergedTracks.reduce((collection, track) => {
+        collection[track.id] = transformTrack(track)
+        return collection
+      }, {})
+      dispatch(receiveTracks(normalizedTracks))
+      Object.keys(normalizedTracks).forEach((id) => {
+        dispatch(listActions.addTrackToList(id, 'set'))
       })
     })
     .catch((error) => {

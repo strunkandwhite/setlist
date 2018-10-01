@@ -1,5 +1,9 @@
 import FileSaver from 'file-saver'
 
+export const storeTempoLocally = (id, value) => {
+  localStorage.setItem(id, value)
+}
+
 export const parseIds = (input) =>
   input
     .trim()
@@ -9,17 +13,13 @@ export const parseIds = (input) =>
 export const normalizeLists = (lists) => Object.entries(lists).map(([id, list]) => ({ id, ...list }))
 
 /* eslint-disable no-param-reassign,camelcase */
-export const denormalizeTracks = (tracks) =>
-  tracks.reduce((collection, { artists, name, id, duration_ms, tempo }) => {
-    collection[id] = {
-      artist: artists[0].name,
-      durationMs: duration_ms,
-      tempo: Math.round(tempo).toString(),
-      name,
-      id,
-    }
-    return collection
-  }, {})
+export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
+  artist: artists[0].name,
+  durationMs: duration_ms,
+  tempo: localStorage.getItem(id) || Math.round(tempo).toString(),
+  name,
+  id,
+})
 
 export const exportToText = (state) => () => {
   const stringToWrite = Object.entries(state.lists.lists).reduce((str, [listName, list]) => {

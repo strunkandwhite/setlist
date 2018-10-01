@@ -5,6 +5,7 @@ import Moment from 'moment'
 
 import { trackActions } from 'Client/redux/track'
 import { listActions } from 'Client/redux/list'
+import { storeTempoLocally } from 'Client/helpers'
 
 import styles from './Track.module.scss'
 
@@ -36,13 +37,16 @@ class Track extends React.Component {
     const { changeTrackTempo, id } = this.props
 
     e.preventDefault()
-    const { value } = e
-    const letters = /[a-zA-Z]/
+    const {
+      target: { value },
+    } = e
+    const notDigits = /[^0-9]/
 
     if (value.length > 3) return
-    if (letters.test(value)) return
+    if (notDigits.test(value)) return
 
     changeTrackTempo(id, value)
+    storeTempoLocally(id, value)
   }
 
   switchTrackList = (e) => {

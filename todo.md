@@ -15,8 +15,8 @@
 - [x] fix import classname toggling
 - [x] babel 7
 - [x] get tempo from API
-- [ ] tempo editing
-- [ ] use localStorage for tempos
+- [x] tempo editing
+- [x] use localStorage for tempos
 - [ ] drag n drop
 - [ ] arbitrary setlists
 - [ ] setlists to rows

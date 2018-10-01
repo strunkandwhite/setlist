@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux'
 
-import { denormalizeTracks } from 'Client/helpers'
-
 import { REQUEST_TRACKS, RECEIVE_TRACKS, CHANGE_TRACK_TEMPO } from './types'
 
 const fetching = (state = false, action) => {
@@ -18,7 +16,10 @@ const fetching = (state = false, action) => {
 const tracks = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_TRACKS:
-      return Object.assign({}, denormalizeTracks(action.tracks), state)
+      return {
+        ...state,
+        ...action.tracks,
+      }
     case CHANGE_TRACK_TEMPO:
       return {
         ...state,
