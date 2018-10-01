@@ -14,10 +14,10 @@ class Track extends React.Component {
     list: PropTypes.string.isRequired,
     removeTrackFromList: PropTypes.func.isRequired,
     addTrackToList: PropTypes.func.isRequired,
-    changeTrackBpm: PropTypes.func.isRequired,
+    changeTrackTempo: PropTypes.func.isRequired,
     data: PropTypes.shape({
       artist: PropTypes.string.isRequired,
-      bpm: PropTypes.string.isRequired,
+      tempo: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       durationMs: PropTypes.number.isRequired,
     }).isRequired,
@@ -33,7 +33,7 @@ class Track extends React.Component {
   }
 
   handleChange = (e) => {
-    const { changeTrackBpm, id } = this.props
+    const { changeTrackTempo, id } = this.props
 
     e.preventDefault()
     const { value } = e
@@ -42,7 +42,7 @@ class Track extends React.Component {
     if (value.length > 3) return
     if (letters.test(value)) return
 
-    changeTrackBpm(id, value)
+    changeTrackTempo(id, value)
   }
 
   switchTrackList = (e) => {
@@ -59,13 +59,13 @@ class Track extends React.Component {
       removeTrackFromList,
       list,
       id,
-      data: { artist, bpm, name, durationMs },
+      data: { artist, tempo, name, durationMs },
     } = this.props
     const { button } = this.state
 
     return (
       <li className={styles.root}>
-        <input placeholder="bpm" className={styles.bpm} type="text" value={bpm} onChange={this.handleChange} />
+        <input placeholder="tempo" className={styles.tempo} type="text" value={tempo} onChange={this.handleChange} />
         <span>
           ({Moment.duration(durationMs).format('m:ss')}) {artist} - {name}
         </span>
@@ -98,6 +98,6 @@ export default connect(
   {
     removeTrackFromList: listActions.removeTrackFromList,
     addTrackToList: listActions.addTrackToList,
-    changeTrackBpm: trackActions.changeTrackBpm,
+    changeTrackTempo: trackActions.changeTrackTempo,
   },
 )(Track)

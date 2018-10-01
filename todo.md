@@ -14,12 +14,14 @@
 - [x] TODO pass
 - [x] fix import classname toggling
 - [x] babel 7
+- [x] get tempo from API
+- [ ] tempo editing
+- [ ] use localStorage for tempos
 - [ ] drag n drop
 - [ ] arbitrary setlists
-- [ ] get bpm from API
+- [ ] setlists to rows
 - [ ] only re-authorize if not authorized
 - [ ] use localStorage for auth token
-- [ ] use localStorage for BPMs
 - [ ] Error handling
 - [ ] test coverage > 80%
 - [ ] better way to do export? side effect action?

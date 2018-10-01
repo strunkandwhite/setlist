@@ -10,11 +10,11 @@ export const normalizeLists = (lists) => Object.entries(lists).map(([id, list]) 
 
 /* eslint-disable no-param-reassign,camelcase */
 export const denormalizeTracks = (tracks) =>
-  tracks.reduce((collection, { artists, name, id, duration_ms }) => {
+  tracks.reduce((collection, { artists, name, id, duration_ms, tempo }) => {
     collection[id] = {
-      bpm: localStorage.getItem(id) || '',
       artist: artists[0].name,
       durationMs: duration_ms,
+      tempo: Math.round(tempo).toString(),
       name,
       id,
     }
@@ -26,8 +26,8 @@ export const exportToText = (state) => () => {
     str += `${listName[0].toUpperCase()}${listName.slice(1)}\n`
 
     str += list.tracks.reduce((tracksStr, track) => {
-      const { artist, name, bpm } = state.tracks.tracks[track]
-      return `${tracksStr}[${bpm}] ${artist} - ${name}\n`
+      const { artist, name, tempo } = state.tracks.tracks[track]
+      return `${tracksStr}[${tempo}] ${artist} - ${name}\n`
     }, '')
 
     return str
