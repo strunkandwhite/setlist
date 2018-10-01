@@ -16,3 +16,12 @@
   top: 4em;
   right: 2em;
 }
+
+.tracklistContainer {
+  grid-column-start: 3;
+  grid-column-end: 11;
+
+  &.importFormHidden {
+    grid-column-start: 1;
+  }
+}

@@ -19,9 +19,9 @@
 - [x] use localStorage for tempos
 - [x] only re-authorize if not authorized
 - [x] use localStorage for auth token
+- [x] setlists to rows
 - [ ] drag n drop
 - [ ] arbitrary setlists
-- [ ] setlists to rows
 - [ ] Error handling
 - [ ] test coverage > 80%
 - [ ] better way to do export? side effect action?

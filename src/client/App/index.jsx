@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import cn from 'classnames'
 
 import { ImportForm, TrackList } from 'Client/components'
 import { exportToText, normalizeLists } from 'Client/helpers'
@@ -36,9 +37,11 @@ class App extends React.Component {
     return (
       <div className={styles.root}>
         {showImport && <ImportForm />}
-        {normalizedLists.map((list) => (
-          <TrackList importFormHidden={!showImport} key={list.id} {...list} />
-        ))}
+        <div className={cn(styles.tracklistContainer, { [styles.importFormHidden]: !showImport })}>
+          {normalizedLists.map((list) => (
+            <TrackList key={list.id} {...list} />
+          ))}
+        </div>
         <button type="button" onClick={boundExportToText} className={styles.exportButton}>
           Export
         </button>
