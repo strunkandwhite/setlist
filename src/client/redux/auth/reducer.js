@@ -27,7 +27,7 @@ export const authorized = (state = false, action) => {
 export const token = (state = '', action) => {
   switch (action.type) {
     case RECEIVE_AUTH:
-      return action.json.token
+      return action.token
     default:
       return state
   }

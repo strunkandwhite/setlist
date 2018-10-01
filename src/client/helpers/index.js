@@ -1,7 +1,14 @@
 import FileSaver from 'file-saver'
 
+import { AUTH_TOKEN_LOCAL_STORAGE_KEY, AUTH_TOKEN_EXPIRES_LOCAL_STORAGE_KEY } from 'Client/consts'
+
 export const storeTempoLocally = (id, value) => {
   localStorage.setItem(id, value)
+}
+
+export const storeAuthToken = (token) => {
+  localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, token)
+  localStorage.setItem(AUTH_TOKEN_EXPIRES_LOCAL_STORAGE_KEY, new Date().getTime() + 3600000)
 }
 
 export const parseIds = (input) =>

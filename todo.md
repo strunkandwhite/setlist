@@ -17,11 +17,11 @@
 - [x] get tempo from API
 - [x] tempo editing
 - [x] use localStorage for tempos
+- [x] only re-authorize if not authorized
+- [x] use localStorage for auth token
 - [ ] drag n drop
 - [ ] arbitrary setlists
 - [ ] setlists to rows
-- [ ] only re-authorize if not authorized
-- [ ] use localStorage for auth token
 - [ ] Error handling
 - [ ] test coverage > 80%
 - [ ] better way to do export? side effect action?
