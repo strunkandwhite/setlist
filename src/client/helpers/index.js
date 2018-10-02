@@ -29,12 +29,13 @@ export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
 })
 
 export const exportToText = (state) => () => {
-  const stringToWrite = Object.entries(state.sets.sets).reduce((str, [setName, set]) => {
-    str += `${setName[0].toUpperCase()}${setName.slice(1)}\n`
+  const stringToWrite = Object.values(state.sets.sets).reduce((str, set) => {
+    const { name, tracks } = set
+    str += `${name[0].toUpperCase()}${name.slice(1)}\n`
 
-    str += set.tracks.reduce((tracksStr, track) => {
-      const { artist, name, tempo } = state.tracks.tracks[track]
-      return `${tracksStr}[${tempo}] ${artist} - ${name}\n`
+    str += tracks.reduce((tracksStr, track) => {
+      const { artist, name: trackName, tempo } = state.tracks.tracks[track]
+      return `${tracksStr}[${tempo}] ${artist} - ${trackName}\n`
     }, '')
 
     return str
