@@ -18,12 +18,15 @@ export const authorize = () => (dispatch) => {
     } else {
       fetch(SPOTIFY_TOKEN_URL)
         .then((response) => response.json())
-        .then((json) => resolve(json.token))
+        .then((json) => {
+          const { token } = json
+          storeAuthToken(token)
+          resolve(token)
+        })
     }
   })
   return authPromise
     .then((token) => {
-      storeAuthToken(token)
       dispatch(receiveAuth(token))
     })
     .catch((error) => {

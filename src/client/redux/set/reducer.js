@@ -11,7 +11,7 @@ import {
 const sets = (
   state = {
     0: {
-      maxDuration: '1:00:00',
+      maxDuration: 3600000,
       tracks: [],
       name: 'set 1',
     },
