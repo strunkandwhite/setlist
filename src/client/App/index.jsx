@@ -22,6 +22,7 @@ class App extends React.Component {
       }),
     ).isRequired,
     boundExportToText: PropTypes.func.isRequired,
+    addSet: PropTypes.func.isRequired,
   }
 
   state = {
@@ -44,7 +45,7 @@ class App extends React.Component {
 
   render() {
     const { showImport } = this.state
-    const { normalizedLists, boundExportToText } = this.props
+    const { normalizedLists, boundExportToText, addSet } = this.props
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -55,11 +56,18 @@ class App extends React.Component {
               <Set key={set.id} {...set} />
             ))}
           </div>
-          <button type="button" onClick={boundExportToText} className={styles.exportButton}>
+          <button type="button" onClick={boundExportToText} className={cn(styles.button, styles.exportButton)}>
             Export
           </button>
-          <button type="button" onClick={this.toggleImportForm} className={styles.toggleImportFormButton}>
+          <button
+            type="button"
+            onClick={this.toggleImportForm}
+            className={cn(styles.button, styles.toggleImportFormButton)}
+          >
             Toggle Import Form
+          </button>
+          <button type="button" onClick={addSet} className={cn(styles.button, styles.addSetButton)}>
+            Add Set
           </button>
         </div>
       </DragDropContext>

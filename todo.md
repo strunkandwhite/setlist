@@ -24,8 +24,9 @@
 - [x] style drag n drop
 - [x] edit set info
 - [x] toggle editing
+- [x] add new set
+- [ ] remove set, move tracks to existing set
 - [ ] validate input
-- [ ] add new set
 - [ ] save/retrieve sets and tracks in localstorage
 - [ ] add additional track info
 - [ ] Error handling

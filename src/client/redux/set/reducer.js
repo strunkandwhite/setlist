@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { uniqueId } from 'lodash-es'
 
 import {
   CHANGE_SET_NAME,
@@ -6,6 +7,7 @@ import {
   ADD_TRACK_TO_SET,
   REMOVE_TRACK_FROM_SET,
   INSERT_TRACK_TO_SET,
+  ADD_SET,
 } from './types'
 
 const sets = (
@@ -19,6 +21,15 @@ const sets = (
   action,
 ) => {
   switch (action.type) {
+    case ADD_SET:
+      return {
+        ...state,
+        [uniqueId()]: {
+          maxDuration: 0,
+          tracks: [],
+          name: 'new set',
+        },
+      }
     case CHANGE_SET_NAME:
       return {
         ...state,

@@ -5,16 +5,21 @@
   font-family: Helvetica;
 }
 
-.exportButton {
+.button {
   position: absolute;
-  top: 2em;
   right: 2em;
-}
 
-.toggleImportFormButton {
-  position: absolute;
-  top: 4em;
-  right: 2em;
+  &.exportButton {
+    top: 2em;
+  }
+
+  &.toggleImportFormButton {
+    top: 4em;
+  }
+
+  &.addSetButton {
+    top: 6em;
+  }
 }
 
 .setContainer {
