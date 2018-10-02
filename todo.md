@@ -20,7 +20,10 @@
 - [x] only re-authorize if not authorized
 - [x] use localStorage for auth token
 - [x] setlists to rows
-- [ ] drag n drop
+- [x] drag n drop
+- [ ] style drag n drop
+- [ ] save/retrieve sets and tracks in localstorage
+- [ ] add additional track info
 - [ ] arbitrary setlists
 - [ ] Error handling
 - [ ] test coverage > 80%

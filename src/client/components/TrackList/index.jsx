@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Moment from 'moment'
 import { connect } from 'react-redux'
 import cn from 'classnames'
+import { Droppable } from 'react-beautiful-dnd'
 
 import Track from 'Client/components/Track'
 
@@ -13,17 +14,24 @@ const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
-    <section className={cn(styles.root, styles[id])}>
-      <h3>
-        {id}{' '}
-        <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
-      </h3>
-      <ul>
-        {tracks.map((track) => (
-          <Track key={track} id={track} list={id} />
-        ))}
-      </ul>
-    </section>
+    <Droppable droppableId={id}>
+      {(provided) => (
+        <section ref={provided.innerRef} className={cn(styles.root, styles[id])}>
+          <h3>
+            {id}{' '}
+            <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>
+              ({formattedDuration})
+            </span>
+          </h3>
+          <ul>
+            {tracks.map((track, i) => (
+              <Track key={track} id={track} list={id} index={i} />
+            ))}
+          </ul>
+          {provided.placeholder}
+        </section>
+      )}
+    </Droppable>
   )
 }
 
