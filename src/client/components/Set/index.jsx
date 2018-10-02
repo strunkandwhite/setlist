@@ -7,9 +7,9 @@ import { Droppable } from 'react-beautiful-dnd'
 
 import Track from 'Client/components/Track'
 
-import styles from './TrackList.module.scss'
+import styles from './Set.module.scss'
 
-const TrackList = ({ id, name, maxDuration, totalDuration, tracks }) => {
+const Set = ({ id, name, maxDuration, totalDuration, tracks }) => {
   const maxDurationInSeconds = Moment.duration(maxDuration).asMilliseconds()
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
@@ -36,7 +36,7 @@ const TrackList = ({ id, name, maxDuration, totalDuration, tracks }) => {
   )
 }
 
-TrackList.propTypes = {
+Set.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   maxDuration: PropTypes.string.isRequired,
@@ -50,4 +50,4 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(TrackList)
+export default connect(mapStateToProps)(Set)

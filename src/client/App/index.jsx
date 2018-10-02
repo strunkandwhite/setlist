@@ -5,7 +5,7 @@ import cn from 'classnames'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { isEqual } from 'lodash-es'
 
-import { ImportForm, TrackList } from 'Client/components'
+import { ImportForm, Set } from 'Client/components'
 import { exportToText, normalizeLists } from 'Client/helpers'
 
 import { listActions } from 'Client/redux/list'
@@ -50,9 +50,9 @@ class App extends React.Component {
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className={styles.root}>
           {showImport && <ImportForm />}
-          <div className={cn(styles.tracklistContainer, { [styles.importFormHidden]: !showImport })}>
+          <div className={cn(styles.setContainer, { [styles.importFormHidden]: !showImport })}>
             {normalizedLists.map((list) => (
-              <TrackList key={list.id} {...list} />
+              <Set key={list.id} {...list} />
             ))}
           </div>
           <button type="button" onClick={boundExportToText} className={styles.exportButton}>
