@@ -58,7 +58,7 @@ export const importTracks = (joinedIds) => (dispatch, getState) => {
       }, {})
       dispatch(receiveTracks(normalizedTracks))
       Object.keys(normalizedTracks).forEach((id) => {
-        dispatch(listActions.addTrackToList(id, 'set'))
+        dispatch(listActions.addTrackToList(id, 0))
       })
     })
     .catch((error) => {

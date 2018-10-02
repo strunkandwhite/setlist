@@ -22,9 +22,10 @@
 - [x] setlists to rows
 - [x] drag n drop
 - [x] style drag n drop
+- [ ] edit set info
+- [ ] add new set
 - [ ] save/retrieve sets and tracks in localstorage
 - [ ] add additional track info
-- [ ] arbitrary setlists
 - [ ] Error handling
 - [ ] test coverage > 80%
 - [ ] better way to do export? side effect action?

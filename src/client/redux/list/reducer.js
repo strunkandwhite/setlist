@@ -4,13 +4,10 @@ import { ADD_TRACK_TO_LIST, REMOVE_TRACK_FROM_LIST, INSERT_TRACK_TO_LIST } from 
 
 const lists = (
   state = {
-    set: {
+    0: {
       maxDuration: '1:00:00',
       tracks: [],
-    },
-    reserve: {
-      maxDuration: '0:00:00',
-      tracks: [],
+      name: 'set 1',
     },
   },
   action,
@@ -19,20 +16,20 @@ const lists = (
     case ADD_TRACK_TO_LIST:
       return {
         ...state,
-        [action.list]: {
-          ...state[action.list],
-          tracks: [...state[action.list].tracks, action.trackId],
+        [action.listId]: {
+          ...state[action.listId],
+          tracks: [...state[action.listId].tracks, action.trackId],
         },
       }
     case REMOVE_TRACK_FROM_LIST: {
-      const trackIndex = state[action.list].tracks.indexOf(action.trackId)
+      const trackIndex = state[action.listId].tracks.indexOf(action.trackId)
       return {
         ...state,
-        [action.list]: {
-          ...state[action.list],
+        [action.listId]: {
+          ...state[action.listId],
           tracks: [
-            ...state[action.list].tracks.slice(0, trackIndex),
-            ...state[action.list].tracks.slice(trackIndex + 1),
+            ...state[action.listId].tracks.slice(0, trackIndex),
+            ...state[action.listId].tracks.slice(trackIndex + 1),
           ],
         },
       }
@@ -40,12 +37,12 @@ const lists = (
     case INSERT_TRACK_TO_LIST: {
       return {
         ...state,
-        [action.list]: {
-          ...state[action.list],
+        [action.listId]: {
+          ...state[action.listId],
           tracks: [
-            ...state[action.list].tracks.slice(0, action.position),
+            ...state[action.listId].tracks.slice(0, action.position),
             action.trackId,
-            ...state[action.list].tracks.slice(action.position),
+            ...state[action.listId].tracks.slice(action.position),
           ],
         },
       }

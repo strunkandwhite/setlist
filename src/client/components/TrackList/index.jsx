@@ -1,23 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Moment from 'moment'
-import { connect } from 'react-redux'
 import cn from 'classnames'
+import { connect } from 'react-redux'
 import { Droppable } from 'react-beautiful-dnd'
 
 import Track from 'Client/components/Track'
 
 import styles from './TrackList.module.scss'
 
-const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
+const TrackList = ({ id, name, maxDuration, totalDuration, tracks }) => {
   const maxDurationInSeconds = Moment.duration(maxDuration).asMilliseconds()
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
-    <section className={cn(styles.root, styles[id])}>
+    <section className={styles.root}>
       <header>
         <h3>
-          {id}{' '}
+          {name}{' '}
           <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
         </h3>
         <h4>max: {maxDuration}</h4>
@@ -38,6 +38,7 @@ const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
 
 TrackList.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   maxDuration: PropTypes.string.isRequired,
   totalDuration: PropTypes.number.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
