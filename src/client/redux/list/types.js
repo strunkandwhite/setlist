@@ -1,3 +1,0 @@
-export const ADD_TRACK_TO_LIST = 'list/ADD_TRACK_TO_LIST'
-export const REMOVE_TRACK_FROM_LIST = 'list/REMOVE_TRACK_FROM_LIST'
-export const INSERT_TRACK_TO_LIST = 'list/INSERT_TRACK_TO_LIST'

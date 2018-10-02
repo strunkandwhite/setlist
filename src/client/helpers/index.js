@@ -17,7 +17,7 @@ export const parseIds = (input) =>
     .split('\n')
     .map((URI) => URI.split(':')[2])
 
-export const normalizeLists = (lists) => Object.entries(lists).map(([id, list]) => ({ id, ...list }))
+export const normalizeLists = (sets) => Object.entries(sets).map(([id, set]) => ({ id, ...set }))
 
 /* eslint-disable no-param-reassign,camelcase */
 export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
@@ -29,10 +29,10 @@ export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
 })
 
 export const exportToText = (state) => () => {
-  const stringToWrite = Object.entries(state.lists.lists).reduce((str, [listName, list]) => {
-    str += `${listName[0].toUpperCase()}${listName.slice(1)}\n`
+  const stringToWrite = Object.entries(state.sets.sets).reduce((str, [setName, set]) => {
+    str += `${setName[0].toUpperCase()}${setName.slice(1)}\n`
 
-    str += list.tracks.reduce((tracksStr, track) => {
+    str += set.tracks.reduce((tracksStr, track) => {
       const { artist, name, tempo } = state.tracks.tracks[track]
       return `${tracksStr}[${tempo}] ${artist} - ${name}\n`
     }, '')

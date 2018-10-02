@@ -2,10 +2,10 @@ import { combineReducers } from 'redux'
 
 import { authReducer } from './auth'
 import { trackReducer } from './track'
-import { listReducer } from './list'
+import { setReducer } from './set'
 
 export default combineReducers({
   auth: authReducer,
   tracks: trackReducer,
-  lists: listReducer,
+  sets: setReducer,
 })

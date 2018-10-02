@@ -8,7 +8,7 @@ import { isEqual } from 'lodash-es'
 import { ImportForm, Set } from 'Client/components'
 import { exportToText, normalizeLists } from 'Client/helpers'
 
-import { listActions } from 'Client/redux/list'
+import { setActions } from 'Client/redux/set'
 
 import styles from './App.module.scss'
 
@@ -51,8 +51,8 @@ class App extends React.Component {
         <div className={styles.root}>
           {showImport && <ImportForm />}
           <div className={cn(styles.setContainer, { [styles.importFormHidden]: !showImport })}>
-            {normalizedLists.map((list) => (
-              <Set key={list.id} {...list} />
+            {normalizedLists.map((set) => (
+              <Set key={set.id} {...set} />
             ))}
           </div>
           <button type="button" onClick={boundExportToText} className={styles.exportButton}>
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   const boundExportToText = exportToText(state)
 
   return {
-    normalizedLists: normalizeLists(state.lists.lists),
+    normalizedLists: normalizeLists(state.sets.sets),
     boundExportToText,
   }
 }
@@ -79,6 +79,6 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {
-    ...listActions,
+    ...setActions,
   },
 )(App)

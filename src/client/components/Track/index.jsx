@@ -5,7 +5,7 @@ import Moment from 'moment'
 import { Draggable } from 'react-beautiful-dnd'
 
 import { trackActions } from 'Client/redux/track'
-import { listActions } from 'Client/redux/list'
+import { setActions } from 'Client/redux/set'
 import { storeTempoLocally } from 'Client/helpers'
 
 import styles from './Track.module.scss'
@@ -45,7 +45,7 @@ class Track extends React.Component {
     const {
       removeTrackFromList,
       index,
-      list,
+      set,
       id,
       data: { artist, tempo, name, durationMs },
     } = this.props
@@ -72,7 +72,7 @@ class Track extends React.Component {
             <button
               type="button"
               onClick={() => {
-                removeTrackFromList(id, list)
+                removeTrackFromList(id, set)
               }}
             >
               x
@@ -95,8 +95,8 @@ function mapStateToProps(state, ownProps) {
 export default connect(
   mapStateToProps,
   {
-    removeTrackFromList: listActions.removeTrackFromList,
-    addTrackToList: listActions.addTrackToList,
+    removeTrackFromList: setActions.removeTrackFromList,
+    addTrackToList: setActions.addTrackToList,
     changeTrackTempo: trackActions.changeTrackTempo,
   },
 )(Track)

@@ -1,45 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Moment from 'moment'
-import cn from 'classnames'
 import { connect } from 'react-redux'
 import { Droppable } from 'react-beautiful-dnd'
 
-import Track from 'Client/components/Track'
+import { Track, SetInfo } from 'Client/components'
 
 import styles from './Set.module.scss'
 
-const Set = ({ id, name, maxDuration, totalDuration, tracks }) => {
-  const maxDurationInSeconds = Moment.duration(maxDuration).asMilliseconds()
-  const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
-
-  return (
-    <section className={styles.root}>
-      <header>
-        <h3>
-          {name}{' '}
-          <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
-        </h3>
-        <h4>max: {maxDuration}</h4>
-      </header>
-      <Droppable droppableId={id}>
-        {(provided) => (
-          <ul ref={provided.innerRef}>
-            {tracks.map((track, i) => (
-              <Track key={track} id={track} list={id} index={i} />
-            ))}
-            {provided.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </section>
-  )
-}
+const Set = ({ id, tracks, totalDuration }) => (
+  <section className={styles.root}>
+    <SetInfo totalDuration={totalDuration} id={id} />
+    <Droppable droppableId={id}>
+      {(provided) => (
+        <ul ref={provided.innerRef}>
+          {tracks.map((track, i) => (
+            <Track key={track} id={track} set={id} index={i} />
+          ))}
+          {provided.placeholder}
+        </ul>
+      )}
+    </Droppable>
+  </section>
+)
 
 Set.propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  maxDuration: PropTypes.string.isRequired,
   totalDuration: PropTypes.number.isRequired,
   tracks: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 }
