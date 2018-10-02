@@ -4,11 +4,26 @@
   align-items: flex-start;
   padding: 0 0.5rem;
 
+  header {
+    display: flex;
+    flex-flow: row;
+
+    h3 {
+      margin-right: 0.5em;
+    }
+
+    h4 {
+      color: gray;
+    }
+  }
+
   ul {
+    background: #f8f8f8;
     width: 100%;
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 1em;
+    box-sizing: border-box;
   }
 }
 

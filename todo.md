@@ -21,7 +21,7 @@
 - [x] use localStorage for auth token
 - [x] setlists to rows
 - [x] drag n drop
-- [ ] style drag n drop
+- [x] style drag n drop
 - [ ] save/retrieve sets and tracks in localstorage
 - [ ] add additional track info
 - [ ] arbitrary setlists

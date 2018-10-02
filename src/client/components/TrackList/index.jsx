@@ -14,24 +14,25 @@ const TrackList = ({ id, maxDuration, totalDuration, tracks }) => {
   const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
 
   return (
-    <Droppable droppableId={id}>
-      {(provided) => (
-        <section ref={provided.innerRef} className={cn(styles.root, styles[id])}>
-          <h3>
-            {id}{' '}
-            <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>
-              ({formattedDuration})
-            </span>
-          </h3>
-          <ul>
+    <section className={cn(styles.root, styles[id])}>
+      <header>
+        <h3>
+          {id}{' '}
+          <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
+        </h3>
+        <h4>max: {maxDuration}</h4>
+      </header>
+      <Droppable droppableId={id}>
+        {(provided) => (
+          <ul ref={provided.innerRef}>
             {tracks.map((track, i) => (
               <Track key={track} id={track} list={id} index={i} />
             ))}
+            {provided.placeholder}
           </ul>
-          {provided.placeholder}
-        </section>
-      )}
-    </Droppable>
+        )}
+      </Droppable>
+    </section>
   )
 }
 

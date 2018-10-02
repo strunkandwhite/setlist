@@ -9,7 +9,7 @@ const lists = (
       tracks: [],
     },
     reserve: {
-      maxDuration: '',
+      maxDuration: '0:00:00',
       tracks: [],
     },
   },
