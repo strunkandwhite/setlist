@@ -1,7 +1,7 @@
 module.exports = {
   testURL: 'http://localhost:8080',
   moduleNameMapper: {
-    '^Src(.*)$': '<rootDir>/src$1',
+    '^Client(.*)$': '<rootDir>/src/client$1',
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
   roots: ['<rootDir>/src/'],
