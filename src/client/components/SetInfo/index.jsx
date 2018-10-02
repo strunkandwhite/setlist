@@ -12,7 +12,7 @@ class SetInfo extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    maxDuration: PropTypes.string.isRequired,
+    maxDuration: PropTypes.number.isRequired,
     totalDuration: PropTypes.number.isRequired,
     changeSetName: PropTypes.func.isRequired,
     changeSetMaxDuration: PropTypes.func.isRequired,
@@ -24,8 +24,14 @@ class SetInfo extends React.Component {
 
   handleMaxDurationChange = (e) => {
     e.preventDefault()
+    const validDurationFormat = /^[\d:]*$/
     const { changeSetMaxDuration, id } = this.props
-    changeSetMaxDuration(id, e.target.value)
+    const {
+      target: { value },
+    } = e
+    if (!Moment.duration(value).isValid() || !value.match(validDurationFormat)) return
+    const parsedDuration = Moment.duration(value).asMilliseconds()
+    changeSetMaxDuration(id, parsedDuration)
   }
 
   handleNameChange = (e) => {
@@ -45,21 +51,21 @@ class SetInfo extends React.Component {
     const { isEditing } = this.state
     const { name, maxDuration, totalDuration } = this.props
 
-    const maxDurationInSeconds = Moment.duration(maxDuration).asMilliseconds()
     const formattedDuration = Moment.duration(totalDuration).format('h:mm:ss', { trim: false })
+    const formattedMaxDuration = Moment.duration(maxDuration).format('h:mm:ss', { trim: false })
 
     return (
       <header className={styles.root}>
         <h3>
           {isEditing ? <input type="text" value={name} onChange={this.handleNameChange} /> : <span>{name}</span>}
-          <span className={cn({ [styles.tooLong]: totalDuration > maxDurationInSeconds })}>({formattedDuration})</span>
+          <span className={cn({ [styles.tooLong]: totalDuration > maxDuration })}>({formattedDuration})</span>
         </h3>
         <h4>
           max:{' '}
           {isEditing ? (
-            <input type="text" value={maxDuration} onChange={this.handleMaxDurationChange} />
+            <input type="text" value={formattedMaxDuration} onChange={this.handleMaxDurationChange} />
           ) : (
-            <span>{maxDuration}</span>
+            <span>{formattedMaxDuration}</span>
           )}
         </h4>
         <button type="button" onClick={this.toggleEditing}>
