@@ -14,6 +14,7 @@ class SetInfo extends React.Component {
     name: PropTypes.string.isRequired,
     maxDuration: PropTypes.number.isRequired,
     totalDuration: PropTypes.number.isRequired,
+    removeSet: PropTypes.func.isRequired,
     changeSetName: PropTypes.func.isRequired,
     changeSetMaxDuration: PropTypes.func.isRequired,
   }
@@ -38,6 +39,11 @@ class SetInfo extends React.Component {
     e.preventDefault()
     const { changeSetName, id } = this.props
     changeSetName(id, e.target.value)
+  }
+
+  handleRemoveSet = () => {
+    const { removeSet, id } = this.props
+    removeSet(id)
   }
 
   toggleEditing = (e) => {
@@ -70,6 +76,9 @@ class SetInfo extends React.Component {
         </h4>
         <button type="button" onClick={this.toggleEditing}>
           e
+        </button>
+        <button type="button" onClick={this.handleRemoveSet}>
+          x
         </button>
       </header>
     )

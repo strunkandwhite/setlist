@@ -8,6 +8,7 @@ import {
   REMOVE_TRACK_FROM_SET,
   INSERT_TRACK_TO_SET,
   ADD_SET,
+  REMOVE_SET,
 } from './types'
 
 const sets = (
@@ -30,6 +31,12 @@ const sets = (
           name: 'new set',
         },
       }
+    case REMOVE_SET: {
+      const { [action.setId]: setToRemove, ...rest } = state
+      return {
+        ...rest,
+      }
+    }
     case CHANGE_SET_NAME:
       return {
         ...state,

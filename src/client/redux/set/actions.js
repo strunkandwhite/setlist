@@ -5,6 +5,7 @@ import {
   CHANGE_SET_MAX_DURATION,
   CHANGE_SET_NAME,
   ADD_SET,
+  REMOVE_SET,
 } from './types'
 
 export const addTrackToList = (trackId, setId) => ({ type: ADD_TRACK_TO_SET, trackId, setId })
@@ -31,3 +32,5 @@ export const changeSetMaxDuration = (setId, maxDuration) => ({
 })
 
 export const addSet = () => ({ type: ADD_SET })
+
+export const removeSet = (setId) => ({ type: REMOVE_SET, setId })

@@ -25,10 +25,12 @@
 - [x] edit set info
 - [x] toggle editing
 - [x] add new set
-- [ ] remove set, move tracks to existing set
-- [ ] validate input
+- [x] remove set, move tracks to existing set
 - [ ] save/retrieve sets and tracks in localstorage
+- [ ] validate input
 - [ ] add additional track info
+- [ ] duplicate track check
+- [ ] track pool of some sort?
 - [ ] Error handling
 - [ ] test coverage > 80%
 - [ ] better way to do export? side effect action?
