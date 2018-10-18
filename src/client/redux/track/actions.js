@@ -18,7 +18,7 @@ export const receiveTracks = (tracks) => ({ type: RECEIVE_TRACKS, tracks })
 
 export const changeTrackTempo = (trackId, tempo) => ({ type: CHANGE_TRACK_TEMPO, trackId, tempo })
 
-export const importTracks = (joinedIds) => (dispatch) => {
+export const importTracks = (joinedIds) => (dispatch, getState) => {
   dispatch(requestTracks())
   dispatch(authActions.authorize())
     .then(() => {
@@ -58,8 +58,9 @@ export const importTracks = (joinedIds) => (dispatch) => {
         return collection
       }, {})
       dispatch(receiveTracks(normalizedTracks))
+      const firstList = Object.keys(getState().sets.sets).sort((a, b) => a - b)[0]
       Object.keys(normalizedTracks).forEach((id) => {
-        dispatch(setActions.addTrackToList(id, 0))
+        dispatch(setActions.addTrackToList(id, firstList))
       })
     })
     .catch((error) => {
