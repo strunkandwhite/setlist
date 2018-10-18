@@ -26,9 +26,9 @@
 - [x] toggle editing
 - [x] add new set
 - [x] remove set, move tracks to existing set
-- [ ] save/retrieve sets and tracks in localstorage
+- [x] add additional track info
+- [x] save/retrieve sets and tracks in localstorage
 - [ ] validate input
-- [ ] add additional track info
 - [ ] duplicate track check
 - [ ] track pool of some sort?
 - [ ] Error handling

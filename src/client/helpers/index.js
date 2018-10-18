@@ -35,10 +35,11 @@ export const parseIds = (input) =>
 export const normalizeLists = (sets) => Object.entries(sets).map(([id, set]) => ({ id, ...set }))
 
 /* eslint-disable no-param-reassign,camelcase */
-export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
+export const transformTrack = ({ artists, duration_ms, valence, tempo, name, id }) => ({
   artist: artists[0].name,
   durationMs: duration_ms,
   tempo: Math.round(tempo).toString(),
+  valence: Math.round(valence * 100),
   name,
   id,
 })

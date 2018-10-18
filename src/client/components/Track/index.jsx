@@ -9,6 +9,10 @@ import { setActions } from 'Client/redux/set'
 
 import styles from './Track.module.scss'
 
+function colorFromValence(valence) {
+  return `rgb(${(100 - valence) * 2.55}, ${valence * 2.55}, 0)`
+}
+
 class Track extends React.Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
@@ -45,7 +49,7 @@ class Track extends React.Component {
       index,
       set,
       id,
-      data: { artist, tempo, name, durationMs },
+      data: { artist, tempo, name, durationMs, valence },
     } = this.props
 
     return (
@@ -57,15 +61,19 @@ class Track extends React.Component {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
           >
-            <input
-              placeholder="tempo"
-              className={styles.tempo}
-              type="text"
-              value={tempo}
-              onChange={this.handleChange}
-            />
-            <span>
-              ({Moment.duration(durationMs).format('m:ss')}) {artist} - {name}
+            <div className={styles.info}>
+              <input
+                placeholder="tempo"
+                className={styles.tempo}
+                type="text"
+                value={tempo}
+                onChange={this.handleChange}
+              />
+              <span style={{ color: colorFromValence(valence) }}>{valence}</span>
+              <span>({Moment.duration(durationMs).format('m:ss')})</span>
+            </div>
+            <span className={styles.artistTrack}>
+              {artist} - {name}
             </span>
             <button
               type="button"

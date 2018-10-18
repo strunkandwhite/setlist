@@ -6,14 +6,6 @@
   justify-content: space-between;
   background: #f0f0f0;
 
-  span {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-grow: 1;
-  }
-
   button {
     width: 2rem;
     padding: 0;
@@ -23,6 +15,23 @@
   &:last-child {
     margin-bottom: 0;
   }
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+
+  > * {
+    margin-right: 0.5em;
+  }
+}
+
+.artistTrack {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
 }
 
 .tempo {
