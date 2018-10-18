@@ -14,20 +14,20 @@ export const authorize = () => (dispatch) => {
       localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY) &&
       new Date().getTime() < localStorage.getItem(AUTH_TOKEN_EXPIRES_LOCAL_STORAGE_KEY)
     ) {
-      resolve(localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY))
+      resolve()
     } else {
       fetch(SPOTIFY_TOKEN_URL)
         .then((response) => response.json())
         .then((json) => {
           const { token } = json
           storeAuthToken(token)
-          resolve(token)
+          resolve()
         })
     }
   })
   return authPromise
-    .then((token) => {
-      dispatch(receiveAuth(token))
+    .then(() => {
+      dispatch(receiveAuth())
     })
     .catch((error) => {
       throw new Error(error)

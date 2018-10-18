@@ -6,7 +6,6 @@ import { Draggable } from 'react-beautiful-dnd'
 
 import { trackActions } from 'Client/redux/track'
 import { setActions } from 'Client/redux/set'
-import { storeTempoLocally } from 'Client/helpers'
 
 import styles from './Track.module.scss'
 
@@ -38,7 +37,6 @@ class Track extends React.Component {
     if (notDigits.test(value)) return
 
     changeTrackTempo(id, value)
-    storeTempoLocally(id, value)
   }
 
   render() {

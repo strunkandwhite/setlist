@@ -3,6 +3,16 @@ import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 
+import { loadState, saveState } from 'Client/helpers'
+
 import rootReducer from './root-reducer'
 
-export default createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, createLogger())))
+const persistedState = loadState()
+
+const store = createStore(rootReducer, persistedState, composeWithDevTools(applyMiddleware(thunk, createLogger())))
+
+store.subscribe(() => {
+  saveState(store.getState())
+})
+
+export default store

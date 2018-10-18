@@ -24,17 +24,7 @@ export const authorized = (state = false, action) => {
   }
 }
 
-export const token = (state = '', action) => {
-  switch (action.type) {
-    case RECEIVE_AUTH:
-      return action.token
-    default:
-      return state
-  }
-}
-
 export default combineReducers({
   fetching,
   authorized,
-  token,
 })

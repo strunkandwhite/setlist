@@ -2,8 +2,23 @@ import FileSaver from 'file-saver'
 
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY, AUTH_TOKEN_EXPIRES_LOCAL_STORAGE_KEY } from 'Client/consts'
 
-export const storeTempoLocally = (id, value) => {
-  localStorage.setItem(id, value)
+export const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem('setlist_state')
+    if (serializedState === null) return undefined
+    return JSON.parse(serializedState)
+  } catch (err) {
+    return undefined
+  }
+}
+
+export const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('setlist_state', serializedState)
+  } catch (err) {
+    // no-op
+  }
 }
 
 export const storeAuthToken = (token) => {
@@ -23,7 +38,7 @@ export const normalizeLists = (sets) => Object.entries(sets).map(([id, set]) => 
 export const transformTrack = ({ artists, duration_ms, tempo, name, id }) => ({
   artist: artists[0].name,
   durationMs: duration_ms,
-  tempo: localStorage.getItem(id) || Math.round(tempo).toString(),
+  tempo: Math.round(tempo).toString(),
   name,
   id,
 })

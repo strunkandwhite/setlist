@@ -1,4 +1,4 @@
-import { SPOTIFY_TRACKS_URL, SPOTIFY_FEATURES_URL } from 'Client/consts'
+import { SPOTIFY_TRACKS_URL, SPOTIFY_FEATURES_URL, AUTH_TOKEN_LOCAL_STORAGE_KEY } from 'Client/consts'
 import { authActions } from 'Client/redux/auth'
 import { setActions } from 'Client/redux/set'
 import { transformTrack } from 'Client/helpers'
@@ -18,18 +18,19 @@ export const receiveTracks = (tracks) => ({ type: RECEIVE_TRACKS, tracks })
 
 export const changeTrackTempo = (trackId, tempo) => ({ type: CHANGE_TRACK_TEMPO, trackId, tempo })
 
-export const importTracks = (joinedIds) => (dispatch, getState) => {
+export const importTracks = (joinedIds) => (dispatch) => {
   dispatch(requestTracks())
   dispatch(authActions.authorize())
     .then(() => {
+      const token = localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY)
       const tracks = fetch(`${SPOTIFY_TRACKS_URL}${joinedIds}`, {
         headers: {
-          Authorization: `Bearer ${getState().auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       const features = fetch(`${SPOTIFY_FEATURES_URL}${joinedIds}`, {
         headers: {
-          Authorization: `Bearer ${getState().auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       return Promise.all([tracks, features])
