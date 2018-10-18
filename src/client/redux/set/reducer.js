@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { uniqueId } from 'lodash-es'
+import uuid from 'uuid/v4'
 
 import {
   CHANGE_SET_NAME,
@@ -25,7 +25,7 @@ const sets = (
     case ADD_SET:
       return {
         ...state,
-        [uniqueId()]: {
+        [uuid()]: {
           maxDuration: 0,
           tracks: [],
           name: 'new set',
