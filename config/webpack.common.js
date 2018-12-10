@@ -66,7 +66,6 @@ module.exports = {
               {
                 loader: 'css-loader',
                 options: {
-                  minimize: true,
                   sourceMap: true,
                 },
               },
@@ -93,7 +92,6 @@ module.exports = {
                   modules: true,
                   importLoaders: 2,
                   localIdentName: '[name]_[local]_[hash:base64:5]',
-                  minimize: true,
                   sourceMap: true,
                 },
               },
