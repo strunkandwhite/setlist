@@ -61,6 +61,7 @@
     "sass-loader": "^7.0.3",
     "serve": "^10.0.0",
     "style-loader": "^0.23.0",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.15.1",
     "webpack-bundle-analyzer": "^3.0.2",
     "webpack-cli": "^3.0.8",
