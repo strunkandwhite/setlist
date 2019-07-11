@@ -5,7 +5,8 @@ import cn from 'classnames'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { isEqual } from 'lodash-es'
 
-import { ImportForm, Set } from 'Client/components'
+import Set from 'Client/components/Set'
+import { ImportForm } from 'Client/components'
 import { exportToText, normalizeLists } from 'Client/helpers'
 
 import { setActions } from 'Client/redux/set'
@@ -22,6 +23,8 @@ class App extends React.Component {
       }),
     ).isRequired,
     boundExportToText: PropTypes.func.isRequired,
+    insertTrackToList: PropTypes.func.isRequired,
+    removeTrackFromList: PropTypes.func.isRequired,
     addSet: PropTypes.func.isRequired,
   }
 

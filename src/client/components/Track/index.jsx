@@ -20,11 +20,13 @@ class Track extends React.Component {
     addTrackToList: PropTypes.func.isRequired,
     changeTrackTempo: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
+    set: PropTypes.string.isRequired,
     data: PropTypes.shape({
       artist: PropTypes.string.isRequired,
       tempo: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       durationMs: PropTypes.number.isRequired,
+      valence: PropTypes.number.isRequired,
     }).isRequired,
   }
 
